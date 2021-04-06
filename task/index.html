@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8" >
+    <title>API Task</title>
+    <meta name="author" content="">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, intial-scale=1">
+    
+    <link rel="icon" href="favicon.ico">
+    <link rel="stylesheet" href="vendors/bootstrap/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="vendors/css/style.css">
+</head>
+<body>
+    
+    <div class="header">
+
+    </div>
+
+    <div class="main">
+         <table class="table">
+          <caption>API Table</caption> 
+         <thead> 
+            <tr>
+                 <th scope="col"></th>
+                 <th scope="col">API name</th>
+                 <th scope="col">API description</th>
+                 <th scope="col">Submit</th>
+             </tr>
+         </thead>  
+         <tbody>  
+             <tr>
+                 <th scope="row">1</th>
+                 <td>EarthQuakes</td>
+                 <td>
+                     List of Earthquakes ordered by magnitude <br>
+                     Url: api.geonames.org/earthquakesJSON? <br> 
+                     Parameters:<br>
+                     north,south,east,west - coordinates of bouding box <br>
+                     callback - name js function (optional parameter) <br>
+                     lang - language of placenames and wiki urls (def = en) <br> 
+                     maxRows - maximal num of rows returned (def = 10)                    
+                 </td>
+                 <td>
+                    <form action="">
+                        <input type="submit" value="Submit">
+                    </form>
+                 </td>
+             </tr>
+             
+             <tr>
+                <th scope="row">2</th>
+                <td>Nearby populated place</td>
+                <td>
+                    Returns the closest populated place <br>
+                    Url: api.geonames.org/findNearbyPlaceName? <br>
+                    Parameters : lat,lng,
+                    lang: language of returned 'name' element (the pseudo language code 'local' will return it in local language), <br>
+                    radius: radius in km (optional), maxRows: max number of rows (default 10) <br>
+                    style: SHORT,MEDIUM,LONG,FULL (default = MEDIUM), verbosity of returned xml document <br>
+                    localCountry: in border areas this parameter will restrict the search on the local country, value=true <br>
+                    cities: optional filter parameter with three possible values 'cities1000', 'cities5000','cities15000'. See the download readme for further infos <br>
+                    Result : returns the closest populated place (feature class=P) for the lat/lng query as xml document. The unit of the distance element is 'km'. <br>     
+                </td>
+                <td>
+                    <form action="">
+                        <input type="submit" value="Submit">
+                    </form>
+                </td>
+            </tr>
+
+            <tr>
+                <th scope="row">3</th>
+                <td>Weather</td>
+                <td>
+                    Weather data provided in METAR format <br>
+                    Url: api.geonames.org/weatherJSON? <br>
+                    Parameters :
+                    north,south,east,west : coordinates of bounding box <br>
+                    callback : name of javascript function (optional parameter) <br>
+                    maxRows : maximal number of rows returned (default = 10) <br>    
+                </td>
+                <td>
+                    <form action="">
+                        <input type="submit" value="Submit">
+                    </form>
+                </td>
+            </tr>
+        </tbody> 
+         </table>
+    </div>
+
+    <div id="preloader"></div>
+    
+    <script src="vendors/jquery/node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="vendors/bootstrap/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <script src="vendors/js/script.js"></script>
+
+</body>
+<footer></footer>
