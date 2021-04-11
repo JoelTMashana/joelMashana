@@ -10,98 +10,207 @@
     <link rel="icon" href="favicon.ico">
     <link rel="stylesheet" href="libs/bootstrap/bootstrap-3.3.7-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="libs/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet"> 
 </head>
 <body>
     
     <div class="header">
-
+      
     </div>
 
     <div class="main">
          
         <!----------API TABLE---------->
-        
+      <div class="panel panel-default panelMine">
+
         <table class="table">
-          <caption>API Table</caption> 
+         <caption class="text">API Table</caption> 
          <thead> 
             <tr>
+                <!--headers-->
                  <th scope="col"></th>
-                 <th scope="col">API name</th>
-                 <th scope="col">API description</th>
-                 <th scope="col">Submit</th>
+                 <th scope="col" class="text">API name</th>
+                 <th scope="col" class="text">API description</th>
+                 <th scope="col" class="text">Submit</th>
              </tr>
          </thead>  
          <tbody>  
              <tr>
-                 <th scope="row">1</th>
-                 <td>GeoCoding</td>
+                 <th scope="row" class="text">1</th>
+                 <td class="text">Postal Code Country Info</td>
                  <td>
-                     Countries for which geocoding is available.
-                     <br>
-                     Url: api.geonames.org/postalCodeCountryInfo?
-                     <br> 
-                     <br>
-                    <label for="username">Username</label>
-                    <input type="text" id="username">
+                     <p class="text">Countries for which geocoding is available.</p>
+                     <p class="text">Url: api.geonames.org/postalCodeCountryInfo?</p>
+                    <label for="username" class="text">Username</label>
+                    <input type="text" placeholder="joelmashana" id="username">
 
                  </td>
-                 <!--button id will be linked to the AJAX call-->
+                
                  <td>
-                    <button id="btnSubmit" class="btn-primary">Submit</button>  
+                    <button id="btnSubmit" class="btn" class="text">Submit</button>  
                  </td>
              </tr>
-   <!----------------------------------------DO NOT FOCUS ON THE CODE BELOW IT IS NOT RELEVEANT FOR NOW--------------------------------------------------->          
+      
              <tr>
-                <th scope="row">2</th>
-                <td>Postal Code country info</td>
+                <th scope="row" class="text">2</th>
+                <td class="text">Neighbours</td>
                 <td>
-                    Returns the closest populated place <br>
-                    Url: api.geonames.org/findNearbyPlaceName? <br>
-                    
-                     
+                    <p class="text">Returns all neighbours for a country or administrative division.</p>
+                    <p class="text"> Url: api.geonames.org/neighboursJSON?</p>
+                    <label for="country" class="text">Country</label>
+                    <select id="selCountry" class="text">
+                        <option value="GB" class="text">GB</option>
+                        <option value="FR" class="text">FR</option>
+                        <option value="DE" class="text">DE</option>
+                        <option value="US" class="text">US</option>
+                    </select> 
                 </td>
                 <td>
-                    <button id="btnSubmitNearby" class="btn-primary">Submit</button>  
+                    <button id="btnSubmitNeighbours" class="btn" class="text">Submit</button>  
                 </td>
             </tr>
 
             <tr>
-                <th scope="row">3</th>
-                <td>Neighbours</td>
+                <th scope="row" class="text">3</th>
+                <td class="text">Search</td>
                 <td>
-                    Weather data provided in METAR format <br>
-                    Url: api.geonames.org/weatherJSON? <br>
-                       
+                    <p class="text">Returns names found for the search term </p>
+                    <p class="text">Url: api.geonames.org/searchJSON? </p>
+                  <label for="searchTerm" class="text">Search</label>
+                  <input type="text" placeholder="london" id="searchTerm">    
                 </td>
                 <td>
-                    <button id="btnSubmitWeather" class="btn-primary">Submit</button>  
+                    <button id="btnSubmitSearch" class="btn" class="text">Submit</button>  
                 </td>
             </tr>
 
-     <!----------------------------------------DO NOT FOCUS ON THE CODE ABOVE IT IS NOT RELEVEANT FOR NOW--------------------------------------------------->              
-        </tbody> 
+       
+           </tbody> 
          </table>
-         
-      <!----------RESULTS TABLE---------->
-      
-    <div class="geoCodingTable">
-         
+        </div>  
+      <!----------RESULTS TABLES---------->
+     
+    <div class="panel panel-default panelMine">  
+      <!--table1-->
+     <div class="postalCodeTable">  
          <table class="table">
-             <caption>Geo Coding</caption>
              <tr>
-                 <th>Results</th>
+                 <th class="resultsHeaders text">Postal Code Country Info API Results</th>
+             </tr>
+
+             <tr>
+                 <td>
+                    <p class="text">Number of Post Codes:</p> 
+                    
+                 </td>
+                 <td id="txtNumPostalCodes" class="text">
+                     
+                 </td>
+             </tr>
+
+             <tr>
+                 <td>
+                    <p class="text">Country code:</p> 
+                    
+                 </td>
+                 <td id="txtCountryCode" class="text">
+
+                 </td>
+             </tr>
+
+             <tr>
+                 <td>
+                     <p class="text">Country name:</p>
+                 </td>
+                 <td id="txtCountryName" class="text">
+
+                 </td>
              </tr>
          </table>
-    </div>      
-
-
-
-
-
-
-
-      
+     </div> 
     </div>
+    
+    <!--table2-->
+     
+    <div class="panel panel-default panelMine">
+    <div class="neighboursTable">
+         
+        <table class="table">
+            <tr>
+                <th class="resultsHeaders text">Neighbours API Results</th>
+            </tr>
+
+            <tr>
+                <td>
+                    <p class="text">Country Name:</p>
+                </td>
+                <td id="txtName" class="text">
+                    
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <p class="text">Country Code:</p>
+                </td>
+                <td id="txtCode" class="text">
+
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <p class="text">Population:</p>
+                </td>
+                <td id="txtPopulation" class="text">
+
+                </td>
+            </tr>
+        </table>
+   </div>
+   </div> 
+   
+   <!--table3-->
+   <div class="panel panel-default panelMine">
+   <div class="searchsTable">
+         
+    <table class="table">
+        <tr>
+            <th class="resultsHeaders text">Search Term API Results</th>
+        </tr>
+
+        <tr>
+            <td>
+                <p class="text">Admin Code 1:</p>
+            </td>
+            <td id="txtAdminCode" class="text">
+                
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <p class="text">F Code Name:</p>
+            </td>
+            <td id="txtFCodeName" class="text">
+
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <p class="text">Toponym Name:</p>
+            </td>
+            <td id="txtToponymName" class="text">
+
+            </td>
+        </tr>
+    </table>
+   </div>
+   </div>
+
+    </div>
+
 
     <div class="loader">
         <div class="loader__bar"></div>
