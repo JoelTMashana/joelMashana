@@ -1,14 +1,15 @@
 <!DOCTYPE html>
+
+<html lang="en">
 <head>
     <meta charset="utf-8" >
     <title>API Task</title>
-    <meta name="author" content="">
-    <meta name="description" content="">
+    <meta name="author" content="Joel Mashana">
+    <meta name="description" content="AJAX/PHP/CURL/JSON example">
     <meta name="viewport" content="width=device-width, intial-scale=1">
-    
     <link rel="icon" href="favicon.ico">
-    <link rel="stylesheet" href="vendors/bootstrap/bootstrap-3.3.7-dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="vendors/css/style.css">
+    <link rel="stylesheet" href="libs/bootstrap/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="libs/css/style.css">
 </head>
 <body>
     
@@ -17,7 +18,10 @@
     </div>
 
     <div class="main">
-         <table class="table">
+         
+        <!----------API TABLE---------->
+        
+        <table class="table">
           <caption>API Table</caption> 
          <thead> 
             <tr>
@@ -30,70 +34,88 @@
          <tbody>  
              <tr>
                  <th scope="row">1</th>
-                 <td>EarthQuakes</td>
+                 <td>GeoCoding</td>
                  <td>
-                     List of Earthquakes ordered by magnitude <br>
-                     Url: api.geonames.org/earthquakesJSON? <br> 
-                     Parameters:<br>
-                     north,south,east,west - coordinates of bouding box <br>
-                     callback - name js function (optional parameter) <br>
-                     lang - language of placenames and wiki urls (def = en) <br> 
-                     maxRows - maximal num of rows returned (def = 10)                    
+                     Countries for which geocoding is available.
+                     <br>
+                     Url: api.geonames.org/postalCodeCountryInfo?
+                     <br> 
+                     <br>
+                    <label for="username">Username</label>
+                    <input type="text" id="username">
+
                  </td>
+                 <!--button id will be linked to the AJAX call-->
                  <td>
-                    <form action="">
-                        <input type="submit" value="Submit">
-                    </form>
+                    <button id="btnSubmit" class="btn-primary">Submit</button>  
                  </td>
              </tr>
-             
+   <!----------------------------------------DO NOT FOCUS ON THE CODE BELOW IT IS NOT RELEVEANT FOR NOW--------------------------------------------------->          
              <tr>
                 <th scope="row">2</th>
-                <td>Nearby populated place</td>
+                <td>Postal Code country info</td>
                 <td>
                     Returns the closest populated place <br>
                     Url: api.geonames.org/findNearbyPlaceName? <br>
-                    Parameters : lat,lng,
-                    lang: language of returned 'name' element (the pseudo language code 'local' will return it in local language), <br>
-                    radius: radius in km (optional), maxRows: max number of rows (default 10) <br>
-                    style: SHORT,MEDIUM,LONG,FULL (default = MEDIUM), verbosity of returned xml document <br>
-                    localCountry: in border areas this parameter will restrict the search on the local country, value=true <br>
-                    cities: optional filter parameter with three possible values 'cities1000', 'cities5000','cities15000'. See the download readme for further infos <br>
-                    Result : returns the closest populated place (feature class=P) for the lat/lng query as xml document. The unit of the distance element is 'km'. <br>     
+                    
+                     
                 </td>
                 <td>
-                    <form action="">
-                        <input type="submit" value="Submit">
-                    </form>
+                    <button id="btnSubmitNearby" class="btn-primary">Submit</button>  
                 </td>
             </tr>
 
             <tr>
                 <th scope="row">3</th>
-                <td>Weather</td>
+                <td>Neighbours</td>
                 <td>
                     Weather data provided in METAR format <br>
                     Url: api.geonames.org/weatherJSON? <br>
-                    Parameters :
-                    north,south,east,west : coordinates of bounding box <br>
-                    callback : name of javascript function (optional parameter) <br>
-                    maxRows : maximal number of rows returned (default = 10) <br>    
+                       
                 </td>
                 <td>
-                    <form action="">
-                        <input type="submit" value="Submit">
-                    </form>
+                    <button id="btnSubmitWeather" class="btn-primary">Submit</button>  
                 </td>
             </tr>
+
+     <!----------------------------------------DO NOT FOCUS ON THE CODE ABOVE IT IS NOT RELEVEANT FOR NOW--------------------------------------------------->              
         </tbody> 
          </table>
+         
+      <!----------RESULTS TABLE---------->
+      
+    <div class="geoCodingTable">
+         
+         <table class="table">
+             <caption>Geo Coding</caption>
+             <tr>
+                 <th>Results</th>
+             </tr>
+         </table>
+    </div>      
+
+
+
+
+
+
+
+      
     </div>
 
-    <div id="preloader"></div>
+    <div class="loader">
+        <div class="loader__bar"></div>
+        <div class="loader__bar"></div>
+        <div class="loader__bar"></div>
+        <div class="loader__bar"></div>
+        <div class="loader__bar"></div>
+        <div class="loader__ball"></div>
+      </div>
     
-    <script src="vendors/jquery/node_modules/jquery/dist/jquery.min.js"></script>
-    <script src="vendors/bootstrap/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-    <script src="vendors/js/script.js"></script>
+    <script src="libs/js/jquery/jquery.min.js"></script>
+    <script src="libs/bootstrap/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <script src="libs/js/script.js"></script>
 
 </body>
 <footer></footer>
+</html>
