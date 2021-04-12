@@ -8,7 +8,7 @@
 	$executionStartTime = microtime(true);
     
 	// these params are taken from the data part of the ajax call
-	$url='http://api.geonames.org/postalCodeCountryInfoJSON?formatted=true&username= ' . $_REQUEST['username'] . '&style=full';
+	$url='http://api.geonames.org/postalCodeCountryInfoJSON?formatted=true&username=joelmashana&style=full';
 	
 	//curls obj initialised and stored in var
 	// the API I use will speicfy what I need to copy

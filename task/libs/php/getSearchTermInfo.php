@@ -8,7 +8,7 @@
 	$executionStartTime = microtime(true);
     
 	// these params are taken from the data part of the ajax call
-	$url='http://api.geonames.org/searchJSON? formatted=true&name=' . $_REQUEST['name'] . '&username=joelmashana=full';
+	$url='http://api.geonames.org/searchJSON?formatted=true&maxRows=10&name_equals=' . $_REQUEST['name_equals'] . '&username=joelmashana&style=full';
 	
 	//curls obj initialised and stored in var
 	// the API I use will speicfy what I need to copy

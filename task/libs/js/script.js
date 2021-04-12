@@ -8,9 +8,6 @@ $('#btnSubmit').click(function(){
          url: "libs/php/getGeocodingAvailibility.php",
          type: 'POST',
          dataType: 'json',
-         data: {
-              username: $('#username').val()  
-         },
 
          success: function(result) {
              
@@ -26,7 +23,8 @@ $('#btnSubmit').click(function(){
 
          },
          error: function(jqXHR, textStatus, errorThrown) {
-            // write error msg when ready
+            console.log("There was an error peforming the AJAX call!");
+			
          }
 
      });
@@ -59,7 +57,8 @@ $('#btnSubmit').click(function(){
 			
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
-				// your error code
+				console.log("There was an error peforming the AJAX call!");
+				
 			}
 		}); 
 	
@@ -74,7 +73,7 @@ $('#btnSubmit').click(function(){
 					type: 'POST',
 					dataType: 'json',
 					data: {
-						name: $('#searchTerm').val()
+						name_equals: $('#searchTerm').val()
 					},
 					success: function(result) {
 		
@@ -91,7 +90,8 @@ $('#btnSubmit').click(function(){
 					
 					},
 					error: function(jqXHR, textStatus, errorThrown) {
-						// your error code
+						console.log("There was an error peforming the AJAX call!");
+						
 					}
 				}); 
 			
