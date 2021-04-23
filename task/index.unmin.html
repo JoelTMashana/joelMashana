@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" >
+    <title>API Task</title>
+    <meta name="author" content="Joel Mashana">
+    <meta name="description" content="AJAX/PHP/CURL/JSON example">
+    <meta name="viewport" content="width=device-width, intial-scale=1">
+    <link rel="icon" href="favicon.ico">
+    <link rel="stylesheet" href="libs/bootstrap/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="libs/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet"> 
+</head>
+<body>
+    
+    <div class="header">
+      
+    </div>
+    <div class="main">
+         
+        <!----------API TABLE---------->
+      <div class="panel panel-default panelMine">
+        <table class="table">
+         <caption class="text">API Table</caption> 
+         <thead> 
+            <tr>
+                <!--headers-->
+                 <th scope="col"></th>
+                 <th scope="col" class="text">API name</th>
+                 <th scope="col" class="text">API description</th>
+                 <th scope="col" class="text">Submit</th>
+             </tr>
+         </thead>  
+         <tbody>  
+             <tr>
+                 <th scope="row" class="text">1</th>
+                 <td class="text">Postal Code Country Info</td>
+                 <td>
+                     <p class="text">Countries for which geocoding is available.</p>
+                     <p class="text">Url: api.geonames.org/postalCodeCountryInfo?</p>
+                    <label for="username" class="text">Username</label>
+                    <input type="text" placeholder="joelmashana" id="username">
+
+                 </td>
+
+
+                    <p class="text"> Url: api.geonames.org/neighboursJSON?</p>
+                    <label for="country" class="text">Country</label>
+                    <select id="selCountry" class="text">
+                        <option value="GB" class="text">GB</option>
+                        <option value="FR" class="text">FR</option>
+                        <option value="DE" class="text">DE</option>
+                        <option value="US" class="text">US</option>
+                        <option value="GB" >GB</option>
+                        <option value="FR" >FR</option>
+                        <option value="DE" >DE</option>
+                        <option value="US" >US</option>
+                    </select> 
+                </td>
+                <td>
+
+                    <p class="text">Returns names found for the search term </p>
+                    <p class="text">Url: api.geonames.org/searchJSON? </p>
+                  <label for="searchTerm" class="text">Search</label>
+                  <input type="text" placeholder="london" id="searchTerm">    
+                  <select name="searchTerm" class="text" id="searchTerm">
+                      <option value="london">London</option>
+                      <option value="birmingham">Birmingham</option>
+                      <option value="ipswich">Ipswich</option>
+                      <option value="glasgow">Glasgow</option>
+                  </select>  
+                </td>
+                <td>
+                    <button id="btnSubmitSearch" class="btn" class="text">Submit</button>  
+
+        <div class="loader__ball"></div>
+      </div>
+
+    <script src="libs/js/jquery/jquery.min.js"></script>
+    <script type="application/javascript" src="libs/js/jquery/jquery.min.js"></script>
+    <script src="libs/bootstrap/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <script src="libs/js/script.js"></script>
+    <script type="application/javascript" src="libs/js/script.js"></script>
+
+</body>
+<footer></footer>
+</html>
