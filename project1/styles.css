@@ -1,8 +1,23 @@
 body {
     padding: 0;
     margin: 0;
+    overflow: hidden;
 }
-html, body, #mapid {
+html, body, main, #mapid {
     height: 100%;
     width: 100vw;
+}
+
+/*search bar*/
+
+.selectCountry {
+    width: 100%;
+    text-align: center;
+}
+
+
+
+/*map*/
+#mapid {
+    position: fixed;
 }

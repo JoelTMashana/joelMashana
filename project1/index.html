@@ -6,7 +6,7 @@
 
 		<meta charset="utf-8">
 
-		<title>Gazetterr</title>
+		<title>Gazetteer</title>
 		<meta name="author" content="Joel Mashana">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
         <link rel="stylesheet" href="styles.css">
@@ -16,9 +16,28 @@
 
 	<body>
 		
+	<main class="mainContainer">
+		<!--Search bar-->
 		<div id="mapid"></div> 
 		
-
+		<div class="container-fluid">
+		<form class="selectCountry">
+			<div class="row">
+			  <div class="col">
+				<input type="text" list="countries" class="searchBar rounded m-sm-2" placeholder="England">
+				<datalist id="countries">
+					<option value="England">England</option>
+					<option value="Botswana">Botswana</option>
+					<option value="Wales">Wales</option>
+					<option value="France">France</option>
+					<option value="Germany">Germany</option>
+				</datalist>
+				<button class="btn-primary rounded">Submit</button>
+			  </div>
+			</div>
+		  </form> 
+		</div>	
+    </main>
 		
 		
 		
