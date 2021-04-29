@@ -28,5 +28,10 @@ html, body, main, #mapid {
 /*data cards*/
 
 
+/*icons*/
 
-
+ion-icon {
+    font-size: 20px;
+    margin-top: 4px;
+    margin-right: 5px;
+}

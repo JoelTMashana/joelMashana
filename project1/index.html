@@ -12,6 +12,7 @@
         <link rel="stylesheet" href="styles.css">
         <link rel="stylesheet" href="boostrap/css/bootstrap.min.css">
 		<link rel="stylesheet" href="node_modules/leaflet/dist/leaflet.css">
+		<link rel="stylesheet" href="node_modules/leaflet-easybutton/src/easy-button.css">
 	</head>
 
 	<body>
@@ -23,8 +24,8 @@
 		<!--Search bar-->
 		<div class="container-fluid">
 			<div class="row selectCountry">
-			  <div class="col-11">
-				<input type="text" list="countries" class="searchBar rounded m-sm-2" placeholder="England">
+			  <div class="col">
+				<input type="text" list="countries" class="searchBar rounded mt-2" placeholder="England">
 				<datalist id="countries">
 					<option value="England">England</option>
 					<option value="Botswana">Botswana</option>
@@ -34,10 +35,6 @@
 				</datalist>
 				<!--search btn-->
 				<button type="button" class="btn-primary rounded" id="btn-submit">Submit</button>
-			  </div>
-			  <!--modal btn-->
-			  <div class="col-1">
-				 <button type="button" class="btn-primary rounded m-sm-2" data-toggle="modal" data-target="#myModal">Info</button> 
 			  </div>
 			</div>
 		</div>
@@ -119,7 +116,9 @@
 		<!--scripts-->
 		<script src="node_modules/jquery/dist/jquery.min.js"></script>
 		<script src="node_modules/leaflet/dist/leaflet.js"></script>
+		<script src="node_modules/leaflet-easybutton/src/easy-button.js"></script>
 		<script src="boostrap/js/bootstrap.min.js"></script>
+		<script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
 		<script src="js/script.js"></script>
 	</body>
 
