@@ -1,7 +1,8 @@
+/*universals*/
 body {
     padding: 0;
     margin: 0;
-    overflow: hidden;
+    
 }
 html, body, main, #mapid {
     height: 100%;
@@ -16,8 +17,16 @@ html, body, main, #mapid {
 }
 
 
-
 /*map*/
 #mapid {
     position: fixed;
 }
+
+/*modal*/
+
+
+/*data cards*/
+
+
+
+
