@@ -13,6 +13,9 @@
         <link rel="stylesheet" href="boostrap/css/bootstrap.min.css">
 		<link rel="stylesheet" href="node_modules/leaflet/dist/leaflet.css">
 		<link rel="stylesheet" href="node_modules/leaflet-easybutton/src/easy-button.css">
+		<link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet"> 
+
 	</head>
 
 	<body>
@@ -22,19 +25,23 @@
 		<div id="mapid"></div> 
 
 		<!--Search bar-->
-		<div class="container-fluid">
+		<div class="container">
 			<div class="row selectCountry">
 			  <div class="col">
-				<input type="text" list="countries" class="searchBar rounded mt-2" placeholder="England">
-				<datalist id="countries">
-					<option value="England">England</option>
-					<option value="Botswana">Botswana</option>
-					<option value="Wales">Wales</option>
-					<option value="France">France</option>
-					<option value="Germany">Germany</option>
-				</datalist>
+				  <div class="searchBox mx-auto">	
+				    <input type="text" list="countries" class="searchTerm mt-3" placeholder="England">
+				 	<datalist id="countries">
+						 <option value="England">England</option>
+						 <option value="Botswana">Botswana</option>
+						 <option value="Wales">Wales</option>
+						 <option value="France">France</option>
+						 <option value="Germany">Germany</option>
+					 </datalist>
 				<!--search btn-->
-				<button type="button" class="btn-primary rounded" id="btn-submit">Submit</button>
+					 <button type="button" class="searchBtn mt-3" id="btn-submit">
+						 <ion-icon name="search-outline"></ion-icon>
+					 </button>
+				 </div>
 			  </div>
 			</div>
 		</div>
@@ -47,6 +54,7 @@
 			  <div class="modal-content">
 		  
 				<!-- Modal Header -->
+				
 				<div class="modal-header">
 				  <h4 class="modal-title">Country Info</h4>
 				  <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -55,57 +63,61 @@
 				<!-- Modal body -->
 				<div class="modal-body modalStyles">
 					
-				 <div class="card bg-primary mt-2">	
+				 <div class="card mt-2 myCard">	
 					<div class="card-body text-center">
-						<p class="card-text">Some text inside the first card</p>
 						<br>
 						<br>
-						<p class="card-text">Some text inside the first card</p>
 						<br>
 						<br>
-						<p class="card-text">Some text inside the first card</p>
+						<br>
+						<br>
+						<br>
+						<br>
 					</div>
 				 </div>
 				 
-				 <div class="card bg-primary mt-4">	
+				 <div class="card mt-4 myCard">	
 					<div class="card-body text-center">
-						<p class="card-text">Some text inside the first card</p>
 						<br>
 						<br>
-						<p class="card-text">Some text inside the first card</p>
 						<br>
 						<br>
-						<p class="card-text">Some text inside the first card</p>
+						<br>
+						<br>
+						<br>
+						<br>
 					</div>
 				 </div>
 
-				 <div class="card bg-primary mt-4">	
+				 <div class="card mt-4 myCard">	
 					<div class="card-body text-center">
-						<p class="card-text">Some text inside the first card</p>
 						<br>
 						<br>
-						<p class="card-text">Some text inside the first card</p>
 						<br>
 						<br>
-						<p class="card-text">Some text inside the first card</p>
+						<br>
+						<br>
+						<br>
+						<br>
 					</div>
 				 </div>
 
-				 <div class="card bg-primary mt-4">	
+				 <div class="card mt-4 mb-4 myCard">	
 					<div class="card-body text-center">
-						<p class="card-text">Some text inside the first card</p>
 						<br>
 						<br>
-						<p class="card-text">Some text inside the first card</p>
 						<br>
 						<br>
-						<p class="card-text">Some text inside the first card</p>
+						<br>
+						<br>
+						<br>
+						<br>
 					</div>
 				 </div>
 		  
 				<!-- Modal footer -->
 				<div class="modal-footer">
-				  <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+				  <button type="button" class="btn myBtn" data-dismiss="modal">Close</button>
 				</div>
 		  
 			  </div>

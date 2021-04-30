@@ -1,8 +1,17 @@
+/*
+Eton Blue: #7DCCAB
+Ocean Green: #73BB9E
+Tan: #D8C39B
+Charleston Green: #1E252A 
+*/
+
+
+
 /*universals*/
 body {
     padding: 0;
     margin: 0;
-    
+
 }
 html, body, main, #mapid {
     height: 100%;
@@ -16,6 +25,43 @@ html, body, main, #mapid {
     text-align: center;
 }
 
+.searchBox {
+    width: 70%;
+    position: relative;
+    display: flex;
+    
+ 
+  }
+.searchTerm {
+    width: 100%;
+    border: 1px solid #7DCCAB;
+    border-right: none;
+    padding: 5px;
+    border-radius: 8px 0 0 8px;
+    outline: none;
+    color: #9DBFAF;
+    box-shadow: 3px 3px 3px #1E252A;
+     
+  }
+.searchTerm:focus{
+    color: #7DCCAB;
+  }
+.searchBtn {
+    
+    width: 40px;
+    height: 45px;
+    border: 1px solid #7DCCAB;
+    background: #7DCCAB;
+    text-align: center;
+    color: #fff;
+    border-radius: 0 8px 8px 0;
+    cursor: pointer;
+    font-size: 20px;
+    box-shadow: 3px 3px 3px #1E252A;
+  }
+
+
+
 
 /*map*/
 #mapid {
@@ -24,14 +70,39 @@ html, body, main, #mapid {
 
 /*modal*/
 
+.modalStyles{
+    background-color: rgb(228, 225, 225); 
+  
+}
 
 /*data cards*/
+
+.card{
+  
+     opacity: 0.8;
+     border-radius: 8px 8px 8px 8px!important;
+     box-shadow: 3px 3px 3px #1E252A;   
+}
+
+.myBtn {
+    color: #1E252A ;
+    background-color: #7DCCAB;
+}
 
 
 /*icons*/
 
 ion-icon {
-    font-size: 20px;
-    margin-top: 4px;
-    margin-right: 5px;
+    font-size: 17px;
+    margin-top: 5px;
+    color: #1E252A;
+    
+
 }
+
+
+.searchBox button ion-icon {
+    position: relative;
+    font-size: 25px;
+}
+
