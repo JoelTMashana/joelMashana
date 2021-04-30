@@ -3,6 +3,7 @@ Eton Blue: #7DCCAB
 Ocean Green: #73BB9E
 Tan: #D8C39B
 Charleston Green: #1E252A 
+light off green: #9DBFAF
 */
 
 
@@ -11,15 +12,16 @@ Charleston Green: #1E252A
 body {
     padding: 0;
     margin: 0;
-
 }
+
 html, body, main, #mapid {
     height: 100%;
     width: 100vw;
 }
 
-/*search bar*/
 
+
+/*search bar*/
 .selectCountry {
     width: 100%;
     text-align: center;
@@ -29,9 +31,8 @@ html, body, main, #mapid {
     width: 70%;
     position: relative;
     display: flex;
-    
- 
   }
+
 .searchTerm {
     width: 100%;
     border: 1px solid #7DCCAB;
@@ -40,14 +41,14 @@ html, body, main, #mapid {
     border-radius: 8px 0 0 8px;
     outline: none;
     color: #9DBFAF;
-    box-shadow: 3px 3px 3px #1E252A;
-     
+    box-shadow: 3px 3px 3px #1E252A;  
   }
+
 .searchTerm:focus{
     color: #7DCCAB;
   }
+
 .searchBtn {
-    
     width: 40px;
     height: 45px;
     border: 1px solid #7DCCAB;
@@ -68,20 +69,49 @@ html, body, main, #mapid {
     position: fixed;
 }
 
-/*modal*/
 
+
+/*modal*/
 .modalStyles{
-    background-color: rgb(228, 225, 225); 
-  
+    background-color: rgb(216, 219, 218);  
 }
 
-/*data cards*/
+.modalSection img {
+    width: 90px;
+}
 
-.card{
-  
-     opacity: 0.8;
-     border-radius: 8px 8px 8px 8px!important;
-     box-shadow: 3px 3px 3px #1E252A;   
+.modalSection span {
+    color: #9DBFAF;  
+}
+
+.modalSection h5{
+     font-weight: 700;
+}
+
+.modalSection p {
+    font-size: 3.0rem;
+    font-weight: 700;
+}
+
+.modal-content {
+    border-radius: 12px 12px 12px 12px!important;
+}
+
+
+/*data cards*/
+.modal-body {
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+}
+
+.myCard{ 
+    border-radius: 8px 8px 8px 8px!important;
+    box-shadow: 3px 3px 3px #1E252A;   
+}
+
+.infoCard {
+    background-color: #7DCCAB!important;
+    opacity: 0.5;
 }
 
 .myBtn {
@@ -90,19 +120,17 @@ html, body, main, #mapid {
 }
 
 
-/*icons*/
 
+/*icons*/
 ion-icon {
     font-size: 17px;
     margin-top: 5px;
     color: #1E252A;
-    
-
 }
-
 
 .searchBox button ion-icon {
     position: relative;
     font-size: 25px;
 }
+
 
