@@ -4,6 +4,8 @@ Ocean Green: #73BB9E
 Tan: #D8C39B
 Charleston Green: #1E252A 
 light off green: #9DBFAF
+Blush: #E6537F
+Tea Green: ECFEC0
 */
 
 
@@ -12,6 +14,7 @@ light off green: #9DBFAF
 body {
     padding: 0;
     margin: 0;
+    
 }
 
 html, body, main, #mapid {
@@ -52,7 +55,7 @@ html, body, main, #mapid {
     width: 40px;
     height: 45px;
     border: 1px solid #7DCCAB;
-    background: #7DCCAB;
+    background-image: linear-gradient(90deg, rgb(129,251,184, 0.5), rgb(125,204,171, 0.5));  
     text-align: center;
     color: #fff;
     border-radius: 0 8px 8px 0;
@@ -72,53 +75,65 @@ html, body, main, #mapid {
 
 
 /*modal*/
-.modalStyles{
-    background-color: rgb(216, 219, 218);  
-}
 
-.modalSection img {
+.iconCard img {
     width: 90px;
 }
 
 .modalSection span {
-    color: #9DBFAF;  
+    color: #bec4c1;  
 }
 
 .modalSection h5{
      font-weight: 700;
+     font-family: 'Roboto', sans-serif;
 }
 
 .modalSection p {
-    font-size: 3.0rem;
-    font-weight: 700;
+    font-size: 2rem;
+    font-family: 'Roboto', sans-serif;   
 }
 
 .modal-content {
     border-radius: 12px 12px 12px 12px!important;
 }
 
+/*modal data header cards */
 
-/*data cards*/
-.modal-body {
-    border-bottom-left-radius: 12px;
-    border-bottom-right-radius: 12px;
-}
 
-.myCard{ 
+.myWeatherHeaderCard, 
+.myPopulationHeaderCard,
+.myCurrencyHeaderCard, 
+.myCard,
+.myHeaderCard {
     border-radius: 8px 8px 8px 8px!important;
-    box-shadow: 3px 3px 3px #1E252A;   
 }
 
-.infoCard {
-    background-color: #7DCCAB!important;
-    opacity: 0.5;
+.myWeatherHeaderCard {   
+    background-image: linear-gradient(90deg, rgb(129,251,184, 0.5), rgb(125,204,171, 0.5));  
+}
+
+.myPopulationHeaderCard {
+    background-image: linear-gradient(90deg, rgba(227, 253, 113, 0.5), rgb(248, 244, 1)) 
+}
+
+.myCurrencyHeaderCard { 
+    background-image: linear-gradient(90deg, rgb(246,206,236, 0.5), rgb(217,57,205, 0.5));  
+}
+
+/* modal data cards*/
+.myCard{ 
+    background-image: linear-gradient(150deg, rgba(243, 243, 243, 0.5), rgba(238, 238, 238, 0.5) ); 
+}
+
+.iconCard {
+    width: 92px;
 }
 
 .myBtn {
     color: #1E252A ;
-    background-color: #7DCCAB;
+    background-image: linear-gradient(90deg, rgb(129,251,184, 0.5), rgb(125,204,171, 0.5));  
 }
-
 
 
 /*icons*/
