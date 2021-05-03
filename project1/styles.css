@@ -32,7 +32,7 @@ html, body, main, #mapid {
 }
 
 .searchBox {
-    width: 70%;
+    width: 100%;
     position: relative;
     display: flex;
   }
@@ -42,10 +42,10 @@ html, body, main, #mapid {
     border: 1px solid #7DCCAB;
     border-right: none;
     padding: 5px;
-    border-radius: 8px 0 0 8px;
+    
+    border-radius: 12px 0 0 12px;
     outline: none;
     color: #9DBFAF;
-    box-shadow: 3px 3px 3px #1E252A;  
   }
 
 .searchTerm:focus{
@@ -59,10 +59,9 @@ html, body, main, #mapid {
     background-image: linear-gradient(90deg, rgb(129,251,184, 0.5), rgb(125,204,171, 0.5));  
     text-align: center;
     color: #fff;
-    border-radius: 0 8px 8px 0;
+    border-radius: 0 12px 12px 0;
     cursor: pointer;
-    font-size: 20px;
-    box-shadow: 3px 3px 3px #1E252A;
+    font-size: 20px; 
   }
 
 
@@ -190,18 +189,32 @@ html, body, main, #mapid {
 
 /*--ICONS--*/
 ion-icon {
-    font-size: 17px;
+    font-size: 25px;
     margin-top: 5px;
     color: #1E252A;
 }
 
 .searchBox button ion-icon {
     position: relative;
-    font-size: 20px;
+    font-size: 25px;
 }
 
-/*can style leaflet easy buttons here
+/*leaflet easy button styles*/
+
 .easy-button-container, .leaflet-bar {
+    border: 1px solid #7DCCAB!important;
+    border-radius: 8px 8px!important;   
+}
+
+.easy-button-button {
+    border-radius: 8px 8px!important;
+}
+
+.leaflet-control-zoom {
+    display: none;
+}
+
+.leaflet-top, .leaflet-left {
+    margin-top: 600px;
     
 }
-*/
