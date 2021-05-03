@@ -42,7 +42,19 @@
 				<!--search btn-->
 				     <button type="button" class="searchBtn mt-3" id="btn-submit">
 					 <ion-icon name="search-outline" class="mx-aut my-auto"></ion-icon>
+					 </button>
 				 </div>
+				 <div class="row">
+					<div class="col">
+						<div class="btnGroupCountainer mt-2">
+							 <button type="button" class="btnPill " data-toggle="modal" data-target="#myModal">Info</button>
+							 <button type="button" class="btnPill">Locate</button>
+							 <button type="button" class="btnPill">Marker</button>
+							 <button type="button" class="btnPill">News</button>
+						</div>
+					</div> 					
+				 </div> 
+
 			  </div>
 			</div>
 		</section>
@@ -63,15 +75,15 @@
 					<div class="container-fluid">
 					<!--weather data--> 
 					  
-					  <div class="row">
+					    <div class="row">
 						 <div class="col">
 							 <div class="card mt-2 myWeatherHeaderCard">
 								 <span class="text-center">London</span>
 								 <h5 class="text-center">Weather</h5>
 							 </div>
 						 </div>
-					  </div>	
-					  <div class="row">
+					    </div>	
+					    <div class="row">
 						  <div class="col">
 							<div class="card myCard mt-1">
 								 <div class="card-image">	 
@@ -95,7 +107,7 @@
 								</div>							
 							</div>
 						  </div>	 
-					  </div>
+					    </div>
 
 
 					    <!--country info data-->
@@ -107,6 +119,7 @@
 								</div>
 							</div>
 						 </div>	
+						 
 						 <div class="card myCard mt-1">
 							<div class="card-image">
 								<img class="card-img-top img-fluid" src="img/london.jpg" alt="Card image">
@@ -126,7 +139,7 @@
 											<h6 class="card-title">Population</h6>
 											<p class="card-text">55.98<br>million</p>
 										 </div>
-										</div>								
+									 </div>								
 								</div>
 							</div>
 						  </div>
@@ -169,7 +182,6 @@
 		  </div>
 		</div>
 	    </section>
-		
 		<!--scripts-->
 		<script src="node_modules/jquery/dist/jquery.min.js"></script>
 		<script src="node_modules/leaflet/dist/leaflet.js"></script>
