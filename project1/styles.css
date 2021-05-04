@@ -15,7 +15,6 @@ Tea Green: ECFEC0
 body {
     padding: 0;
     margin: 0;
-    
 }
 
 html, body, main, #mapid {
@@ -95,6 +94,49 @@ html, body, main, #mapid {
 
 /*--MODAL--*/
 
+.frostedGlass {
+    width: 100%;
+    height: 100%;
+    box-shadow: 0 0 1rem 0 rgba(0,0,0, .2);
+    position: relative;
+    overflow: hidden;
+    background-image: url(img/compass.jpg);
+    background-attachment: fixed;
+    z-index: 1;
+
+}
+
+
+.frostedGlass::before {
+    content: '';
+    position: absolute;
+    background: inherit;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    box-shadow: inset 0 0 2000px rgba(255, 255, 255, .5);
+    filter: blur(10px);
+    margin: -20px;
+    z-index: -1;  
+}
+
+.frostedGlass {
+    height: auto;
+    width: auto;
+    border-radius: 0 0 12px 12px;
+}
+
+.frostedGlassCenterPiece {
+    border-radius: 0 0; 
+}
+.modalStyles {
+    background-image: url(img/compass.jpg);
+    background-attachment: fixed;
+    border-radius: 12px 12px;
+
+}
+
 .modalSection span {
     color: #7e7e7e;  
 }
@@ -125,17 +167,12 @@ html, body, main, #mapid {
     border-radius: 12px 12px 0 0!important;
 }
 
-.myWeatherHeaderCard {   
+.myWeatherHeaderCard,
+.myCountryInfoHeaderCard,
+.myCurrencyHeaderCard  {   
     background-image: linear-gradient(90deg, rgb(129,251,184, 0.5), rgb(125,204,171, 0.5));  
 }
 
-.myCountryInfoHeaderCard {
-    background-image: linear-gradient(90deg, rgba(227, 253, 113, 0.5), rgb(248, 244, 1)) 
-}
-
-.myCurrencyHeaderCard { 
-    background-image: linear-gradient(90deg, rgb(246,206,236, 0.5), rgb(217,57,205, 0.5));  
-}
 
 /* modal data content cards*/
 
@@ -241,3 +278,4 @@ ion-icon {
     margin-top: 290px;
     
 }
+
