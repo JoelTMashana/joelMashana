@@ -124,17 +124,25 @@ html, body, main, #mapid {
 .frostedGlass {
     height: auto;
     width: auto;
-    border-radius: 0 0 12px 12px;
+    border-radius: 5px 5px 12px 12px;
 }
 
 .frostedGlassCenterPiece {
-    border-radius: 0 0; 
+    border-radius: 5px 5px; 
 }
 .modalStyles {
     background-image: url(img/compass.jpg);
     background-attachment: fixed;
     border-radius: 12px 12px;
 
+}
+
+.weatherPanels, p, h1, figcaption {
+    color: whitesmoke;
+}
+
+.weatherPanels .mainData {
+    color: #7DCCAB;
 }
 
 .modalSection span {
@@ -146,10 +154,6 @@ html, body, main, #mapid {
      font-family: 'Roboto', sans-serif;
 }
 
-.modalSection p {
-    font-size: 2rem;
-    font-family: 'Roboto', sans-serif;   
-}
 
 .modal-content, 
 .weatherIconCard {
@@ -177,33 +181,11 @@ html, body, main, #mapid {
 /* modal data content cards*/
 
 
-.myCard, .myCard img, .image-overlay{ 
+.myCard, .myCard img{ 
     border-radius: 0 0 12px 12px!important;   
 }
 
-.card-image {
-    position: relative;
-    
-  }
-  
-.image-overlay {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 100%;
-      width: 100%;
-      opacity: 0;
-      transition: .5s ease;
-      background: rgba(0, 0, 0, 0.5);
-    }
-  
-.card:hover .image-overlay {
-    opacity: 1;
-  }
 
- 
 
 .myBtn {
     color: #1E252A ;
@@ -213,7 +195,7 @@ html, body, main, #mapid {
 
 /*icon cards*/
 
-.weatherIconCard, .countryInfoIconCard, .countryInfoIconCard img {
+.countryInfoIconCard, .countryInfoIconCard img {
     height: 110px;
     width: 110px;
 }
@@ -221,11 +203,6 @@ html, body, main, #mapid {
 /*icon cards content*/
 .iconCard img {
     width: 90px;
-}
-
-.weatherIconCard img {
-    width: 100%;
-     
 }
 
 .card-img-overlay, figcaption, h1, h6 {
