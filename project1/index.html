@@ -54,7 +54,6 @@
 						</div>
 					</div> 					
 				 </div> 
-
 			  </div>
 			</div>
 		</section>
@@ -69,14 +68,14 @@
 				
 				<!-- Modal body -->
 				<div class="modal-body modalStyles">
-					<div class="modalContainer"></div>					 
-			<!--data cards-->
-					<div class="container-fluid">
+				<!--data cards-->
+				<div class="container-fluid">
 					<!--WEATHER DATA-->
 					<!--weather data headercard--> 						  
 					    <div class="row">
 						 <div class="col">
 							 <div class="card mt-2 myWeatherHeaderCard">
+								 <!--will dynamically update-->
 								 <span class="text-center">London</span>
 								 <h5 class="text-center">Weather</h5>
 							 </div>
@@ -94,7 +93,7 @@
 											 <!--will dynamically update-->
 											 <figcaption>Cloudy</figcaption>
 										</figure>
-										<!--will dynamically update-->>
+										<!--will dynamically update-->
 										<h1 class="mt-4 display-1 mainData">67°</h1>
 										<h1 class="display-4">TODAY</h1>							
 								 </div>					 
@@ -148,62 +147,87 @@
 					
 
 
-					    <!--country info data-->
+					    <!--COUNTRY INFO DATA-->
+
+						<!--country info headercard-->
+				    <div class="countryInfoPanels">	
 						<div class="row">
 							<div class="col">
 								<div class="card mt-4 myCountryInfoHeaderCard">
+									<!--will dynamically update-->
 									<span class="text-center">England</span>
 									<h5 class="text-center">Country Info</h5>
 								</div>
 							</div>
 						 </div>	
 						 
-						 <div class="card myCard mt-1">
-
-							<div class="frostedGlass">
-								<div class="row align-items-center m-2">
+						 <!--country info panels-->
+						 
+							<div class="frostedGlass frostedGlassCenterPiece mt-2">
+								<div class="row justify-content-center align-items-center m-2">
 									 <div class="col-6">
 										 <div class="card countryInfoIconCard">
+											<!--will dynamically update-->  
 											<img class="card-img-top" src="img/union-jack.png" alt="Card image">
 										 </div>
 									 </div>
 									 
 									 <div class="col-6">
-										<div class="text-center mx-auto ">
-											<h6 class="card-title">Population</h6>
-											<p class="card-text">55.98<br>million</p>
-										 </div>								
+										<div class="text-center mx-auto ">										
+											<p class="card-title">Population</p>
+											<!--will dynamically update-->
+											<h1 class="mainData">55.98<br>million</h1>
+										</div>								
 									 </div>
 							 	</div>
-							</div>	  
-						  </div>
-
-
-
-					    <!--currency data--> 
-						<div class="row">
-							<div class="col">
-								<div class="card mt-4 myCurrencyHeaderCard">
-									<span class="text-center">Currency</span>
-									<h5 class="text-center">Exchange rates</h5>
-								</div>
 							</div>
-						 </div>	
-
-						 <div class=" frostedGlass mb-2 mt-2">	 
+							
+							<div class="frostedGlass mt-2">									 
+								<div class="row">	
+								    <div class="col">
+										<div class="text-center mx-auto ">
+											<!--will dynamically update-->
+											<p class="card-title">Capital  City: London</p>
+											<p>The United Kingdom of Great Britain and Northern Ireland, commonly known as the United Kingdom (UK) or Britain,
+											   is a sovereign state in Europe. Lying off the north-western coast of the European mainland, 
+											   it includes the island of Great Britain—a term also applied loosely to refer to the whole <a><span>more</span></a></p>
+										</div>								
+									</div>
+								</div>	
+							</div>
+					</div>
+					
+					    <!--currency data-->
+						<div class="currencyPanels">	 
 							<div class="row">
-								 <div class="col">
-
-								 </div>
-							</div>
-						 </div>						
-
-				   </div>
-				<!-- Modal footer -->
-				<div class="modal-footer">
-				  <button type="button" class="btn myBtn" data-dismiss="modal">Close</button>
+								<div class="col">
+									<div class="card mt-4 myCurrencyHeaderCard">
+										<span class="text-center">Currency</span>
+										<h5 class="text-center">Exchange rates</h5>
+									</div>
+								</div>
+							 </div>	
+	
+							 <div class="frostedGlass mb-2 mt-2">	 
+								<div class="row">
+									 <div class="col">
+										<div class="text-center mx-auto ">
+											<!--will dynamically update-->
+											<p class="card-title">Great British Pound</p>
+											<h1 class="display-4 mainData">1 USD = 0.2 GBP</h1>	
+										</div>
+									 </div>
+								</div>		 
+								</div>
+						</div>
+							 		 <!-- Modal footer -->
+					 	  	  	<div class="modal-footer">
+							 	 	<button type="button" class="btn myBtn" data-dismiss="modal">Close</button>
+						  		  </div>						
+					</div>		  
 				</div>
-
+				
+			    </div>   
 			  </div>
 			</div>
 		  </div>
@@ -221,7 +245,7 @@
 </html>
 
 
-										<!--weather icon card and img-->
+
 								
 									
 										

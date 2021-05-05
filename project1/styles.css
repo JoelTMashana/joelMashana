@@ -100,7 +100,7 @@ html, body, main, #mapid {
     box-shadow: 0 0 1rem 0 rgba(0,0,0, .2);
     position: relative;
     overflow: hidden;
-    background-image: url(img/compass.jpg);
+    background-image: url(img/clouds.png);
     background-attachment: fixed;
     z-index: 1;
 
@@ -131,7 +131,7 @@ html, body, main, #mapid {
     border-radius: 5px 5px; 
 }
 .modalStyles {
-    background-image: url(img/compass.jpg);
+    background-image: url(img/clouds.png);   
     background-attachment: fixed;
     border-radius: 12px 12px;
 
@@ -144,7 +144,17 @@ html, body, main, #mapid {
 .weatherPanels .mainData {
     color: #7DCCAB;
 }
+.countryInfoPanels .mainData {
+    color:  whitesmoke;
+}
 
+.countryInfoPanels p {
+    color: whitesmoke;
+}
+
+.currencyPanels .mainData {
+    color: whitesmoke;
+} 
 .modalSection span {
     color: #7e7e7e;  
 }
