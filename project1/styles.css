@@ -127,11 +127,15 @@ html, body, main, #mapid {
     border-radius: 5px 5px 12px 12px;
 }
 
+.frostedGlassTopPiece {
+    border-radius: 0 0 5px 5px;
+}
+
 .frostedGlassCenterPiece {
     border-radius: 5px 5px; 
 }
 .modalStyles {
-    background-image: url(img/clouds.png);   
+    background-image: url(img/clouds.png); 
     background-attachment: fixed;
     border-radius: 12px 12px;
 
@@ -266,3 +270,6 @@ ion-icon {
     
 }
 
+.newsHeader {
+    font-size: 0.9rem;
+}
