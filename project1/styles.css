@@ -134,6 +134,7 @@ html, body, main, #mapid {
 .frostedGlassCenterPiece {
     border-radius: 5px 5px; 
 }
+
 .modalStyles {
     background-image: url(img/clouds.png); 
     background-attachment: fixed;
