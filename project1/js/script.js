@@ -46,7 +46,7 @@ $(document).ready(function getUserLocationWeatherData() {
                 longitude: long
             },
             success: function(result) {
-                console.log(JSON.stringify(result));
+                console.log(result.data.weather);
                 if (result.status.name == "ok") {
                     //$('#temperature').html(result['main'][0]);
                 }
