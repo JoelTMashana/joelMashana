@@ -30,15 +30,24 @@ $('#locate').click(function (){
 });
 
 
-// functions
+//functions
+//openweather data conversion
 const kelvinToCelcius = (kelvin) => {
     return Math.floor(kelvin - 273.15);
 } 
 
 
+
+
+
 // ajax for weather information on load
 $(document).ready(function getUserLocationWeatherData() {
-    
+    //date for weather panels
+    let currDate = new Date();
+    let ddPlusTwo = String(currDate.getDate() + 2).padStart(2, '0'),
+        ddPlusThree = String(currDate.getDate() + 3).padStart(2, '0'),
+        ddPlusFour = String(currDate.getDate() + 4).padStart(2, '0');
+          
     navigator.geolocation.getCurrentPosition(function(position) {
         let lat = position.coords.latitude;
         let long = position.coords.longitude;
@@ -64,14 +73,15 @@ $(document).ready(function getUserLocationWeatherData() {
                     //panel three
                     $('#weatherPanelThreeIcon').html(`<img src="http://openweathermap.org/img/wn/${result['data'][2]['weather'][0]['icon']}@2x.png">`);
                     $('#weatherPanelThreeTemp').html(`H:${kelvinToCelcius(result['data'][2]['temp']['max'])}<span>°</span> L:${kelvinToCelcius(result['data'][2]['temp']['min'])}<span>°</span>`);
-                    
+                    $('#currDatePlusTwo').html(`${ddPlusTwo}th`);
                     //panel four
                     $('#weatherPanelFourIcon').html(`<img src="http://openweathermap.org/img/wn/${result['data'][3]['weather'][0]['icon']}@2x.png">`);
                     $('#weatherPanelFourTemp').html(`H:${kelvinToCelcius(result['data'][3]['temp']['max'])}<span>°</span> L:${kelvinToCelcius(result['data'][3]['temp']['min'])}<span>°</span>`);
-
+                    $('#currDatePlusThree').html(`${ddPlusThree}th`); 
                     //panel five
                     $('#weatherPanelFiveIcon').html(`<img src="http://openweathermap.org/img/wn/${result['data'][4]['weather'][0]['icon']}@2x.png">`);
                     $('#weatherPanelFiveTemp').html(`H:${kelvinToCelcius(result['data'][4]['temp']['max'])}<span>°</span> L:${kelvinToCelcius(result['data'][4]['temp']['min'])}<span>°</span>`);
+                    $('#currDatePlusFour').html(`${ddPlusFour}th`);
                 }
             },
             error: function(jqXHR, textStatus, errorThrown) {
