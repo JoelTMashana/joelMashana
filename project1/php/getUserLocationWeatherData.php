@@ -6,7 +6,7 @@
 
 	$API_Key = 'd24dbe12c720afa869a1120f204c6c05';
 	// these params are taken from the data part of the ajax call
-	$url='http://api.openweathermap.org/data/2.5/onecall?lat=' . $_POST['latitude'] . '&lon=' . $_POST['longitude'] . '&cnt=10&exclude=minutely,hourly,current' . '&appid=d24dbe12c720afa869a1120f204c6c05';
+	$url='http://api.openweathermap.org/data/2.5/onecall?lat=' . $_POST['latitude'] . '&lon=' . $_POST['longitude'] . '&exclude=minutely,hourly,current' . '&appid=d24dbe12c720afa869a1120f204c6c05';
 
 	//curls obj initialised and stored in var
 	// the API I use will speicfy what I need to copy
@@ -27,7 +27,7 @@
 	$output['status']['name'] = "ok";
 	$output['status']['description'] = "success";
 	$output['status']['returnedIn'] = intval((microtime(true) - $executionStartTime) * 1000) . " ms";
-	$output['data'] = $countryInfoDecode;
+	$output['data'] = $countryInfoDecode['daily'];
 
 	header('Content-Type: application/json; charset=UTF-8');
     

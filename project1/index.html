@@ -86,14 +86,10 @@
 						<div class="frostedGlass frostedGlassTopPiece mb-2 mt-1">	 
 							<div class="row justify-content-center align-items-center">
 								 <div class="col-12 text-center">									
-										<figure>
-											 <!--will dynamically update-->
-											 <img src="http://openweathermap.org/img/wn/10d@2x.png" alt="Card image">
-											 <!--will dynamically update-->
-											 <figcaption>Cloudy</figcaption>
-										</figure>
-										<!--will dynamically update-->
-										<h1 class="mt-4 display-1 mainData" id="temperature">67°</h1>
+										<!--written to html by ajax call-->
+									    <div id="weatherPanelOneIcon"></div>
+										<p id="weatherPanelOneDescriptionText"></p>
+										<h1 class="mt-4 display-1 mainData" id="weatherPanelOneTemp"></h1>
 										<h1 class="display-4">TODAY</h1>							
 								 </div>					 
 							</div>
@@ -104,19 +100,15 @@
 								<div class="frostedGlass frostedGlassCenterPiece">
 									<!--will dynamically update-->
 									<p>Tomorrow</p>
-									<figure>	
-										<img src="http://openweathermap.org/img/wn/10d@2x.png" alt="Card image">
-										<figcaption>H:12° L:3°</figcaption>
-								   </figure>
+									<div id="weatherPanelTwoIcon"></div>
+									<p id="weatherPanelTwoTemp"></p>
 								</div>
 							</div>
 							<div class="col-6 text-center">
 								<div class="frostedGlass frostedGlassCenterPiece">
 									<p>7th</p>
-									<figure>	
-										<img src="http://openweathermap.org/img/wn/10d@2x.png" alt="Card image">
-										<figcaption>H:12° L:3°</figcaption>
-								   </figure>
+									<div id="weatherPanelThreeIcon"></div>
+								    <p id="weatherPanelThreeTemp"></p> 
 								</div>
 							</div>
 						 </div>
@@ -126,18 +118,14 @@
 						  	<div class="row justify-content-center align-items-center">
 							    <div class="col-6 text-center">
 									<p>8th</p>
-									<figure>	
-										<img src="http://openweathermap.org/img/wn/10d@2x.png" alt="Card image">
-										<figcaption>H:12° L:3°</figcaption>
-								   </figure>
+									<div id="weatherPanelFourIcon"></div>
+								    <p id="weatherPanelFourTemp"></p>
 							 	</div>
 
 								<div class="col-6 text-center">
 									<p>9th</p>
-									<figure>	
-										<img src="http://openweathermap.org/img/wn/10d@2x.png" alt="Card image">
-										<figcaption>H:12° L:3°</figcaption>
-								   </figure>
+									<div id="weatherPanelFiveIcon"></div>
+								    <p id="weatherPanelFiveTemp"></p>
 								 </div>
 							 </div>	 
 						 </div>

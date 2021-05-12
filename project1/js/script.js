@@ -30,6 +30,12 @@ $('#locate').click(function (){
 });
 
 
+// functions
+const kelvinToCelcius = (kelvin) => {
+    return Math.floor(kelvin - 273.15);
+} 
+
+
 // ajax for weather information on load
 $(document).ready(function getUserLocationWeatherData() {
     
@@ -46,9 +52,45 @@ $(document).ready(function getUserLocationWeatherData() {
                 longitude: long
             },
             success: function(result) {
-                console.log(result.data.weather);
+                //convert weather data from kelvin to celcius
+                //panel one data
+                let weatherPanelOneTempDay = kelvinToCelcius(result['data'][0]['temp']['day']);
+                   
+                //panel two data
+                let weatherPanelTwoHigh = kelvinToCelcius(result['data'][1]['temp']['max']);
+                let weatherPanelTwoLow = kelvinToCelcius(result['data'][1]['temp']['min']);
+                
+                //panel three data
+                let weatherPanelThreeHigh = kelvinToCelcius(result['data'][2]['temp']['max']);
+                let weatherPanelThreeLow = kelvinToCelcius(result['data'][2]['temp']['min']);
+                
+                //panel four data
+                let weatherPanelFourHigh = kelvinToCelcius(result['data'][3]['temp']['max']);
+                let weatherPanelFourLow = kelvinToCelcius(result['data'][3]['temp']['min']);
+
+                //panel five data
+                let weatherPanelFiveHigh = kelvinToCelcius(result['data'][4]['temp']['max']);
+                let weatherPanelFiveLow = kelvinToCelcius(result['data'][4]['temp']['min']);
+
                 if (result.status.name == "ok") {
-                    //$('#temperature').html(result['main'][0]);
+                    //panel one
+                    $('#weatherPanelOneDescriptionText').html(result['data'][0]['weather'][0]['description']);
+                    $('#weatherPanelOneTemp').html(`${weatherPanelOneTempDay}<span>°</span>`);
+                    $('#weatherPanelOneIcon').html(`<img src="http://openweathermap.org/img/wn/${result['data'][0]['weather'][0]['icon']}@2x.png">`);
+                    //panel two
+                    $('#weatherPanelTwoIcon').html(`<img src="http://openweathermap.org/img/wn/${result['data'][1]['weather'][0]['icon']}@2x.png">`);
+                    $('#weatherPanelTwoTemp').html(`H:${weatherPanelTwoHigh}<span>°</span> L:${weatherPanelTwoLow}<span>°</span>`); 
+                    //panel three
+                    $('#weatherPanelThreeIcon').html(`<img src="http://openweathermap.org/img/wn/${result['data'][2]['weather'][0]['icon']}@2x.png">`);
+                    $('#weatherPanelThreeTemp').html(`H:${weatherPanelThreeHigh}<span>°</span> L:${weatherPanelThreeLow}<span>°</span>`);
+                    
+                    //panel four
+                    $('#weatherPanelFourIcon').html(`<img src="http://openweathermap.org/img/wn/${result['data'][3]['weather'][0]['icon']}@2x.png">`);
+                    $('#weatherPanelFourTemp').html(`H:${weatherPanelFourHigh}<span>°</span> L:${weatherPanelFourLow}<span>°</span>`);
+
+                    //panel five
+                    $('#weatherPanelFiveIcon').html(`<img src="http://openweathermap.org/img/wn/${result['data'][4]['weather'][0]['icon']}@2x.png">`);
+                    $('#weatherPanelFiveTemp').html(`H:${weatherPanelFiveHigh }<span>°</span> L:${weatherPanelFiveLow}<span>°</span>`);
                 }
             },
             error: function(jqXHR, textStatus, errorThrown) {
