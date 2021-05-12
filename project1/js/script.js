@@ -52,51 +52,30 @@ $(document).ready(function getUserLocationWeatherData() {
                 longitude: long
             },
             success: function(result) {
-                //convert weather data from kelvin to celcius
-                //panel one data
-                let weatherPanelOneTempDay = kelvinToCelcius(result['data'][0]['temp']['day']);
-                   
-                //panel two data
-                let weatherPanelTwoHigh = kelvinToCelcius(result['data'][1]['temp']['max']);
-                let weatherPanelTwoLow = kelvinToCelcius(result['data'][1]['temp']['min']);
-                
-                //panel three data
-                let weatherPanelThreeHigh = kelvinToCelcius(result['data'][2]['temp']['max']);
-                let weatherPanelThreeLow = kelvinToCelcius(result['data'][2]['temp']['min']);
-                
-                //panel four data
-                let weatherPanelFourHigh = kelvinToCelcius(result['data'][3]['temp']['max']);
-                let weatherPanelFourLow = kelvinToCelcius(result['data'][3]['temp']['min']);
-
-                //panel five data
-                let weatherPanelFiveHigh = kelvinToCelcius(result['data'][4]['temp']['max']);
-                let weatherPanelFiveLow = kelvinToCelcius(result['data'][4]['temp']['min']);
 
                 if (result.status.name == "ok") {
                     //panel one
                     $('#weatherPanelOneDescriptionText').html(result['data'][0]['weather'][0]['description']);
-                    $('#weatherPanelOneTemp').html(`${weatherPanelOneTempDay}<span>°</span>`);
+                    $('#weatherPanelOneTemp').html(`${kelvinToCelcius(result['data'][0]['temp']['day'])}<span>°</span>`);
                     $('#weatherPanelOneIcon').html(`<img src="http://openweathermap.org/img/wn/${result['data'][0]['weather'][0]['icon']}@2x.png">`);
                     //panel two
                     $('#weatherPanelTwoIcon').html(`<img src="http://openweathermap.org/img/wn/${result['data'][1]['weather'][0]['icon']}@2x.png">`);
-                    $('#weatherPanelTwoTemp').html(`H:${weatherPanelTwoHigh}<span>°</span> L:${weatherPanelTwoLow}<span>°</span>`); 
+                    $('#weatherPanelTwoTemp').html(`H:${kelvinToCelcius(result['data'][1]['temp']['max'])}<span>°</span> L:${kelvinToCelcius(result['data'][1]['temp']['min'])}<span>°</span>`); 
                     //panel three
                     $('#weatherPanelThreeIcon').html(`<img src="http://openweathermap.org/img/wn/${result['data'][2]['weather'][0]['icon']}@2x.png">`);
-                    $('#weatherPanelThreeTemp').html(`H:${weatherPanelThreeHigh}<span>°</span> L:${weatherPanelThreeLow}<span>°</span>`);
+                    $('#weatherPanelThreeTemp').html(`H:${kelvinToCelcius(result['data'][2]['temp']['max'])}<span>°</span> L:${kelvinToCelcius(result['data'][2]['temp']['min'])}<span>°</span>`);
                     
                     //panel four
                     $('#weatherPanelFourIcon').html(`<img src="http://openweathermap.org/img/wn/${result['data'][3]['weather'][0]['icon']}@2x.png">`);
-                    $('#weatherPanelFourTemp').html(`H:${weatherPanelFourHigh}<span>°</span> L:${weatherPanelFourLow}<span>°</span>`);
+                    $('#weatherPanelFourTemp').html(`H:${kelvinToCelcius(result['data'][3]['temp']['max'])}<span>°</span> L:${kelvinToCelcius(result['data'][3]['temp']['min'])}<span>°</span>`);
 
                     //panel five
                     $('#weatherPanelFiveIcon').html(`<img src="http://openweathermap.org/img/wn/${result['data'][4]['weather'][0]['icon']}@2x.png">`);
-                    $('#weatherPanelFiveTemp').html(`H:${weatherPanelFiveHigh }<span>°</span> L:${weatherPanelFiveLow}<span>°</span>`);
+                    $('#weatherPanelFiveTemp').html(`H:${kelvinToCelcius(result['data'][4]['temp']['max'])}<span>°</span> L:${kelvinToCelcius(result['data'][4]['temp']['min'])}<span>°</span>`);
                 }
             },
             error: function(jqXHR, textStatus, errorThrown) {
-                // your error code
-                console.log("There was an error peforming the AJAX call!");
-    
+                console.log("There was an error peforming the AJAX call!");  
             }
         });
     });
