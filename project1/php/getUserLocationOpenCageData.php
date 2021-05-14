@@ -23,12 +23,6 @@
 	$countryInfoDecode  = json_decode($countryInfoDecode ,true);	
     // this is the strucure of the output
 
-	
-	//vars for other apis
-	$currencySymbol= $countryInfoDecode['results']['annotations']['currency']['symbol'];
-	$countryName = $countryInfoDecode['results'][0]['components']['country'];
-	$countryCode = $countryInfoDecode['results'][0]['components']['country_code'];
-
 
 	// status and data
 	$output['status']['code'] = "200";

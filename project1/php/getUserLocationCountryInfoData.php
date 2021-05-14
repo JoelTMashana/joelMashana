@@ -3,11 +3,10 @@
 	ini_set('display_errors', 'On');
 	error_reporting(E_ALL);
 	$executionStartTime = microtime(true);
-    include 'getUserLocationOpenCageData.php';
-    
+
     
 	// these params are taken from the data part of the ajax call
-	$url='https://restcountries.eu/rest/v2/name/' . $countryName . '?fullText=true';
+	$url='https://restcountries.eu/rest/v2/alpha?codes=' . $_POST['isocode'];
 
 	//curls obj initialised and stored in var
 	// the API I use will speicfy what I need to copy
@@ -17,19 +16,19 @@
 	curl_setopt($ch, CURLOPT_URL, $url);
 	 
 	//executed the curl obj and store it in a var
-	$countryInfo =curl_exec($ch);
+	$countryInfoDecode =curl_exec($ch);
 	curl_close($ch);
     //converts the json encoded string and turns into pphp var
 	// true ensures that JSON is returned as associative array
-	$countryInfo  = json_decode($countryInfo ,true);	
+	$countryInfoDecode  = json_decode($countryInfoDecode ,true);	
     // this is the strucure of the output
 	// status and data
 	$output['status']['code'] = "200";
 	$output['status']['name'] = "ok";
 	$output['status']['description'] = "success";
 	$output['status']['returnedIn'] = intval((microtime(true) - $executionStartTime) * 1000) . " ms";
-
-	$output['data'] = $countryInfo[0];
+	$output['status']['url'] = $url;
+	$output['data'] = $countryInfoDecode;
 
 	header('Content-Type: application/json; charset=UTF-8');
     
