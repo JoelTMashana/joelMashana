@@ -41,7 +41,7 @@ const kelvinToCelcius = (kelvin) => {
 
 
 // ajax for weather information on load
-$(document).ready(function getUserLocationWeatherData() {
+$(document).ready(function getUserLocationData() {
     //date for weather panels
     let currDate = new Date();
     let ddPlusTwo = String(currDate.getDate() + 2).padStart(2, '0'),
@@ -51,7 +51,7 @@ $(document).ready(function getUserLocationWeatherData() {
     navigator.geolocation.getCurrentPosition(function(position) {
         let lat = position.coords.latitude;
         let long = position.coords.longitude;
-        
+        //openweather api ajax call
         $.ajax({
             url: "./php/getUserLocationWeatherData.php",
             type: 'POST',
@@ -88,6 +88,46 @@ $(document).ready(function getUserLocationWeatherData() {
                 console.log("There was an error peforming the AJAX call!");  
             }
         });
+        //opencage ajax call
+        $.ajax({
+            url: "./php/getUserLocationOpenCageData.php",
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                latitude: lat,
+                longitude: long
+            },
+            success: function(result) {
+                 console.log(result.data);
+                 if (result.status.name == "ok") {
+                    //RESTCountries ajax call 
+                    $.ajax({
+                        url: "./php/getUserCountryInfoData.php",
+                        type: 'POST',
+                        dataType: 'json',
+                        data: {
+                            latitude: lat,
+                            longitude: long
+                        },
+                        success: function(result) {
+                             console.log(result.data);
+                             if (result.status.name == "ok") {
+                                  
+                             }
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            console.log("There was an error peforming the AJAX call!");  
+                        }  
+                    });    
+                 }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log("There was an error peforming the AJAX call!");  
+            }  
+        });
+
+
+
     });
 
 });
