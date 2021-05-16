@@ -102,8 +102,30 @@ $(document).ready(function getUserLocationData() {
                     $('#cityLocationTxt').html(result['data'][0]['components']['town']);
                     $('#countryNameTxt').html(result['data'][0]['components']['country']);
                     
-                    //next ajax calls which depends on data from previous
-                     //news api ajax call
+                     //next ajax calls which depends on data from previous
+                     //openexchangerates ajax call
+                     let isoCode = result['data'][0]['annotations']['currency']['iso_code'];
+                     $.ajax({
+                        url: "./php/getUserLocationExchangeData.php",
+                        type: 'POST',
+                        dataType: 'json',
+                        success: function(result){
+                        
+                            let rates = result['data'];                           
+                            for (let key in rates) {
+                               if(key == isoCode){
+                                   $('#exchangeRatesTxt').html(`1 USD = ${(rates[key])} ${isoCode}`);
+                               } 
+                            }
+
+                            
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            console.log("There was an error peforming the AJAX call!");  
+                        }                          
+                     });
+
+                     //newsapi ajax call
                      $.ajax({
                         url: "./php/getUserLocationNewsData.php",
                         type: 'POST',

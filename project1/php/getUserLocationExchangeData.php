@@ -6,7 +6,7 @@
 
     
 	// these params are taken from the data part of the ajax call
-	$url='https://openexchangerates.org/api/latest.json?app_id=d087a88f8aea4d5cae75f34d6b6c8838&prettyprint=false';
+	$url='https://openexchangerates.org/api/latest.json?' .                          'app_id=d087a88f8aea4d5cae75f34d6b6c8838&prettyprint=false';
 
 	//curls obj initialised and stored in var
 	// the API I use will speicfy what I need to copy
@@ -28,7 +28,7 @@
 	$output['status']['description'] = "success";
 	$output['status']['returnedIn'] = intval((microtime(true) - $executionStartTime) * 1000) . " ms";
 	$output['status']['url'] = $url;
-	$output['data'] = $countryInfoDecode;
+	$output['data'] = $countryInfoDecode['rates'];
 
 	header('Content-Type: application/json; charset=UTF-8');
     
