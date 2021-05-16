@@ -102,7 +102,26 @@ $(document).ready(function getUserLocationData() {
                     $('#cityLocationTxt').html(result['data'][0]['components']['town']);
                     $('#countryNameTxt').html(result['data'][0]['components']['country']);
                     
-                    //next ajax call which depends on data from previous
+                    //next ajax calls which depends on data from previous
+                     //news api ajax call
+                     $.ajax({
+                        url: "./php/getUserLocationNewsData.php",
+                        type: 'POST',
+                        dataType: 'json',
+                        data: {
+                           isocode: result['data'][0]['components']['ISO_3166-1_alpha-2']
+                        },
+                        success: function(result){                        
+                                $('#newsHeadlineIconImgOne').html(`<a href="${result['data'][0]['url']}"><img src="${result['data'][0]['urlToImage']}" alt="headline image"></a>`);
+                                $('#newsHeadlineTxtOne').html(`<b>${result['data'][0]['description']}</b>`);
+                                
+                                $('#newsHeadlineIconImgTwo').html(`<a href="${result['data'][1]['url']}"><img src="${result['data'][1]['urlToImage']}" alt="headline image"></a>`);
+                                $('#newsHeadlineTxtTwo').html(`<b>${result['data'][1]['description']}</b>`);
+                                
+                                $('#newsHeadlineIconImgThree').html(`<a href="${result['data'][2]['url']}"><img src="${result['data'][2]['urlToImage']}" alt="headline image"></a>`);
+                                $('#newsHeadlineTxtThree').html(`<b>${result['data'][2]['description']}</b>`);  
+                        }
+                    });
                     //RESTCountries ajax call 
                     $.ajax({
                         url: "./php/getUserLocationCountryInfoData.php",

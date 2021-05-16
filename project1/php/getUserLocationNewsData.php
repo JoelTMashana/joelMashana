@@ -30,6 +30,7 @@
 	$output['status']['name'] = "ok";
 	$output['status']['description'] = "success";
 	$output['status']['returnedIn'] = intval((microtime(true) - $executionStartTime) * 1000) . " ms";
+	$output['status'] = $url;
 	$output['data'] = $countryInfoDecode['articles'];
 
 
