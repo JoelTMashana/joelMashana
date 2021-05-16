@@ -75,7 +75,7 @@
 						 <div class="col">
 							 <div class="card mt-2 myWeatherHeaderCard">
 								 <!--will dynamically update-->
-								 <span class="text-center">London</span>
+								 <span class="text-center" id="cityLocationTxt"></span>
 								 <h5 class="text-center">Weather</h5>
 							 </div>
 						 </div>
@@ -142,7 +142,7 @@
 							<div class="col">
 								<div class="card mt-4 myCountryInfoHeaderCard">
 									<!--will dynamically update-->
-									<span class="text-center">England</span>
+									<span class="text-center" id="countryNameTxt"></span>
 									<h5 class="text-center">Country Info</h5>
 								</div>
 							</div>
@@ -153,17 +153,15 @@
 							<div class="frostedGlass frostedGlassTopPiece mt-2">
 								<div class="row justify-content-center align-items-center m-2">
 									 <div class="col-6">
-										 <div class="card countryInfoIconCard">
-											<!--will dynamically update-->  
-											<img class="card-img-top" src="img/union-jack.png" alt="Card image">
-										 </div>
+										 <!--image needs to be resized to fit the icon card-->
+										 <div class="card countryInfoIconCard" id="countryFlagImg"></div>
 									 </div>
 									 
 									 <div class="col-6">
 										<div class="text-center mx-auto ">										
 											<p class="card-title">Population</p>
 											<!--will dynamically update-->
-											<h1 class="mainData">55.98<br>million</h1>
+											<h1 class="mainData" id="populationTxt"></h1>
 										</div>								
 									 </div>
 							 	</div>

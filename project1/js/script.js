@@ -98,28 +98,30 @@ $(document).ready(function getUserLocationData() {
                 longitude: long
             },
             success: function(result) {
-                 console.log(result.data);
-                 if (result.status.name == "ok") {
+                    //writes locations using data of opencage to html
+                    $('#cityLocationTxt').html(result['data'][0]['components']['town']);
+                    $('#countryNameTxt').html(result['data'][0]['components']['country']);
+                    
+                    //next ajax call which depends on data from previous
                     //RESTCountries ajax call 
                     $.ajax({
-                        url: "./php/getUserCountryInfoData.php",
+                        url: "./php/getUserLocationCountryInfoData.php",
                         type: 'POST',
                         dataType: 'json',
                         data: {
-                            latitude: lat,
-                            longitude: long
+                           isocode: result['data'][0]['components']['ISO_3166-1_alpha-2']
                         },
                         success: function(result) {
                              console.log(result.data);
                              if (result.status.name == "ok") {
-                                  
+                                  $('#countryFlagImg').html(`<img src="${result['data'][0]['flag']}" alt="country flag">`);
+                                  $('#populationTxt').html(result['data'][0]['population']);
                              }
                         },
                         error: function(jqXHR, textStatus, errorThrown) {
                             console.log("There was an error peforming the AJAX call!");  
                         }  
-                    });    
-                 }
+                    });                   
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 console.log("There was an error peforming the AJAX call!");  
