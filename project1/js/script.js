@@ -116,6 +116,25 @@ $(document).ready(function getUserLocationData() {
                              if (result.status.name == "ok") {
                                   $('#countryFlagImg').html(`<img src="${result['data'][0]['flag']}" alt="country flag">`);
                                   $('#populationTxt').html(result['data'][0]['population']);
+                                  $('#capitalCityNameTxt').html(`Capital city: ${result['data'][0]['capital']}`);
+                                  
+                                  //geonames ajax call
+                                  $.ajax({
+                                      url: "./php/getUserLocationWikiData.php",
+                                      type: 'POST',
+                                      dataType: 'json',
+                                      data: {
+                                        placename: result['data'][0]['capital']
+                                      },
+                                      success: function(result){
+                                          if (result.status.name == "ok") {
+                                            $('#capitalCitySummaryTxt').html(result['data'][0]['summary']);
+                                          }
+                                      },
+                                      error: function(jqXHR, textStatus, errorThrown) {
+                                        console.log("There was an error peforming the AJAX call!");  
+                                      }
+                                  });
                              }
                         },
                         error: function(jqXHR, textStatus, errorThrown) {
@@ -133,3 +152,4 @@ $(document).ready(function getUserLocationData() {
     });
 
 });
+
