@@ -6,7 +6,7 @@
 
     
 	// these params are taken from the data part of the ajax call
-	$url='https://openexchangerates.org/api/latest.json?' .                          'app_id=d087a88f8aea4d5cae75f34d6b6c8838&prettyprint=false';
+	$url='https://openexchangerates.org/api/latest.json?app_id=d087a88f8aea4d5cae75f34d6b6c8838&prettyprint=false';
 
 	//curls obj initialised and stored in var
 	// the API I use will speicfy what I need to copy
