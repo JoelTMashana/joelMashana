@@ -7,7 +7,7 @@
     // api key 11878960dfcf4f289cc492eb31c87900
 
 	// these params are taken from the data part of the ajax call
-	$url='https://newsapi.org/v2/top-headlines?country=' . $_POST['isocode'] . '&apiKey=11878960dfcf4f289cc492eb31c87900';
+	$url='https://newsapi.org/v2/top-headlines?country=' . $_POST['isocode']  . '&apiKey=11878960dfcf4f289cc492eb31c87900';
 
 	//curls obj initialised and stored in var
 	// the API I use will speicfy what I need to copy
