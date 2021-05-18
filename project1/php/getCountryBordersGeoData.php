@@ -6,7 +6,7 @@
 
     
     // get file contenes from json file 
-    $countryBordersGeoFileContents = file_get_contents("./countryBorders.geo.json");
+    $countryBordersGeoFileContents = file_get_contents("../countryBorders.geo.json");
 
     //convert to associative array
     $countryBordersDecode = json_decode($countryBordersGeoFileContents, true);
