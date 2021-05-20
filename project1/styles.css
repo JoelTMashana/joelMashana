@@ -234,6 +234,14 @@ html, body, main, #mapid {
     color: #1E252A;   
 }
 
+/*typography*/
+
+#capitalCitySummaryTxt {
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+
 
 /*--ICONS--*/
 ion-icon {
@@ -273,4 +281,8 @@ ion-icon {
 
 .newsHeader {
     font-size: 0.9rem;
+}
+
+.heading {
+    color: whitesmoke;
 }

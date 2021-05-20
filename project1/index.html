@@ -29,21 +29,13 @@
 		<section class="container searchBarSection">
 			<div class="row selectCountry">
 			  <div class="col-12">
-				  <div class="searchBox">	
-				    <input type="text" list="countries" class="searchTerm mt-3" placeholder="England">
-				 	<datalist id="countries">
-						 <!--country names must be dynamically accessible option-->
-						 <option value="England">England</option>
-						 <option value="Botswana">Botswana</option>
-						 <option value="Wales">Wales</option>
-						 <option value="France">France</option>
-						 <option value="Germany">Germany</option>
-					 </datalist>
-				<!--search btn-->
-				     <button type="button" class="searchBtn mt-3" id="btn-submit">
+				  <form class="searchBox">	
+				    <input type="text" list="selCountry" class="searchTerm mt-3"  id="val" placeholder="United Kingdom">
+				 	<datalist id="selCountry"></datalist>
+				     <button type="button" class="searchBtn mt-3" id="btnRun">
 					 <ion-icon name="search-outline" class="mx-aut my-auto"></ion-icon>
 					 </button>
-				 </div>
+				 </form>
 				 <div class="row">
 					<div class="col">
 						<div class="btnGroupCountainer mt-2">
@@ -172,7 +164,7 @@
 								    <div class="col">
 										<div class="text-center mx-auto ">
 											<!--will dynamically update-->
-											<p class="card-title" id="capitalCityNameTxt"></p>
+											<h6 class="card-title heading" id="capitalCityNameTxt"></h6>
 											<p id="capitalCitySummaryTxt"></p>
 										</div>								
 									</div>
@@ -181,7 +173,7 @@
 							<div class="frostedGlass mt-2">
 								<div class="row">
 									<div class="col-10">
-										<h6 class="ml-4">Latest headlines</h6>
+										<h6 class="ml-4 heading">Latest headlines</h6>
 									</div>
 										 <div class="col-2">
 											<ion-icon name="newspaper-outline"></ion-icon>
@@ -244,7 +236,7 @@
 									 <div class="col">
 										<div class="text-center mx-auto ">
 											<!--will dynamically update-->
-											<p class="card-title">Great British Pound</p>
+											<p class="card-title" id="currencyFullNameTxt"></p>
 											<h1 class="display-4 mainData" id="exchangeRatesTxt"></h1>	
 										</div>
 									 </div>
