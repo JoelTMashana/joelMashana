@@ -7,7 +7,7 @@
     $API_KEY = 'C7s2Apq1D2ntgmQerVYSI_u7oRfEriTeZyzp-BFwqaRogpJqTv78J_m6sKZRm7rx2i8qYMLgrAHfeMlsp906XbAjlCjHSQxBwPUa9HXuC4MTrPoP1yRq4uDIzOmmYHYx';
    
 	// these params are taken from the data part of the ajax call
-	$url='https://api.yelp.com/v3/businesses/search?term=food&location=' . urlencode($_POST['placename'];
+	$url='https://api.yelp.com/v3/businesses/search?location=' . urlencode($_POST['placename']);
 
 	//curls obj initialised and stored in var
 	// the API I use will speicfy what I need to copy
@@ -36,7 +36,7 @@
 	$output['status']['description'] = "success";
 	$output['status']['returnedIn'] = intval((microtime(true) - $executionStartTime) * 1000) . " ms";
 	$output['status'] = $url;
-	$output['data'] = $countryInfoDecode;
+	$output['data'] = $countryInfoDecode['businesses'];
 
 
 	header('Content-Type: application/json; charset=UTF-8');
