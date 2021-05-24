@@ -2,8 +2,9 @@
 const mymap = L.map('mapid',
 {
     
-}).setView([51.505, -0.09], 13);
+}).fitWorld();
 
+mymap.locate({setView: true, maxZoom: 16});
 //add the tile layer on the class, in this case i used thunderforest
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     minZoom: 3,
@@ -11,6 +12,12 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     zoomSnap: 0.1,
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(mymap);
+
+function onLocationError(e) {
+    alert(e.message);
+}
+
+mymap.on('locationerror', onLocationError);
 
 
 // on load run ajax call to populate search bar with country options dynamically
@@ -40,48 +47,6 @@ $(document).ready(function getCountryNameData(){
     });
 });
 
-// on load set the country user is currently in in focus
-$(document).ready(function (){
-    navigator.geolocation.getCurrentPosition(function(position) {
-        let lat = position.coords.latitude;
-        let long = position.coords.longitude;
-
-    $.ajax({
-        url: "./php/getUserLocationOpenCageData.php",
-        type: 'POST',
-        dataType: 'json',
-        data: {
-           latitude: lat,
-           longitude: long
-         },
-        success: function(result){           
-          
-            $.ajax({
-                url: "./php/getUserLocationCountryInfoData.php",
-                type: 'POST',
-                dataType: 'json',
-                data: {
-                   isocode: result['data'][0]['components']['ISO_3166-1_alpha-2']
-                },
-                success: function(result) {
-                    let lat = result['data'][0]['latlng'][0];
-                    let lng = result['data'][0]['latlng'][1];    
-            
-                    mymap.setView([lat,lng], 4);
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    console.log("There was an error peforming the AJAX call!");  
-                }  
-            });         
-          
-        },
-        error: function(jqXHR, textStatus, errorThrown){
-            console.log("There was an error peforming the AJAX call!");  
-        }
-    });
-    
-  });
-});
 
 // find users location and set marker on doc ready
 $(document).ready(function findLocation () {
@@ -96,11 +61,17 @@ $(document).ready(function findLocation () {
 
 const showPosition = position => {
     var userLocationMarker = L.marker( [position.coords.latitude, position.coords.longitude]).addTo(mymap);
+    //remember to style properly in style sheet
+    userLocationMarker.bindPopup('<p style="color: black;">You are here!</p>');
 }
 
+
+
 //nav buttons
+//ajax calls when 
 $('#locate').click(function (){
     navigator.geolocation.getCurrentPosition(showPosition);
+    
 });
 
 
@@ -175,7 +146,7 @@ $(document).ready(function getUserLocationData() {
                     $('#countryNameTxt').html(result['data'][0]['components']['country']);
                     
                      //next ajax calls which depends on data from previous
-                     //openexchangerates ajax call
+                     /*openexchangerates ajax call
                      let isoCode = result['data'][0]['annotations']['currency']['iso_code'];
                      $.ajax({
                         url: "./php/getUserLocationExchangeData.php",
@@ -195,7 +166,7 @@ $(document).ready(function getUserLocationData() {
                         error: function(jqXHR, textStatus, errorThrown) {
                             console.log("There was an error peforming the AJAX call!");  
                         }                          
-                     });
+                     });*/
 
                      //newsapi ajax call
                      $.ajax({
@@ -266,58 +237,48 @@ $(document).ready(function getUserLocationData() {
 
 });
 
-/*
-let layer = L.geoJSON().addTo(mymap);
-$('#btnRun').click(function (){
-    $.ajax({
-        url: "./php/getCountryBordersGeoData.php",
-        type: 'POST',
-        dataType: 'json',
-        success: function(result){           
 
+function style(feature){
+    return {
+        fillcolor: 'red',
+        fillOpacity: 0.5,
+        weight: 2,
+        opacity: 1,
+        color: 'red',
+    }
+}
 
-            let countryName = $('#val').val();
+let geoJsonLayerGroup = L.layerGroup().addTo(mymap);
+let theLayer = L.geoJSON();
+
+$('#btnRun').click(function(){
+     $.ajax({
+         url: "./php/getCountryBordersGeoData.php",
+         type: 'POST',
+         dataType: 'json',
+         success: function(result){
             let features = result['data'];
             console.log(features);
-            for (i = 0; i < features.length; i++){
-                if(countryName == features[i].properties.name){
-                    let layer = L.geoJSON(features[i]).addTo(mymap);
-                }      
-            }
-        },
-        error: function(jqXHR, textStatus, errorThrown){
-            console.log("There was an error peforming the AJAX call!");  
-        }
-    });    
-});
-*/
-
-
-
-// on country select set the view to currently selected map
-$('#btnRun').click(function (){
-    $.ajax({
-        url: "./php/getCountryOpenCageData.php",
-        type: 'POST',
-        dataType: 'json',
-        data: {
-            placename: $('#val').val(),  
-         },
-        success: function(result){           
-        
-        
-        let lat = result['data'][0]['geometry']['lat'];
-        let lng = result['data'][0]['geometry']['lng'];    
-
-        mymap.setView([lat,lng], 4);   
+            let countryName = $('#val').val();
+            
+            geoJsonLayerGroup.removeLayer(theLayer);
+            features.forEach(feature =>{
+                if (countryName == feature.properties.name){
+                    let currFeature = feature;
+                    theLayer.addData(currFeature);
+                }  
+                geoJsonLayerGroup.addLayer(theLayer);
+               });     
+               
          
-          
-        },
-        error: function(jqXHR, textStatus, errorThrown){
-            console.log("There was an error peforming the AJAX call!");  
-        }
-    });    
+           
+         },
+         error: function(jqXHR, textStatus, errorThrown){
+            console.log("There was an error peforming the AJAX call!"); 
+         }
+     });
 });
+
 
 // ajax calls for when user selects country
 $('#btnRun').click(function(){
@@ -329,10 +290,59 @@ $('#btnRun').click(function(){
            placename: $('#val').val(),  
         },
         success: function(result){              
-            $('#countryNameTxt').html(result['data'][0]['components']['country']); 
-        console.log(result.data);
-       //openexchangerates ajax call
+        //write coutry name to country name header 
+        $('#countryNameTxt').html(result['data'][0]['components']['country']); 
+  
+
+        //set view to selected country
+        let lat = result['data'][0]['geometry']['lat'];
+        let lng = result['data'][0]['geometry']['lng'];    
+        mymap.setView([lat,lng], 4);
+
+        //find near by ares of interst ajax call
+        
+        $.ajax({
+            url: "./php/getCapitalAreasOfInterestData.php",
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                latitude: lat,
+                longitude: lng,
+                isocode: result['data'][0]['components']['ISO_3166-1_alpha-2']
+            },
+            success: function(result){
+                //create layer grough 
+                // if the is more that 0 layers in the layer group cleare all layers in group
+                // if not, add the the layer of markers to the map
+                let areasOfInterest = result['data'];
+
+                let areasOfInterestMarkerGroup = 
+                     L.layerGroup().addTo(mymap);
+                //let areaOfInterestMarkers = {}; 
+                areasOfInterest.forEach(area => {
+                    let areaLat = area.lat;
+                    let areaLng = area.lng;
+                    let areaOfInterestMarkers = L.marker([areaLat, areaLng]).addTo(mymap);
+                    if(areaOfInterestMarkers != undefined){
+                        areasOfInterestMarkerGroup.removeLayer(areaOfInterestMarkers);
+                    } else {
+                        areasOfInterestMarkerGroup.addLayer(areaOfInterestMarkers)
+                    }
+                     
+                
+                    areaOfInterestMarkers.bindPopup(`<p style="color: black;">${area.title}</p>`);
+                
+                });           
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log("There was an error peforming the AJAX call!");  
+            }                          
+         }); 
+            
+
+       /*openexchangerates ajax call
        let isoCode = result['data'][0]['annotations']['currency']['iso_code'];
+       
        $.ajax({
           url: "./php/getUserLocationExchangeData.php",
           type: 'POST',
@@ -349,7 +359,7 @@ $('#btnRun').click(function(){
           error: function(jqXHR, textStatus, errorThrown) {
               console.log("There was an error peforming the AJAX call!");  
           }                          
-       });     
+       }); */    
         
          //newsapi ajax call
          $.ajax({
@@ -359,7 +369,8 @@ $('#btnRun').click(function(){
             data: {
                isocode: result['data'][0]['components']['ISO_3166-1_alpha-2']
             },
-            success: function(result){                       
+            success: function(result){
+                if (result.data[0] != undefined) {
                     $('#newsHeadlineIconImgOne').html(`<a href="${result['data'][0]['url']}"><img src="${result['data'][0]['urlToImage']}" alt="headline image"></a>`);
                     $('#newsHeadlineTxtOne').html(`<b>${result['data'][0]['description']}</b>`);
                     
@@ -367,7 +378,19 @@ $('#btnRun').click(function(){
                     $('#newsHeadlineTxtTwo').html(`<b>${result['data'][1]['description']}</b>`);
                     
                     $('#newsHeadlineIconImgThree').html(`<a href="${result['data'][2]['url']}"><img src="${result['data'][2]['urlToImage']}" alt="headline image"></a>`);
-                    $('#newsHeadlineTxtThree').html(`<b>${result['data'][2]['description']}</b>`);  
+                    $('#newsHeadlineTxtThree').html(`<b>${result['data'][2]['description']}</b>`); 
+                } else {
+                    $('#newsHeadlineIconImgOne').html(`<img src="./img/news_placeholder.png">`);
+                    $('#newsHeadlineTxtOne').html("News data currnetly unavailable");
+                    $('#newsHeadlineIconImgTwo').html(`<img src="./img/news_placeholder.png">`);
+                    $('#newsHeadlineTxtTwo').html("News data currnetly unavailable");
+                    $('#newsHeadlineIconImgThree').html(`<img src="./img/news_placeholder.png">`);
+                    $('#newsHeadlineTxtThree').html("News data currnetly unavailable");
+                }                      
+                   
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                
             }
         }); 
         
@@ -385,6 +408,42 @@ $('#btnRun').click(function(){
                       $('#populationTxt').html(result['data'][0]['population']);
                       $('#capitalCityNameTxt').html(`Capital city: ${result['data'][0]['capital']}`);
                       $('#cityLocationTxt').html(result['data'][0]['capital']);
+                      //yelp api search ajax call
+                      $.ajax({
+                        url: "./php/getCapitalCityBusinessData.php",
+                        type: 'POST',
+                        dataType: 'json',
+                        data: {
+                            placename: result['data'][0]['capital'],
+                        },
+                        success: function(result){
+                           
+                             let businesses = result['data'];
+                             businesses.forEach(f => {
+                                let lat = f.coordinates.latitude;
+                                let long = f.coordinates.longitude;
+                                let businessMarker = L.marker([lat, long]).addTo(mymap);
+                                 
+                                let popup = L.popup({
+                                    maxWidth: 400
+                                })
+                                   .setLatLng([lat,long])
+                                   .setContent(`
+                                   <img style="max-width: 190px;"src="${f.image_url}" alt="image of business">
+                                   <br>
+                                   <hr>
+                                   <p>${f.name}</p>
+                                   `)
+                                   .openOn(mymap);
+
+                                businessMarker.bindPopup(popup);
+                             })
+                        },
+                        error: function(jqXHR, textStatus, errorThrown){
+                            alert("Bussiness data currently unavailable");
+                        }
+                     });
+                      
                       //geonames ajax call
                       $.ajax({
                           url: "./php/getUserLocationWikiData.php",
@@ -399,7 +458,7 @@ $('#btnRun').click(function(){
                               }
                           },
                           error: function(jqXHR, textStatus, errorThrown) {
-                            console.log("There was an error peforming the AJAX call!");  
+                            $('#capitalCitySummaryTxt').html(`No information available for: ${result['data'][0]['capital']}`);  
                           }
                       });
                  }

@@ -100,7 +100,7 @@ html, body, main, #mapid {
     box-shadow: 0 0 1rem 0 rgba(0,0,0, .2);
     position: relative;
     overflow: hidden;
-    background-image: url(img/clouds.png);
+    background-image: linear-gradient(#0169A4, #aec0df, #c8c2db); 
     background-attachment: fixed;
     z-index: 1;
 
@@ -136,7 +136,7 @@ html, body, main, #mapid {
 }
 
 .modalStyles {
-    background-image: url(img/clouds.png); 
+    background-image: linear-gradient(#0169A4, #aec0df, #c8c2db); 
     background-attachment: fixed;
     border-radius: 12px 12px;
 
@@ -228,12 +228,6 @@ html, body, main, #mapid {
      border-radius: 12px 12px 12px 12px!important;
 }
 
-.countryInfoIconCard figcaption {
-    font-size: 1rem;
-    font-family: 'Roboto', sans-serif;
-    color: #1E252A;   
-}
-
 /*typography*/
 
 #capitalCitySummaryTxt {
@@ -241,19 +235,13 @@ html, body, main, #mapid {
     padding-right: 8px;
 }
 
-
-
 /*--ICONS--*/
 ion-icon {
-    font-size: 15px;
-    margin-top: 5px;
+  
     color: #1E252A;
 }
 
-.searchBox button ion-icon {
-    position: relative;
-    font-size: 25px;
-}
+
 
 /*leaflet easy button styles*/
 
