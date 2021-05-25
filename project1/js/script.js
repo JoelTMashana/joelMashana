@@ -13,10 +13,10 @@ let osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(mymap);
 
+//error message if locating user fails
 function onLocationError(e) {
     alert(e.message);
 }
-
 mymap.on('locationerror', onLocationError);
 
 
@@ -36,7 +36,6 @@ $(document).ready(function getCountryNameData(){
                "'>"
                +f.properties.name+
                "</option>";
-             
              });
              $('#selCountry').html(countryOptions);            
         },
@@ -47,7 +46,7 @@ $(document).ready(function getCountryNameData(){
 });
 
 
-// find users location and set marker on doc ready
+//finds users location and set marker
 $(document).ready(function findLocation () {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition);
@@ -64,15 +63,6 @@ const showPosition = position => {
 }
 
 
-
-//nav buttons
-//ajax calls when 
-$('#locate').click(function (){
-    navigator.geolocation.getCurrentPosition(showPosition);
-});
-
-
-
 //dates for weather panels
 let currDate = new Date();
 let ddPlusTwo = String(currDate.getDate() + 2).padStart(2, '0'),
@@ -83,9 +73,9 @@ const kelvinToCelcius = (kelvin) => {
     return Math.floor(kelvin - 273.15);
 } 
 
-// ajax for weather information on load
+//func which calls on doc load
 $(document).ready(function getUserLocationData() {
-            
+    //store users current lat and long so its accessible for all calls        
     navigator.geolocation.getCurrentPosition(function(position) {
         let lat = position.coords.latitude;
         let long = position.coords.longitude;
@@ -93,7 +83,7 @@ $(document).ready(function getUserLocationData() {
         
         //openweather api ajax call
         $.ajax({
-            url: "./php/getUserLocationWeatherData.php",
+            url: "./php/getLocationWeatherData.php",
             type: 'POST',
             dataType: 'json',
             data: {
@@ -130,7 +120,7 @@ $(document).ready(function getUserLocationData() {
         });
         //opencage ajax call
         $.ajax({
-            url: "./php/getUserLocationOpenCageData.php",
+            url: "./php/getLocationOpenCageDataReverseGeo.php",
             type: 'POST',
             dataType: 'json',
             data: {
@@ -138,7 +128,7 @@ $(document).ready(function getUserLocationData() {
                 longitude: long
             },
             success: function(result) {
-                    //writes locations using data of opencage to html
+                    //writes locations using data from opencage to html
                     $('#cityLocationTxt').html(result['data'][0]['components']['town']);
                     $('#countryNameTxt').html(result['data'][0]['components']['country']);
                     
@@ -146,7 +136,7 @@ $(document).ready(function getUserLocationData() {
                      /*openexchangerates ajax call
                      let isoCode = result['data'][0]['annotations']['currency']['iso_code'];
                      $.ajax({
-                        url: "./php/getUserLocationExchangeData.php",
+                        url: "./php/getLocationExchangeData.php",
                         type: 'POST',
                         dataType: 'json',
                         success: function(result){
@@ -167,7 +157,7 @@ $(document).ready(function getUserLocationData() {
 
                      //newsapi ajax call
                      $.ajax({
-                        url: "./php/getUserLocationNewsData.php",
+                        url: "./php/getLocationNewsData.php",
                         type: 'POST',
                         dataType: 'json',
                         data: {
@@ -182,11 +172,15 @@ $(document).ready(function getUserLocationData() {
                                 
                                 $('#newsHeadlineIconImgThree').html(`<a href="${result['data'][2]['url']}"><img src="${result['data'][2]['urlToImage']}" alt="headline image"></a>`);
                                 $('#newsHeadlineTxtThree').html(`<b>${result['data'][2]['description']}</b>`);  
-                        }
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            console.log("There was an error peforming the AJAX call!");  
+                        } 
                     });
+
                     //RESTCountries ajax call 
                     $.ajax({
-                        url: "./php/getUserLocationCountryInfoData.php",
+                        url: "./php/getLocationCountryInfoData.php",
                         type: 'POST',
                         dataType: 'json',
                         data: {
@@ -195,13 +189,13 @@ $(document).ready(function getUserLocationData() {
                         success: function(result) {
                            
                              if (result.status.name == "ok") {
-                                  $('#countryFlagImg').html(`<img src="${result['data'][0]['flag']}" alt="country flag">`);
+                                  $('#countryFlagImg').html(`<img src="${result['data'][0]['flag']}" alt="flag image">`);
                                   $('#populationTxt').html(result['data'][0]['population']);
                                   $('#capitalCityNameTxt').html(`Capital city: ${result['data'][0]['capital']}`);
                                   
                                   //geonames ajax call
                                   $.ajax({
-                                      url: "./php/getUserLocationWikiData.php",
+                                      url: "./php/getLocationWikiData.php",
                                       type: 'POST',
                                       dataType: 'json',
                                       data: {
@@ -289,7 +283,7 @@ let goldIcon = new L.icon({
 // ajax calls for when user selects country
 $('#btnRun').click(function(){
     $.ajax({
-        url: "./php/getCountryOpenCageData.php",
+        url: "./php/getLocationOpenCageDataForwardGeo.php",
         type: 'POST',
         dataType: 'json',
         data: {
@@ -305,8 +299,8 @@ $('#btnRun').click(function(){
         let lng = result['data'][0]['geometry']['lng'];    
         mymap.setView([lat,lng], 4);
 
+        //next ajax calls all depend on data from the opencage php routine/ajax call
         //find near by ares of interst ajax call
-        
         $.ajax({
             url: "./php/getCapitalAreasOfInterestData.php",
             type: 'POST',
@@ -317,12 +311,7 @@ $('#btnRun').click(function(){
                 isocode: result['data'][0]['components']['ISO_3166-1_alpha-2']
             },
             success: function(result){
-                //create layer grough 
-                // if the is more that 0 layers in the layer group cleare all layers in group
-                // if not, add the the layer of markers to the map
-                let areasOfInterest = result['data'];
-                
-                
+                let areasOfInterest = result['data'];               
                 areasOfInterest.forEach(area => {
                     let areaLat = area.lat;
                     let areaLng = area.lng;
@@ -345,7 +334,7 @@ $('#btnRun').click(function(){
        let isoCode = result['data'][0]['annotations']['currency']['iso_code'];
        
        $.ajax({
-          url: "./php/getUserLocationExchangeData.php",
+          url: "./php/getLocationExchangeData.php",
           type: 'POST',
           dataType: 'json',
           success: function(result){
@@ -364,7 +353,7 @@ $('#btnRun').click(function(){
         
          //newsapi ajax call
          $.ajax({
-            url: "./php/getUserLocationNewsData.php",
+            url: "./php/getLocationNewsData.php",
             type: 'POST',
             dataType: 'json',
             data: {
@@ -380,23 +369,21 @@ $('#btnRun').click(function(){
                     
                     $('#newsHeadlineIconImgThree').html(`<a href="${result['data'][2]['url']}"><img src="${result['data'][2]['urlToImage']}" alt="headline image"></a>`);
                     $('#newsHeadlineTxtThree').html(`<b>${result['data'][2]['description']}</b>`); 
-                } else {
-                    $('#newsHeadlineIconImgOne').html(`<img src="./img/news_placeholder.png">`);
-                    $('#newsHeadlineTxtOne').html("News data currnetly unavailable");
-                    $('#newsHeadlineIconImgTwo').html(`<img src="./img/news_placeholder.png">`);
-                    $('#newsHeadlineTxtTwo').html("News data currnetly unavailable");
-                    $('#newsHeadlineIconImgThree').html(`<img src="./img/news_placeholder.png">`);
-                    $('#newsHeadlineTxtThree').html("News data currnetly unavailable");
-                }                      
+                }                    
                    
             },
             error: function(jqXHR, textStatus, errorThrown){
-                
+                $('#newsHeadlineIconImgOne').html(`<img src="./img/news_placeholder.png">`);
+                $('#newsHeadlineTxtOne').html("News data currnetly unavailable");
+                $('#newsHeadlineIconImgTwo').html(`<img src="./img/news_placeholder.png">`);
+                $('#newsHeadlineTxtTwo').html("News data currnetly unavailable");
+                $('#newsHeadlineIconImgThree').html(`<img src="./img/news_placeholder.png">`);
+                $('#newsHeadlineTxtThree').html("News data currnetly unavailable");
             }
         }); 
         
         $.ajax({
-            url: "./php/getUserLocationCountryInfoData.php",
+            url: "./php/getLocationCountryInfoData.php",
             type: 'POST',
             dataType: 'json',
             data: {
@@ -451,7 +438,7 @@ $('#btnRun').click(function(){
                       
                       //geonames ajax call
                       $.ajax({
-                          url: "./php/getUserLocationWikiData.php",
+                          url: "./php/getLocationWikiData.php",
                           type: 'POST',
                           dataType: 'json',
                           data: {
@@ -475,7 +462,7 @@ $('#btnRun').click(function(){
 
         //openweather api ajax call       
         $.ajax({
-            url: "./php/getUserLocationWeatherData.php",
+            url: "./php/getLocationWeatherData.php",
             type: 'POST',
             dataType: 'json',
             data: {
@@ -513,11 +500,183 @@ $('#btnRun').click(function(){
         
         },
         error: function(jqXHR, textStatus, errorThrown){
-            console.log("There was an error with the Ajax call");
+            console.log("There was an error peforming the AJAX call!");
         }
         
     });
 });
+
+
+//nav buttons
+//locate user, set view and run ajax calls to write data to html and place markers around user local area
+
+$('#locate').click(function (){
+    
+    navigator.geolocation.getCurrentPosition(function(position) {
+        let lat = position.coords.latitude;
+        let long = position.coords.longitude;  
+
+    //set view
+    mymap.setView(
+        [lat, long,],
+        16
+    );
+    //ajax call to open cage
+    $.ajax({
+        url: "./php/getLocationOpenCageDataReverseGeo.php",
+        type: 'POST',
+        dataType: 'json',
+        data: {
+            latitude: lat,
+            longitude: long       
+        },
+        //all ajax calls dependent on openage results are within the success func
+        success: function(result){
+             console.log(result.data);
+            //write coutry name to country name header 
+            $('#countryNameTxt').html(result['data'][0]['components']['country']); 
+            $('#cityLocationTxt').html(result['data'][0]['components']['town']);
+
+               /*openexchangerates ajax call
+               let isoCode = result['data'][0]['annotations']['currency']['iso_code'];
+       
+               $.ajax({
+                    url: "./php/getLocationExchangeData.php",
+                    type: 'POST',
+                    dataType: 'json',
+                    success: function(result){
+          
+                         let rates = result['data'];                           
+                         for (let key in rates) {
+                            if(key == isoCode){
+                                $('#exchangeRatesTxt').html(`1 USD = ${(rates[key])} ${isoCode}`);
+                            } 
+                         }          
+                 },
+                 error: function(jqXHR, textStatus, errorThrown) {
+                        console.log("There was an error peforming the AJAX call!");  
+                    }                               
+                }); */
+                
+                //news ajax call
+                $.ajax({
+                    url: "./php/getLocationNewsData.php",
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                       isocode: result['data'][0]['components']['ISO_3166-1_alpha-2']
+                    },
+                    success: function(result){
+                        if (result.data[0] != undefined) {
+                            $('#newsHeadlineIconImgOne').html(`<a href="${result['data'][0]['url']}"><img src="${result['data'][0]['urlToImage']}" alt="headline image"></a>`);
+                            $('#newsHeadlineTxtOne').html(`<b>${result['data'][0]['description']}</b>`);
+                            
+                            $('#newsHeadlineIconImgTwo').html(`<a href="${result['data'][1]['url']}"><img src="${result['data'][1]['urlToImage']}" alt="headline image"></a>`);
+                            $('#newsHeadlineTxtTwo').html(`<b>${result['data'][1]['description']}</b>`);
+                            
+                            $('#newsHeadlineIconImgThree').html(`<a href="${result['data'][2]['url']}"><img src="${result['data'][2]['urlToImage']}" alt="headline image"></a>`);
+                            $('#newsHeadlineTxtThree').html(`<b>${result['data'][2]['description']}</b>`); 
+                        }                    
+                           
+                    },
+                    error: function(jqXHR, textStatus, errorThrown){
+                        $('#newsHeadlineIconImgOne').html(`<img src="./img/news_placeholder.png">`);
+                        $('#newsHeadlineTxtOne').html("News data currnetly unavailable");
+                        $('#newsHeadlineIconImgTwo').html(`<img src="./img/news_placeholder.png">`);
+                        $('#newsHeadlineTxtTwo').html("News data currnetly unavailable");
+                        $('#newsHeadlineIconImgThree').html(`<img src="./img/news_placeholder.png">`);
+                        $('#newsHeadlineTxtThree').html("News data currnetly unavailable");
+                    }
+                });
+
+                let userTown = result['data'][0]['components']['town']; 
+                $.ajax({
+                    url: "./php/getLocationCountryInfoData.php",
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                       isocode: result['data'][0]['components']['ISO_3166-1_alpha-2']
+                    },
+                    success: function(result) {
+                         
+                         if (result.status.name == "ok") {
+                              $('#countryFlagImg').html(`<img src="${result['data'][0]['flag']}" alt="country flag">`);
+                              $('#populationTxt').html(result['data'][0]['population']);
+                              $('#capitalCityNameTxt').html(`Capital city: ${result['data'][0]['capital']}`);
+
+                              
+                              //geonames ajax call
+                              $.ajax({
+                                  url: "./php/getLocationWikiData.php",
+                                  type: 'POST',
+                                  dataType: 'json',
+                                  data: {
+                                    placename: result['data'][0]['capital']
+                                  },
+                                  success: function(result){
+                                      if (result.status.name == "ok") {
+                                        $('#capitalCitySummaryTxt').html(result['data'][0]['summary']);
+                                      }
+                                  },
+                                  error: function(jqXHR, textStatus, errorThrown) {
+                                    $('#capitalCitySummaryTxt').html(`No information available for: ${result['data'][0]['capital']}`);  
+                                  }
+                              });
+                         }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.log("There was an error peforming the AJAX call!");  
+                    }  
+                });
+
+                $.ajax({
+                    url: "./php/getLocationWeatherData.php",
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        latitude: result['data'][0]['geometry']['lat'],
+                        longitude: result['data'][0]['geometry']['lng']
+                    },
+                    success: function(result) {
+                        if (result.status.name == "ok") {
+                            //panel one
+                            $('#weatherPanelOneDescriptionText').html(result['data'][0]['weather'][0]['description']);
+                            $('#weatherPanelOneTemp').html(`${kelvinToCelcius(result['data'][0]['temp']['day'])}<span>°</span>`);
+                            $('#weatherPanelOneIcon').html(`<img src="http://openweathermap.org/img/wn/${result['data'][0]['weather'][0]['icon']}@2x.png">`);
+                            //panel two
+                            $('#weatherPanelTwoIcon').html(`<img src="http://openweathermap.org/img/wn/${result['data'][1]['weather'][0]['icon']}@2x.png">`);
+                            $('#weatherPanelTwoTemp').html(`H:${kelvinToCelcius(result['data'][1]['temp']['max'])}<span>°</span> L:${kelvinToCelcius(result['data'][1]['temp']['min'])}<span>°</span>`); 
+                            //panel three
+                            $('#weatherPanelThreeIcon').html(`<img src="http://openweathermap.org/img/wn/${result['data'][2]['weather'][0]['icon']}@2x.png">`);
+                            $('#weatherPanelThreeTemp').html(`H:${kelvinToCelcius(result['data'][2]['temp']['max'])}<span>°</span> L:${kelvinToCelcius(result['data'][2]['temp']['min'])}<span>°</span>`);
+                            $('#currDatePlusTwo').html(`${ddPlusTwo}th`);
+                            //panel four
+                            $('#weatherPanelFourIcon').html(`<img src="http://openweathermap.org/img/wn/${result['data'][3]['weather'][0]['icon']}@2x.png">`);
+                            $('#weatherPanelFourTemp').html(`H:${kelvinToCelcius(result['data'][3]['temp']['max'])}<span>°</span> L:${kelvinToCelcius(result['data'][3]['temp']['min'])}<span>°</span>`);
+                            $('#currDatePlusThree').html(`${ddPlusThree}th`); 
+                            //panel five
+                            $('#weatherPanelFiveIcon').html(`<img src="http://openweathermap.org/img/wn/${result['data'][4]['weather'][0]['icon']}@2x.png">`);
+                            $('#weatherPanelFiveTemp').html(`H:${kelvinToCelcius(result['data'][4]['temp']['max'])}<span>°</span> L:${kelvinToCelcius(result['data'][4]['temp']['min'])}<span>°</span>`);
+                            $('#currDatePlusFour').html(`${ddPlusFour}th`);
+        
+                        }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.log("There was an error peforming the AJAX call!");  
+                    }
+                });
+             
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+            console.log("There was an error peforming the AJAX call!");
+        }
+    });
+
+  });  
+});
+
+
+
 
 // for layer control 
 let baseMaps = {
@@ -528,5 +687,5 @@ let dataLayer = {
     "My Data": allMarkers
 };
 
-// add layer control
+// add layer control which allows user to toggle data
 L.control.layers(baseMaps, dataLayer).addTo(mymap);
