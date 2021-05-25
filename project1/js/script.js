@@ -6,7 +6,7 @@ const mymap = L.map('mapid',
 
 mymap.locate({setView: true, maxZoom: 16});
 //add the tile layer on the class, in this case i used thunderforest
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+let osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     minZoom: 3,
     maxZoom: 19,
     zoomSnap: 0.1,
@@ -20,7 +20,7 @@ function onLocationError(e) {
 mymap.on('locationerror', onLocationError);
 
 
-// on load run ajax call to populate search bar with country options dynamically
+// populate datalist with country list on load
 $(document).ready(function getCountryNameData(){
     $.ajax({
         url: "./php/getCountryBordersGeoData.php",
@@ -42,8 +42,7 @@ $(document).ready(function getCountryNameData(){
         },
         error: function(jqXHR, textStatus, errorThrown){
             console.log("There was an error with the getCountryNameData Ajax call");
-        }
-        
+        }        
     });
 });
 
@@ -56,7 +55,6 @@ $(document).ready(function findLocation () {
     } else {
         alert('Geolocation is not supported by browser');
     }
-
 });
 
 const showPosition = position => {
@@ -71,7 +69,6 @@ const showPosition = position => {
 //ajax calls when 
 $('#locate').click(function (){
     navigator.geolocation.getCurrentPosition(showPosition);
-    
 });
 
 
@@ -238,19 +235,8 @@ $(document).ready(function getUserLocationData() {
 });
 
 
-function style(feature){
-    return {
-        fillcolor: 'red',
-        fillOpacity: 0.5,
-        weight: 2,
-        opacity: 1,
-        color: 'red',
-    }
-}
 
-let geoJsonLayerGroup = L.layerGroup().addTo(mymap);
-let theLayer = L.geoJSON();
-
+/*
 $('#btnRun').click(function(){
      $.ajax({
          url: "./php/getCountryBordersGeoData.php",
@@ -258,27 +244,47 @@ $('#btnRun').click(function(){
          dataType: 'json',
          success: function(result){
             let features = result['data'];
-            console.log(features);
             let countryName = $('#val').val();
             
-            geoJsonLayerGroup.removeLayer(theLayer);
-            features.forEach(feature =>{
-                if (countryName == feature.properties.name){
-                    let currFeature = feature;
-                    theLayer.addData(currFeature);
-                }  
-                geoJsonLayerGroup.addLayer(theLayer);
-               });     
-               
-         
-           
+            features.forEach(feature => {
+                
+                if(countryName == feature.properties.name){
+                    mymap.removeLayer(theLayer);
+                    let theLayer = L.geoJSON(feature).addTo(mymap);
+               }               
+            });
+            
          },
          error: function(jqXHR, textStatus, errorThrown){
             console.log("There was an error peforming the AJAX call!"); 
          }
      });
 });
+*/
 
+
+
+let allMarkers = L.markerClusterGroup();
+mymap.addLayer(allMarkers);
+
+//temporary color marker until i find better alternative
+let greenIcon = new L.icon({
+    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+});
+
+let goldIcon = new L.icon({
+    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-gold.png',
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]    
+})
 
 // ajax calls for when user selects country
 $('#btnRun').click(function(){
@@ -315,21 +321,16 @@ $('#btnRun').click(function(){
                 // if the is more that 0 layers in the layer group cleare all layers in group
                 // if not, add the the layer of markers to the map
                 let areasOfInterest = result['data'];
-
-                let areasOfInterestMarkerGroup = 
-                     L.layerGroup().addTo(mymap);
-                //let areaOfInterestMarkers = {}; 
+                
+                
                 areasOfInterest.forEach(area => {
                     let areaLat = area.lat;
                     let areaLng = area.lng;
-                    let areaOfInterestMarkers = L.marker([areaLat, areaLng]).addTo(mymap);
-                    if(areaOfInterestMarkers != undefined){
-                        areasOfInterestMarkerGroup.removeLayer(areaOfInterestMarkers);
-                    } else {
-                        areasOfInterestMarkerGroup.addLayer(areaOfInterestMarkers)
-                    }
-                     
-                
+                    let areaOfInterestMarkers = L.marker(
+                        [areaLat, areaLng],
+                        {icon: greenIcon}
+                        );
+                    allMarkers.addLayer(areaOfInterestMarkers);
                     areaOfInterestMarkers.bindPopup(`<p style="color: black;">${area.title}</p>`);
                 
                 });           
@@ -422,7 +423,11 @@ $('#btnRun').click(function(){
                              businesses.forEach(f => {
                                 let lat = f.coordinates.latitude;
                                 let long = f.coordinates.longitude;
-                                let businessMarker = L.marker([lat, long]).addTo(mymap);
+                                let businessMarker = L.marker(
+                                    [lat, long],
+                                    {icon: goldIcon}
+                                    );
+                                allMarkers.addLayer(businessMarker);
                                  
                                 let popup = L.popup({
                                     maxWidth: 400
@@ -467,8 +472,6 @@ $('#btnRun').click(function(){
                 console.log("There was an error peforming the AJAX call!");  
             }  
         });        
-
-
 
         //openweather api ajax call       
         $.ajax({
@@ -515,3 +518,15 @@ $('#btnRun').click(function(){
         
     });
 });
+
+// for layer control 
+let baseMaps = {
+    "Open Street Map": osm
+};
+
+let dataLayer = {
+    "My Data": allMarkers
+};
+
+// add layer control
+L.control.layers(baseMaps, dataLayer).addTo(mymap);

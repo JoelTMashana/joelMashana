@@ -4,7 +4,7 @@
 	error_reporting(E_ALL);
 	$executionStartTime = microtime(true);
 
-   
+    // for reverse geocding
 	// these params are taken from the data part of the ajax call
 	$url='https://api.opencagedata.com/geocode/v1/json?q=' . $_POST['latitude']. ',' . $_POST['longitude'] . '&key=ee756e3c37284a8db239a456ef2be343' . '&pretty=1';
 
