@@ -284,6 +284,9 @@ let goldIcon = new L.icon({
     shadowSize: [41, 41]    
 })
 
+
+let countryBordersGeoJsonLayer = L.geoJSON().addTo(mymap);
+
 // ajax calls for when user selects country
 $('#btnRun').click(function(){
     $.ajax({
@@ -303,6 +306,27 @@ $('#btnRun').click(function(){
         let lng = result['data'][0]['geometry']['lng'];    
         mymap.setView([lat,lng], 4);
 
+        
+      
+        let isoCode = result['data'][0]['components']['ISO_3166-1_alpha-3'];
+        
+        $.ajax({
+             url: "./php/getCountryBordersGeoData.php",
+             type: 'POST',
+             dataType: 'json',
+             success: function(result){
+                countryBordersGeoJsonLayer.clearLayers();
+                 let features = result['data'];
+                 features.forEach(feature =>{
+                     if(isoCode == feature.properties.iso_a3){
+                        countryBordersGeoJsonLayer.addData(feature);
+                     }
+                 });
+             }
+        });
+        
+        
+        
         //next ajax calls all depend on data from the opencage php routine/ajax call
         //find near by ares of interst ajax call
         $.ajax({
@@ -315,6 +339,7 @@ $('#btnRun').click(function(){
                 isocode: result['data'][0]['components']['ISO_3166-1_alpha-2']
             },
             success: function(result){
+                allMarkers.clearLayers();
                 let areasOfInterest = result['data'];               
                 areasOfInterest.forEach(area => {
                     let areaLat = area.lat;
