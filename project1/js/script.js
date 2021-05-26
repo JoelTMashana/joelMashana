@@ -17,6 +17,18 @@ let osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(mymap);
 
+//set max bounds so map does not infinitely pan in different directions
+const southWest = L.latLng(-89.98155760646617, -180),
+northEast = L.latLng(89.99346179538875, 180);
+const bounds = L.latLngBounds(southWest, northEast);
+
+mymap.setMaxBounds(bounds);
+mymap.on('drag', function() {
+    mymap.panInsideBounds(bounds, { animate: false });
+});
+
+
+
 //error message if locating user fails
 function onLocationError(e) {
     alert(e.message);
