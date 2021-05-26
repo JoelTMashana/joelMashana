@@ -195,6 +195,7 @@ $(document).ready(function getUserLocationData() {
                            isocode: result['data'][0]['components']['ISO_3166-1_alpha-2']
                         },
                         success: function(result){                        
+                                console.log(result.data);
                                 $('#newsHeadlineIconImgOne').html(`<a href="${result['data'][0]['url']}"><img src="${result['data'][0]['urlToImage']}" alt="headline image"></a>`);
                                 $('#newsHeadlineTxtOne').html(`<b>${result['data'][0]['description']}</b>`);
                                 
@@ -234,7 +235,9 @@ $(document).ready(function getUserLocationData() {
                                       },
                                       success: function(result){
                                           if (result.status.name == "ok") {
-                                            $('#capitalCitySummaryTxt').html(result['data'][0]['summary']);
+                                            //https needs to be concatinated for url to work
+                                            let wikiUrlString = 'https://' + result['data'][0]['wikipediaUrl']; 
+                                            $('#capitalCitySummaryTxt').html(`${result['data'][0]['summary']} <a href=${wikiUrlString}>more</a>`);
                                           }
                                       },
                                       error: function(jqXHR, textStatus, errorThrown) {
@@ -258,35 +261,6 @@ $(document).ready(function getUserLocationData() {
     });
 
 });
-
-
-
-/*
-$('#btnRun').click(function(){
-     $.ajax({
-         url: "./php/getCountryBordersGeoData.php",
-         type: 'POST',
-         dataType: 'json',
-         success: function(result){
-            let features = result['data'];
-            let countryName = $('#val').val();
-            
-            features.forEach(feature => {
-                
-                if(countryName == feature.properties.name){
-                    mymap.removeLayer(theLayer);
-                    let theLayer = L.geoJSON(feature).addTo(mymap);
-               }               
-            });
-            
-         },
-         error: function(jqXHR, textStatus, errorThrown){
-            console.log("There was an error peforming the AJAX call!"); 
-         }
-     });
-});
-*/
-
 
 let businessMarkers = L.markerClusterGroup();
 mymap.addLayer(businessMarkers);
@@ -504,7 +478,8 @@ $('#btnRun').click(function(){
                           },
                           success: function(result){
                               if (result.status.name == "ok") {
-                                $('#capitalCitySummaryTxt').html(result['data'][0]['summary']);
+                                let wikiUrlString = 'https://' + result['data'][0]['wikipediaUrl']; 
+                                $('#capitalCitySummaryTxt').html(`${result['data'][0]['summary']} <a href=${wikiUrlString}>more</a>`);
                               }
                           },
                           error: function(jqXHR, textStatus, errorThrown) {
@@ -665,7 +640,6 @@ $('#locate').click(function (){
                     }
                 });
 
-                let userTown = result['data'][0]['components']['town']; 
                 $.ajax({
                     url: "./php/getLocationCountryInfoData.php",
                     type: 'POST',
@@ -691,7 +665,8 @@ $('#locate').click(function (){
                                   },
                                   success: function(result){
                                       if (result.status.name == "ok") {
-                                        $('#capitalCitySummaryTxt').html(result['data'][0]['summary']);
+                                        let wikiUrlString = 'https://' + result['data'][0]['wikipediaUrl']; 
+                                        $('#capitalCitySummaryTxt').html(`${result['data'][0]['summary']} <a href=${wikiUrlString}>more</a>`);
                                       }
                                   },
                                   error: function(jqXHR, textStatus, errorThrown) {

@@ -322,10 +322,6 @@ ion-icon {
     border-radius: 8px 8px!important;   
 }
 
-.leaflet-control-zoom-in, 
-.leaflet-control-zoom-out {
-    /*box-shadow: 2px 2px 2px #b3b4b6;*/
-}
 
 .leaflet-control-zoom-in {
     border-radius: 8px 8px 0 0!important;
