@@ -136,7 +136,25 @@ $(document).ready(function getUserLocationData() {
                     $('#cityLocationTxt').html(result['data'][0]['components']['town']);
                     $('#countryNameTxt').html(result['data'][0]['components']['country']);
                     
-                     //next ajax calls which depends on data from previous
+                     
+                    let isoCode = result['data'][0]['components']['ISO_3166-1_alpha-3'];
+        
+                    $.ajax({
+                         url: "./php/getCountryBordersGeoData.php",
+                         type: 'POST',
+                         dataType: 'json',
+                         success: function(result){
+                            countryBordersGeoJsonLayer.clearLayers();
+                             let features = result['data'];
+                             features.forEach(feature =>{
+                                 if(isoCode == feature.properties.iso_a3){
+                                    countryBordersGeoJsonLayer.addData(feature);
+                                 }
+                             });
+                         }
+                    });
+                    
+                    //next ajax calls which depends on data from previous
                      /*openexchangerates ajax call
                      let isoCode = result['data'][0]['annotations']['currency']['iso_code'];
                      $.ajax({
@@ -566,7 +584,25 @@ $('#locate').click(function (){
             $('#countryNameTxt').html(result['data'][0]['components']['country']); 
             $('#cityLocationTxt').html(result['data'][0]['components']['town']);
 
-               /*openexchangerates ajax call
+            //country borders ajax 
+            let isoCode = result['data'][0]['components']['ISO_3166-1_alpha-3'];
+            $.ajax({
+                 url: "./php/getCountryBordersGeoData.php",
+                 type: 'POST',
+                 dataType: 'json',
+                 success: function(result){
+                    countryBordersGeoJsonLayer.clearLayers();
+                     let features = result['data'];
+                     features.forEach(feature =>{
+                         if(isoCode == feature.properties.iso_a3){
+                            countryBordersGeoJsonLayer.addData(feature);
+                         }
+                     });
+                 }
+            });      
+            
+               
+            /*openexchangerates ajax call
                let isoCode = result['data'][0]['annotations']['currency']['iso_code'];
        
                $.ajax({
