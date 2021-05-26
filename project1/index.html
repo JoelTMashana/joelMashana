@@ -40,8 +40,8 @@
 				 <div class="row">
 					<div class="col">
 						<div class="btnGroupCountainer mt-2">
-							 <button type="button" class="btnPill " data-toggle="modal" data-target="#myModal">Info</button>
-							 <button type="button" class="btnPill" id="locate">Locate</button>
+							 <button type="button" class="btnPill btnPillInfo" data-toggle="modal" data-target="#myModal">Info</button>
+							 <button type="button" class="btnPill btnPillLocate" id="locate">Locate</button>
 						</div>
 					</div> 					
 				 </div> 
@@ -145,7 +145,6 @@
 							<div class="frostedGlass frostedGlassTopPiece mt-1">
 								<div class="row justify-content-center align-items-center m-2">
 									 <div class="col-6">
-										 <!--image needs to be resized to fit the icon card-->
 										 <div class="card countryInfoIconCard" id="countryFlagImg"></div>
 									 </div>
 									 
@@ -153,7 +152,7 @@
 										<div class="text-center mx-auto ">										
 											<p class="card-title">Population</p>
 											<!--will dynamically update-->
-											<h1 class="mainData" id="populationTxt"></h1>
+											<h5 class="mainData" id="populationTxt"></h6>
 										</div>								
 									 </div>
 							 	</div>
@@ -181,7 +180,7 @@
 								</div>
 								<div class="row m-1">
 									 <div class="col-5 col-sm-4">
-										 <div class="card countryInfoIconCard" id="newsHeadlineIconImgOne"></div> 
+										 <div class="card countryInfoIconCard overlay" id="newsHeadlineIconImgOne"></div> 
 									 </div>
 									 
 									 <div class="col-7 col-sm-8">

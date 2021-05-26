@@ -9,6 +9,12 @@ const mymap = L.map('mapid',
 }).fitWorld();
 
 mymap.locate({setView: true, maxZoom: 16});
+//error message if locating user fails
+function onLocationError(e) {
+    alert(e.message);
+}
+mymap.on('locationerror', onLocationError);
+
 //add the tile layer on the class, in this case i used thunderforest
 let osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     minZoom: 3,
@@ -26,15 +32,6 @@ mymap.setMaxBounds(bounds);
 mymap.on('drag', function() {
     mymap.panInsideBounds(bounds, { animate: false });
 });
-
-
-
-//error message if locating user fails
-function onLocationError(e) {
-    alert(e.message);
-}
-mymap.on('locationerror', onLocationError);
-
 
 // populate datalist with country list on load
 $(document).ready(function getCountryNameData(){
@@ -291,9 +288,11 @@ $('#btnRun').click(function(){
 */
 
 
+let businessMarkers = L.markerClusterGroup();
+mymap.addLayer(businessMarkers);
 
-let allMarkers = L.markerClusterGroup();
-mymap.addLayer(allMarkers);
+let areaOfInterestMarkers = L.markerClusterGroup();
+mymap.addLayer(areaOfInterestMarkers);
 
 //temporary color marker until i find better alternative
 let greenIcon = new L.icon({
@@ -369,17 +368,17 @@ $('#btnRun').click(function(){
                 isocode: result['data'][0]['components']['ISO_3166-1_alpha-2']
             },
             success: function(result){
-                allMarkers.clearLayers();
+                areaOfInterestMarkers.clearLayers();
                 let areasOfInterest = result['data'];               
                 areasOfInterest.forEach(area => {
                     let areaLat = area.lat;
                     let areaLng = area.lng;
-                    let areaOfInterestMarkers = L.marker(
+                    let areaOfInterestMarker = L.marker(
                         [areaLat, areaLng],
                         {icon: greenIcon}
                         );
-                    allMarkers.addLayer(areaOfInterestMarkers);
-                    areaOfInterestMarkers.bindPopup(`<b><h6 style="color: black;">${area.title}</h6></b>`);
+                        areaOfInterestMarkers.addLayer(areaOfInterestMarker);
+                    areaOfInterestMarker.bindPopup(`<b><h6 style="color: black;">${area.title}</h6></b>`);
                 
                 });           
             },
@@ -464,7 +463,7 @@ $('#btnRun').click(function(){
                             placename: result['data'][0]['capital'],
                         },
                         success: function(result){
-                            console.log(result.data);
+                             businessMarkers.clearLayers(); 
                              let businesses = result['data'];
                              businesses.forEach(f => {
                                 let lat = f.coordinates.latitude;
@@ -473,7 +472,7 @@ $('#btnRun').click(function(){
                                     [lat, long],
                                     {icon: goldIcon}
                                     );
-                                allMarkers.addLayer(businessMarker);
+                                businessMarkers.addLayer(businessMarker);
                                  
                                 let popup = L.popup({
                                     maxWidth: 400
@@ -483,7 +482,7 @@ $('#btnRun').click(function(){
                                    <img style="max-width: 190px; max-height: 220px;"src="${f.image_url}" alt="image of business">
                                    <br>
                                    <hr>
-                                   <a href="${result['data']['url']}"><h6>${f.name}</h6> </a>
+                                  <h6>${f.name}</h6>
                                    `)
                                    .openOn(mymap);
 
@@ -574,7 +573,7 @@ $('#locate').click(function (){
     navigator.geolocation.getCurrentPosition(function(position) {
         let lat = position.coords.latitude;
         let long = position.coords.longitude;  
-
+    
     //set view
     mymap.setView(
         [lat, long,],
@@ -761,7 +760,8 @@ let baseMaps = {
 };
 
 let dataLayer = {
-    "My Data": allMarkers
+    "Businesses": businessMarkers,
+    "Areas of Interest": areaOfInterestMarkers
 };
 
 // add layer control which allows user to toggle data
