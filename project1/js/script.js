@@ -1,4 +1,8 @@
 //initialises an instance of the map class and sets the view to fit world
+$(window).on('load', function(){
+    $('.loader-wrapper').fadeOut('slow');
+});
+
 const mymap = L.map('mapid',
 {
     
@@ -320,7 +324,7 @@ $('#btnRun').click(function(){
                         {icon: greenIcon}
                         );
                     allMarkers.addLayer(areaOfInterestMarkers);
-                    areaOfInterestMarkers.bindPopup(`<p style="color: black;">${area.title}</p>`);
+                    areaOfInterestMarkers.bindPopup(`<b><h6 style="color: black;">${area.title}</h6></b>`);
                 
                 });           
             },
@@ -405,7 +409,7 @@ $('#btnRun').click(function(){
                             placename: result['data'][0]['capital'],
                         },
                         success: function(result){
-                           
+                            console.log(result.data);
                              let businesses = result['data'];
                              businesses.forEach(f => {
                                 let lat = f.coordinates.latitude;
@@ -420,16 +424,16 @@ $('#btnRun').click(function(){
                                     maxWidth: 400
                                 })
                                    .setLatLng([lat,long])
-                                   .setContent(`
-                                   <img style="max-width: 190px;"src="${f.image_url}" alt="image of business">
+                                   .setContent(`                                  
+                                   <img style="max-width: 190px; max-height: 220px;"src="${f.image_url}" alt="image of business">
                                    <br>
                                    <hr>
-                                   <p>${f.name}</p>
+                                   <a href="${result['data']['url']}"><h6>${f.name}</h6> </a>
                                    `)
                                    .openOn(mymap);
 
                                 businessMarker.bindPopup(popup);
-                             })
+                             });
                         },
                         error: function(jqXHR, textStatus, errorThrown){
                             alert("Bussiness data currently unavailable");
