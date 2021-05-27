@@ -355,6 +355,7 @@ $('#btnRun').click(function(){
             },
             success: function(result){
                 areaOfInterestMarkers.clearLayers();
+                console.log(result['data']);
                 let areasOfInterest = result['data'];               
                 areasOfInterest.forEach(area => {
                     let areaLat = area.lat;
@@ -364,7 +365,8 @@ $('#btnRun').click(function(){
                         {icon: greenIcon}
                         );
                         areaOfInterestMarkers.addLayer(areaOfInterestMarker);
-                    areaOfInterestMarker.bindPopup(`<b><h6 style="color: black;">${area.title}</h6></b>`);
+                    let wikipediaUrl = 'https://' + area.wikipediaUrl;    
+                    areaOfInterestMarker.bindPopup(`<a href="${wikipediaUrl}" target="_blank"><h6 style="color: black;">${area.title}</h6></a>`);
                 
                 });           
             },
