@@ -207,8 +207,7 @@ $(document).ready(function getUserLocationData() {
                         data: {
                            isocode: result['data'][0]['components']['ISO_3166-1_alpha-2']
                         },
-                        success: function(result){                        
-                                console.log(result.data);
+                        success: function(result){                       
                                 $('#newsHeadlineIconImgOne').html(`<a href="${result['data'][0]['url']}" target="_blank"><img src="${result['data'][0]['urlToImage']}" alt="headline image"></a>`);
                                 $('#newsHeadlineTxtOne').html(`<b>${result['data'][0]['description']}</b>`);
                                 
@@ -452,6 +451,7 @@ $('#btnRun').click(function(){
                         success: function(result){
                              businessMarkers.clearLayers(); 
                              let businesses = result['data'];
+                             console.log(result['data']);
                              businesses.forEach(f => {
                                 let lat = f.coordinates.latitude;
                                 let long = f.coordinates.longitude;
@@ -460,16 +460,14 @@ $('#btnRun').click(function(){
                                     {icon: goldIcon}
                                     );
                                 businessMarkers.addLayer(businessMarker);
-                                 
+                                
+                                
                                 let popup = L.popup({
                                     maxWidth: 400
                                 })
                                    .setLatLng([lat,long])
                                    .setContent(`                                  
-                                   <img style="max-width: 190px; max-height: 220px;"src="${f.image_url}" alt="image of business">
-                                   <br>
-                                   <hr>
-                                  <h6>${f.name}</h6>
+                                   <a href="${f.url}" target="_blank"><h6>${f.name}</h6></a>
                                    `)
                                    .openOn(mymap);
 
