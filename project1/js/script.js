@@ -3,9 +3,26 @@ $(window).on('load', function(){
     $('.loader-wrapper').fadeOut('slow');
 });
 
+
+let osmLink = '<a href="http://openstreetmap.org">OpenStreetMap</a>',
+    thunLink = '<a href="http://thunderforest.com/">Thunderforest</a>';
+
+
+let osmUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    osmAttrib = '&copy; ' + osmLink + ' Contributors',
+    landUrl = 'https://tile.thunderforest.com/landscape/{z}/{x}/{y}.png?apikey=6d9911c3c07e404eaa8dd1c1067b8c7e',
+    thunAttrib = '&copy; '+osmLink+' Contributors & '+thunLink;
+
+
+let osmMap = L.tileLayer(osmUrl, {attribution: osmAttrib}),
+    landMap = L.tileLayer(landUrl, {attribution: thunAttrib});
+
 const mymap = L.map('mapid',
 {
-    
+    layers: [osmMap],
+    minZoom: 3,
+    maxZoom: 19,
+    zoomSnap: 0.1
 }).fitWorld();
 
 mymap.locate({setView: true, maxZoom: 16});
@@ -13,15 +30,19 @@ mymap.locate({setView: true, maxZoom: 16});
 function onLocationError(e) {
     alert(e.message);
 }
-mymap.on('locationerror', onLocationError);
+mymap.on('locationerror', onLocationError);    
 
-//add the tile layer on the class, in this case i used thunderforest
+
+
+
+
+/*
 let osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    minZoom: 3,
-    maxZoom: 19,
-    zoomSnap: 0.1,
+
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-}).addTo(mymap);
+}).addTo(mymap);*/
+
+
 
 //set max bounds so map does not infinitely pan in different directions
 const southWest = L.latLng(-89.98155760646617, -180),
@@ -196,13 +217,13 @@ $(document).ready(function getUserLocationData() {
                         },
                         success: function(result){                        
                                 console.log(result.data);
-                                $('#newsHeadlineIconImgOne').html(`<a href="${result['data'][0]['url']}"><img src="${result['data'][0]['urlToImage']}" alt="headline image"></a>`);
+                                $('#newsHeadlineIconImgOne').html(`<a href="${result['data'][0]['url']}" target="_blank"><img src="${result['data'][0]['urlToImage']}" alt="headline image"></a>`);
                                 $('#newsHeadlineTxtOne').html(`<b>${result['data'][0]['description']}</b>`);
                                 
-                                $('#newsHeadlineIconImgTwo').html(`<a href="${result['data'][1]['url']}"><img src="${result['data'][1]['urlToImage']}" alt="headline image"></a>`);
+                                $('#newsHeadlineIconImgTwo').html(`<a href="${result['data'][1]['url']}" target="_blank"><img src="${result['data'][1]['urlToImage']}" alt="headline image"></a>`);
                                 $('#newsHeadlineTxtTwo').html(`<b>${result['data'][1]['description']}</b>`);
                                 
-                                $('#newsHeadlineIconImgThree').html(`<a href="${result['data'][2]['url']}"><img src="${result['data'][2]['urlToImage']}" alt="headline image"></a>`);
+                                $('#newsHeadlineIconImgThree').html(`<a href="${result['data'][2]['url']}" target="_blank"><img src="${result['data'][2]['urlToImage']}" alt="headline image"></a>`);
                                 $('#newsHeadlineTxtThree').html(`<b>${result['data'][2]['description']}</b>`);  
                         },
                         error: function(jqXHR, textStatus, errorThrown) {
@@ -393,13 +414,13 @@ $('#btnRun').click(function(){
             },
             success: function(result){
                 if (result.data[0] != undefined) {
-                    $('#newsHeadlineIconImgOne').html(`<a href="${result['data'][0]['url']}"><img src="${result['data'][0]['urlToImage']}" alt="headline image"></a>`);
+                    $('#newsHeadlineIconImgOne').html(`<a href="${result['data'][0]['url']}" target="_blank"><img src="${result['data'][0]['urlToImage']}" alt="headline image"></a>`);
                     $('#newsHeadlineTxtOne').html(`<b>${result['data'][0]['description']}</b>`);
                     
-                    $('#newsHeadlineIconImgTwo').html(`<a href="${result['data'][1]['url']}"><img src="${result['data'][1]['urlToImage']}" alt="headline image"></a>`);
+                    $('#newsHeadlineIconImgTwo').html(`<a href="${result['data'][1]['url']}" target="_blank"><img src="${result['data'][1]['urlToImage']}" alt="headline image"></a>`);
                     $('#newsHeadlineTxtTwo').html(`<b>${result['data'][1]['description']}</b>`);
                     
-                    $('#newsHeadlineIconImgThree').html(`<a href="${result['data'][2]['url']}"><img src="${result['data'][2]['urlToImage']}" alt="headline image"></a>`);
+                    $('#newsHeadlineIconImgThree').html(`<a href="${result['data'][2]['url']}" target="_blank"><img src="${result['data'][2]['urlToImage']}" alt="headline image"></a>`);
                     $('#newsHeadlineTxtThree').html(`<b>${result['data'][2]['description']}</b>`); 
                 }                    
                    
@@ -619,13 +640,13 @@ $('#locate').click(function (){
                     },
                     success: function(result){
                         if (result.data[0] != undefined) {
-                            $('#newsHeadlineIconImgOne').html(`<a href="${result['data'][0]['url']}"><img src="${result['data'][0]['urlToImage']}" alt="headline image"></a>`);
+                            $('#newsHeadlineIconImgOne').html(`<a href="${result['data'][0]['url']}" target="_blank"><img src="${result['data'][0]['urlToImage']}" alt="headline image"></a>`);
                             $('#newsHeadlineTxtOne').html(`<b>${result['data'][0]['description']}</b>`);
                             
-                            $('#newsHeadlineIconImgTwo').html(`<a href="${result['data'][1]['url']}"><img src="${result['data'][1]['urlToImage']}" alt="headline image"></a>`);
+                            $('#newsHeadlineIconImgTwo').html(`<a href="${result['data'][1]['url']}" target="_blank"><img src="${result['data'][1]['urlToImage']}" alt="headline image"></a>`);
                             $('#newsHeadlineTxtTwo').html(`<b>${result['data'][1]['description']}</b>`);
                             
-                            $('#newsHeadlineIconImgThree').html(`<a href="${result['data'][2]['url']}"><img src="${result['data'][2]['urlToImage']}" alt="headline image"></a>`);
+                            $('#newsHeadlineIconImgThree').html(`<a href="${result['data'][2]['url']}" target="_blank"><img src="${result['data'][2]['urlToImage']}" alt="headline image"></a>`);
                             $('#newsHeadlineTxtThree').html(`<b>${result['data'][2]['description']}</b>`); 
                         }                    
                            
@@ -727,11 +748,10 @@ $('#locate').click(function (){
 });
 
 
-
-
 // for layer control 
 let baseMaps = {
-    "Open Street Map": osm
+    "OSM Mapnik": osmMap,
+	"Landscape": landMap
 };
 
 let dataLayer = {
@@ -741,3 +761,5 @@ let dataLayer = {
 
 // add layer control which allows user to toggle data
 L.control.layers(baseMaps, dataLayer).addTo(mymap);
+
+

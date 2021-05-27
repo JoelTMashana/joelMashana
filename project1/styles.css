@@ -279,12 +279,17 @@ html, body, main, #mapid {
 .countryInfoIconCard, .countryInfoIconCard img {
     height: 80px;
     width: 80px;
+    transition: 0.3s;
+    
 }
 
-.countryInfoIconCard:hover .countryInfoIconCard img:hover{
-    height: 85px;
-    width: 85px
-   
+#newsHeadlineIconImgOne:hover,
+#newsHeadlineIconImgTwo:hover,
+#newsHeadlineIconImgThree:hover,
+#newsHeadlineIconImgOne img:hover,
+#newsHeadlineIconImgTwo img:hover,
+#newsHeadlineIconImgThree img:hover{
+   border: 1px solid #7DCCAB; 
 }
 
 /*icon cards content*/
