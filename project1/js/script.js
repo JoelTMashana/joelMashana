@@ -11,11 +11,14 @@ let osmLink = '<a href="http://openstreetmap.org">OpenStreetMap</a>',
 let osmUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
     osmAttrib = '&copy; ' + osmLink + ' Contributors',
     landUrl = 'https://tile.thunderforest.com/landscape/{z}/{x}/{y}.png?apikey=6d9911c3c07e404eaa8dd1c1067b8c7e',
-    thunAttrib = '&copy; '+osmLink+' Contributors & '+thunLink;
+    thunAttrib = '&copy; '+osmLink+' Contributors & '+thunLink
+    worldUrl = 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+    worldAtrrib = 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community';
 
 
 let osmMap = L.tileLayer(osmUrl, {attribution: osmAttrib}),
-    landMap = L.tileLayer(landUrl, {attribution: thunAttrib});
+    landMap = L.tileLayer(landUrl, {attribution: thunAttrib})
+    worldMap = L.tileLayer(worldUrl, {attribution: worldAtrrib});
 
 const mymap = L.map('mapid',
 {
@@ -31,17 +34,6 @@ function onLocationError(e) {
     alert(e.message);
 }
 mymap.on('locationerror', onLocationError);    
-
-
-
-
-
-/*
-let osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-}).addTo(mymap);*/
-
 
 
 //set max bounds so map does not infinitely pan in different directions
@@ -750,8 +742,9 @@ $('#locate').click(function (){
 
 // for layer control 
 let baseMaps = {
-    "OSM Mapnik": osmMap,
-	"Landscape": landMap
+    "Open street": osmMap,
+	"Landscape": landMap,
+    "World": worldMap
 };
 
 let dataLayer = {
