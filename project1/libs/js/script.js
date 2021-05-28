@@ -52,13 +52,8 @@ $(document).ready(function getCountryNameData(){
         url: "./php/getCountryBordersGeoData.php",
         type: 'POST',
         dataType: 'json',
-        success: function(result){
-             //store each value in arr
-             //sort the arr alphabetically
-             //add country options to datalist
-
+        success: function(result){            
              let countryArr = [];
-
              let countryOptions; 
              let features = result['data'];
              console.log(features);
@@ -423,7 +418,8 @@ $('#btnRun').click(function(){
                             });
                         },
                         error: function(jqXHR, textStatus, errorThrown){
-                           console.log("There was an error peforming the AJAX call!");
+                           alert('Business data not avaialble');
+                            console.log("Restaurant data not available");
                        }
                     });
                     
@@ -461,7 +457,7 @@ $('#btnRun').click(function(){
                                    });
                                 },
                                 error: function(jqXHR, textStatus, errorThrown){
-                                   console.log("There was an error peforming the AJAX call!");
+                                   console.log("Gym data not available");
                                }
                            });
                            
@@ -499,7 +495,7 @@ $('#btnRun').click(function(){
                                });
                             },
                             error: function(jqXHR, textStatus, errorThrown){
-                               console.log("There was an error peforming the AJAX call!");
+                               console.log("Salon data not available");
                            }
                            });
 
@@ -537,11 +533,11 @@ $('#btnRun').click(function(){
                                });
                             },
                             error: function(jqXHR, textStatus, errorThrown){
-                               console.log("There was an error peforming the AJAX call!");
+                               console.log("Museum data not availalbe");
                            }
                          });
 
-                            //museum data ajax call 
+                            //cocktail bar data ajax call 
                            $.ajax({
                             url: "./php/getCapitalCityCocktailBarData.php",
                             type: 'POST',
@@ -575,7 +571,7 @@ $('#btnRun').click(function(){
                                });
                             },
                             error: function(jqXHR, textStatus, errorThrown){
-                               console.log("There was an error peforming the AJAX call!");
+                               console.log("Cocktail bar data not available");
                            }
                          });
 
@@ -616,7 +612,7 @@ $('#btnRun').click(function(){
         //set view to selected country
         let lat = result['data'][0]['geometry']['lat'];
         let lng = result['data'][0]['geometry']['lng'];    
-        mymap.setView([lat,lng], 4);
+        mymap.setView([lat,lng], 4, {animate:true, duration:3.0});
 
         
       
