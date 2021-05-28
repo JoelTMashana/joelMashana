@@ -9,11 +9,12 @@
 		<title>Gazetteer</title>
 		<meta name="author" content="Joel Mashana">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-        <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="libs/styles.css">
         <link rel="stylesheet" href="boostrap/css/bootstrap.min.css">
 		<link rel="stylesheet" href="node_modules/leaflet/dist/leaflet.css">
 		<link rel="stylesheet" href="node_modules/leaflet.markercluster/dist/MarkerCluster.css">
 		<link rel="stylesheet" href="node_modules/leaflet.markercluster/dist/MarkerCluster.Default.css">
+		<link rel="stylesheet" href="css/awesome-markers.css">
 		<link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
 		<link rel="icon" href="favicon.ico"> 
@@ -31,7 +32,7 @@
 			<div class="row selectCountry">
 			  <div class="col-12">
 				  <form class="searchBox" name="form">	
-				    <input type="text" list="selCountry" class="searchTerm mt-3"  id="val" placeholder="United Kingdom">
+				    <input type="text" list="selCountry" class="searchTerm mt-3"  id="val" placeholder="Search Gazetteer">
 				 	<datalist id="selCountry"></datalist>
 				     <button type="button" class="searchBtn mt-3" id="btnRun">
 					  	<ion-icon name="search-outline" class="mx-auto my-auto"></ion-icon>
@@ -266,6 +267,7 @@
 		<script src="boostrap/js/bootstrap.min.js"></script>
 		<script type="module" src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.esm.js"></script>
         <script nomodule="" src="https://unpkg.com/ionicons@5.4.0/dist/ionicons/ionicons.js"></script>
+		<script src="js/awesome-markers.js"></script>
 		<script src="js/script.js"></script>
 	</body>
 

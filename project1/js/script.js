@@ -3,7 +3,7 @@ $(window).on('load', function(){
     $('.loader-wrapper').fadeOut('slow');
 });
 
-
+//multiple tile layer options for layer control 
 let osmLink = '<a href="http://openstreetmap.org">OpenStreetMap</a>',
     thunLink = '<a href="http://thunderforest.com/">Thunderforest</a>';
 
@@ -98,6 +98,9 @@ let ddPlusTwo = String(currDate.getDate() + 2).padStart(2, '0'),
 const kelvinToCelcius = (kelvin) => {
     return Math.floor(kelvin - 273.15);
 } 
+
+//initiase country borders before usage below
+let countryBordersGeoJsonLayer = L.geoJSON().addTo(mymap);
 
 //func which calls on doc load
 $(document).ready(function getUserLocationData() {
@@ -249,7 +252,7 @@ $(document).ready(function getUserLocationData() {
                                           if (result.status.name == "ok") {
                                             //https needs to be concatinated for url to work
                                             let wikiUrlString = 'https://' + result['data'][0]['wikipediaUrl']; 
-                                            $('#capitalCitySummaryTxt').html(`${result['data'][0]['summary']} <a href=${wikiUrlString}>more</a>`);
+                                            $('#capitalCitySummaryTxt').html(`${result['data'][0]['summary']} <a href=${wikiUrlString} target="_blank">more</a>`);
                                           }
                                       },
                                       error: function(jqXHR, textStatus, errorThrown) {
@@ -274,14 +277,12 @@ $(document).ready(function getUserLocationData() {
 
 });
 
-let businessMarkers = L.markerClusterGroup();
-mymap.addLayer(businessMarkers);
 
 let areaOfInterestMarkers = L.markerClusterGroup();
 mymap.addLayer(areaOfInterestMarkers);
 
-//temporary color marker until i find better alternative
-let greenIcon = new L.icon({
+//temporary color marker until I find better alternative
+const greenIcon = new L.icon({
     iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
     shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
     iconSize: [25, 41],
@@ -290,17 +291,297 @@ let greenIcon = new L.icon({
     shadowSize: [41, 41]
 });
 
-let goldIcon = new L.icon({
+const goldIcon = new L.icon({
     iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-gold.png',
     shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
     iconSize: [25, 41],
     iconAnchor: [12, 41],
     popupAnchor: [1, -34],
     shadowSize: [41, 41]    
-})
+});
+
+const redIcon = new L.icon({
+    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]    
+});
 
 
-let countryBordersGeoJsonLayer = L.geoJSON().addTo(mymap);
+const greyIcon = new L.icon({
+    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-grey.png',
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]    
+});
+
+const violetIcon = new L.icon({
+    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-violet.png',
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]    
+});
+
+const blackIcon = new L.icon({
+    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-black.png',
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]    
+});
+
+
+
+// ajax calls for bussiness data on country select
+
+let restaurantMarkers = L.markerClusterGroup();
+mymap.addLayer(restaurantMarkers);
+
+let gymMarkers = L.markerClusterGroup();
+mymap.addLayer(gymMarkers);
+
+let salonMarkers = L.markerClusterGroup();
+mymap.addLayer(salonMarkers);
+
+let museumMarkers = L.markerClusterGroup();
+mymap.addLayer(museumMarkers);
+
+let cocktailBarMarkers = L.markerClusterGroup();
+mymap.addLayer(cocktailBarMarkers);
+
+$('#btnRun').click(function(){
+    $.ajax({
+        url: "./php/getLocationOpenCageDataForwardGeo.php",
+        type: 'POST',
+        dataType: 'json',
+        data: {
+            placename: $('#val').val()
+        },
+        success: function(result){
+            $.ajax({
+                url: "./php/getLocationCountryInfoData.php",
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    isocode: result['data'][0]['components']['ISO_3166-1_alpha-3']
+                },
+                success: function(result){
+                    $.ajax({
+                        url: "./php/getCapitalCityRestaurantsData.php",
+                        type: 'POST',
+                        dataType: 'json',
+                        data: {
+                            placename: result['data'][0]['capital']
+                        },
+                        success: function(result){
+                            
+                            restaurantMarkers.clearLayers(); 
+                            let restaurants = result['data'];
+                            restaurants.forEach(r => {
+                               let lat = r.coordinates.latitude;
+                               let long = r.coordinates.longitude;
+                               let restaurantMarker = L.marker(
+                                   [lat, long],
+                                   {icon: redIcon}
+                                   );
+                                   restaurantMarkers.addLayer(restaurantMarker);
+                               
+                               
+                               let popup = L.popup({
+                                   maxWidth: 400
+                               })
+                                  .setLatLng([lat,long])
+                                  .setContent(`                                  
+                                  <a href="${r.url}" target="_blank"><h6>${r.name}</h6></a>
+                                  `)
+                                  .openOn(mymap);
+
+                                  restaurantMarker.bindPopup(popup);
+                            });
+                        },
+                        error: function(jqXHR, textStatus, errorThrown){
+                           console.log("There was an error peforming the AJAX call!");
+                       }
+                    });
+                    
+                            //gym data ajax call 
+                            $.ajax({
+                                url: "./php/getCapitalCityGymData.php",
+                                type: 'POST',
+                                dataType: 'json',
+                                data: {
+                                   placename: result['data'][0]['capital'] 
+                                }, 
+                                success: function(result){
+                                   gymMarkers.clearLayers(); 
+                                   let gyms = result['data'];
+                                   gyms.forEach(g => {
+                                      let lat = g.coordinates.latitude;
+                                      let long = g.coordinates.longitude;
+                                      let gymMarker = L.marker(
+                                          [lat, long],
+                                          {icon: greyIcon}
+                                          );
+                                          gymMarkers.addLayer(gymMarker);
+                                      
+                                      
+                                      let popup = L.popup({
+                                          maxWidth: 400
+                                      })
+                                         .setLatLng([lat,long])
+                                         .setContent(`                                  
+                                         <a href="${g.url}" target="_blank"><h6>${g.name}</h6></a>
+                                         `)
+                                         .openOn(mymap);
+       
+                                         gymMarker.bindPopup(popup);
+                                   });
+                                },
+                                error: function(jqXHR, textStatus, errorThrown){
+                                   console.log("There was an error peforming the AJAX call!");
+                               }
+                           });
+                           
+                             //salon data ajax call 
+                           $.ajax({
+                            url: "./php/getCapitalCitySalonData.php",
+                            type: 'POST',
+                            dataType: 'json',
+                            data: {
+                               placename: result['data'][0]['capital'] 
+                            }, 
+                            success: function(result){
+                               salonMarkers.clearLayers(); 
+                               let salons = result['data'];
+                               salons.forEach(s => {
+                                  let lat = s.coordinates.latitude;
+                                  let long = s.coordinates.longitude;
+                                  let salonMarker = L.marker(
+                                      [lat, long],
+                                      {icon: violetIcon}
+                                      );
+                                      salonMarkers.addLayer(salonMarker);
+                                  
+                                  
+                                  let popup = L.popup({
+                                      maxWidth: 400
+                                  })
+                                     .setLatLng([lat,long])
+                                     .setContent(`                                  
+                                     <a href="${s.url}" target="_blank"><h6>${s.name}</h6></a>
+                                     `)
+                                     .openOn(mymap);
+   
+                                     salonMarker.bindPopup(popup);
+                               });
+                            },
+                            error: function(jqXHR, textStatus, errorThrown){
+                               console.log("There was an error peforming the AJAX call!");
+                           }
+                           });
+
+                           //museum data ajax call 
+                           $.ajax({
+                            url: "./php/getCapitalCityMuseumData.php",
+                            type: 'POST',
+                            dataType: 'json',
+                            data: {
+                               placename: result['data'][0]['capital'] 
+                            }, 
+                            success: function(result){
+                               museumMarkers.clearLayers(); 
+                               let museums = result['data'];
+                               museums.forEach(m => {
+                                  let lat = m.coordinates.latitude;
+                                  let long = m.coordinates.longitude;
+                                  let museumMarker = L.marker(
+                                      [lat, long],
+                                      {icon: blackIcon}
+                                      );
+                                      museumMarkers.addLayer(museumMarker);
+                                  
+                                  
+                                  let popup = L.popup({
+                                      maxWidth: 400
+                                  })
+                                     .setLatLng([lat,long])
+                                     .setContent(`                                  
+                                     <a href="${m.url}" target="_blank"><h6>${m.name}</h6></a>
+                                     `)
+                                     .openOn(mymap);
+   
+                                     museumMarker.bindPopup(popup);
+                               });
+                            },
+                            error: function(jqXHR, textStatus, errorThrown){
+                               console.log("There was an error peforming the AJAX call!");
+                           }
+                         });
+
+                            //museum data ajax call 
+                           $.ajax({
+                            url: "./php/getCapitalCityCocktailBarData.php",
+                            type: 'POST',
+                            dataType: 'json',
+                            data: {
+                               placename: result['data'][0]['capital'] 
+                            }, 
+                            success: function(result){
+                               cocktailBarMarkers.clearLayers(); 
+                               let cocktailBars = result['data'];
+                               cocktailBars.forEach(c => {
+                                  let lat = c.coordinates.latitude;
+                                  let long = c.coordinates.longitude;
+                                  let cocktailBarMarker = L.marker(
+                                      [lat, long],
+                                      {icon: goldIcon}
+                                      );
+                                      cocktailBarMarkers.addLayer(cocktailBarMarker);
+                                  
+                                  
+                                  let popup = L.popup({
+                                      maxWidth: 400
+                                  })
+                                     .setLatLng([lat,long])
+                                     .setContent(`                                  
+                                     <a href="${c.url}" target="_blank"><h6>${c.name}</h6></a>
+                                     `)
+                                     .openOn(mymap);
+   
+                                     cocktailBarMarker.bindPopup(popup);
+                               });
+                            },
+                            error: function(jqXHR, textStatus, errorThrown){
+                               console.log("There was an error peforming the AJAX call!");
+                           }
+                         });
+
+
+                },
+                error: function(jqXHR, textStatus, errorThrown){
+                   console.log("There was an error peforming the AJAX call!");
+               }
+            });
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+           console.log("There was an error peforming the AJAX call!");
+       }
+    });
+});
+
+
+
+
+
+
+
 
 // ajax calls for when user selects country
 $('#btnRun').click(function(){
@@ -355,7 +636,6 @@ $('#btnRun').click(function(){
             },
             success: function(result){
                 areaOfInterestMarkers.clearLayers();
-                console.log(result['data']);
                 let areasOfInterest = result['data'];               
                 areasOfInterest.forEach(area => {
                     let areaLat = area.lat;
@@ -442,45 +722,7 @@ $('#btnRun').click(function(){
                       $('#populationTxt').html(result['data'][0]['population']);
                       $('#capitalCityNameTxt').html(`Capital city: ${result['data'][0]['capital']}`);
                       $('#cityLocationTxt').html(result['data'][0]['capital']);
-                      //yelp api search ajax call
-                      $.ajax({
-                        url: "./php/getCapitalCityBusinessData.php",
-                        type: 'POST',
-                        dataType: 'json',
-                        data: {
-                            placename: result['data'][0]['capital'],
-                        },
-                        success: function(result){
-                             businessMarkers.clearLayers(); 
-                             let businesses = result['data'];
-                             console.log(result['data']);
-                             businesses.forEach(f => {
-                                let lat = f.coordinates.latitude;
-                                let long = f.coordinates.longitude;
-                                let businessMarker = L.marker(
-                                    [lat, long],
-                                    {icon: goldIcon}
-                                    );
-                                businessMarkers.addLayer(businessMarker);
-                                
-                                
-                                let popup = L.popup({
-                                    maxWidth: 400
-                                })
-                                   .setLatLng([lat,long])
-                                   .setContent(`                                  
-                                   <a href="${f.url}" target="_blank"><h6>${f.name}</h6></a>
-                                   `)
-                                   .openOn(mymap);
 
-                                businessMarker.bindPopup(popup);
-                             });
-                        },
-                        error: function(jqXHR, textStatus, errorThrown){
-                            alert("Bussiness data currently unavailable");
-                        }
-                     });
-                      
                       //geonames ajax call
                       $.ajax({
                           url: "./php/getLocationWikiData.php",
@@ -492,7 +734,7 @@ $('#btnRun').click(function(){
                           success: function(result){
                               if (result.status.name == "ok") {
                                 let wikiUrlString = 'https://' + result['data'][0]['wikipediaUrl']; 
-                                $('#capitalCitySummaryTxt').html(`${result['data'][0]['summary']} <a href=${wikiUrlString}>more</a>`);
+                                $('#capitalCitySummaryTxt').html(`${result['data'][0]['summary']} <a href=${wikiUrlString} target="_blank">more</a>`);
                               }
                           },
                           error: function(jqXHR, textStatus, errorThrown) {
@@ -744,11 +986,15 @@ $('#locate').click(function (){
 let baseMaps = {
     "Open street": osmMap,
 	"Landscape": landMap,
-    "World": worldMap
+    "Satellite": worldMap
 };
 
 let dataLayer = {
-    "Businesses": businessMarkers,
+    "Restaurants": restaurantMarkers,
+    "Cocktail Bars": cocktailBarMarkers,
+    "Museums": museumMarkers,
+    "Gyms": gymMarkers,
+    "Salons": salonMarkers,
     "Areas of Interest": areaOfInterestMarkers
 };
 
