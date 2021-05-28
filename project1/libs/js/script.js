@@ -53,16 +53,26 @@ $(document).ready(function getCountryNameData(){
         type: 'POST',
         dataType: 'json',
         success: function(result){
-            
+             //store each value in arr
+             //sort the arr alphabetically
+             //add country options to datalist
+
+             let countryArr = [];
+
              let countryOptions; 
              let features = result['data'];
+             console.log(features);
              features.forEach( f => {
-               countryOptions+="<option value='"
-               +f.properties.name+
-               "'>"
-               +f.properties.name+
-               "</option>";
+                 countryArr.push(f.properties.name);
              });
+             countryArr.sort();
+             for(i = 0; i < countryArr.length; i++){
+                countryOptions+="<option value='"
+                +countryArr[i]+
+                "'>"
+                +countryArr[i]+
+                "</option>"; 
+             };
              $('#selCountry').html(countryOptions);            
         },
         error: function(jqXHR, textStatus, errorThrown){
@@ -70,6 +80,12 @@ $(document).ready(function getCountryNameData(){
         }        
     });
 });
+/*
+countryOptions+="<option value='"
++countryArr+
+"'>"
++countryArr+
+"</option>"; */
 
 
 //finds users location and set marker
