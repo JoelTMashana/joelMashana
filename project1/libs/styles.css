@@ -9,6 +9,109 @@ Blush: #E6537F
 Tea Green: ECFEC0
 */
 
+/*  Media Queries */
+
+@media screen and (max-width: 420px) {
+    
+    .frostedGlass {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background-attachment: fixed;
+        background-color: rgba(208, 221, 206, 0.3); 
+        border-radius: 5px 5px 12px 12px;
+    
+    }
+    .frostedGlass, 
+    .myWeatherHeaderCard,
+    .myCountryInfoHeaderCard,
+    .myCurrencyHeaderCard {
+        box-shadow: rgba(107, 105, 105, 0.753) 2px 2px 2px;
+
+    }
+    .frostedGlassTopPiece {
+        border-radius: 0 0 5px 5px;
+        background-color: rgba(208, 221, 206, 0.3); 
+    }
+    
+    .frostedGlassCenterPiece {
+        border-radius: 5px 5px;
+        background-color: rgba(208, 221, 206, 0.3); 
+    }
+    
+    .modalStyles {
+        background-color: rgb(137, 192, 209);
+        background-attachment: fixed;
+        border-radius: 12px 12px;
+    
+    }
+    /*
+    .countryInfoPanels .mainData, 
+    .countryInfoPanels p,
+    .currencyPanels .mainData,
+    .weatherPanels,
+    .heading,
+    p,
+    h1 {
+        color: #131611;
+    }
+    */ 
+  }
+
+
+  @media screen and (min-width: 420px){
+     
+.frostedGlass {
+    width: 100%;
+    height: 100%;
+    box-shadow: 0 0 1rem 0 rgba(0,0,0, .2);
+    position: relative;
+    overflow: hidden;
+    background-image:inherit; 
+    background-attachment: fixed;
+    z-index: 1;
+    border-radius: 5px 5px 12px 12px;
+
+}
+
+.frostedGlass::before {
+    content: '';
+    position: absolute;
+    background-image: inherit; 
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    box-shadow: inset 0 0 2000px rgba(255, 255, 255, .5);
+    filter: blur(10px);
+    margin: -20px;
+    z-index: -1;  
+}
+
+
+.frostedGlassTopPiece {
+    border-radius: 0 0 5px 5px;
+}
+
+.frostedGlassCenterPiece {
+    border-radius: 5px 5px; 
+}
+
+.modalStyles {
+    background-image: -webkit-linear-gradient(#0169A4, #aec0df, #c8c2db);
+    background-image: -webkit-gradient(#0169A4, #aec0df, #c8c2db);
+    background-image: -moz-linear-gradient(#0169A4, #aec0df, #c8c2db);
+    background-image: -o-linear-gradient(#0169A4, #aec0df, #c8c2db); 
+    background-attachment: fixed;
+    border-radius: 12px 12px;
+
+}
+  }
+
+
+
+
+
 
 /*preloader css*/
 
@@ -160,75 +263,20 @@ html, body, main, #mapid {
 
 /*--MODAL--*/
 
-.frostedGlass {
-    width: 100%;
-    height: 100%;
-    box-shadow: 0 0 1rem 0 rgba(0,0,0, .2);
-    position: relative;
-    overflow: hidden;
-    background-image:inherit; 
-    background-attachment: fixed;
-    z-index: 1;
-
-}
-
-/*box shadow may be causing modal issus on mobile- sort this later*/
-.frostedGlass::before {
-    content: '';
-    position: absolute;
-    background-image: inherit; 
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    box-shadow: inset 0 0 2000px rgba(255, 255, 255, .5);
-    filter: blur(10px);
-    margin: -20px;
-    z-index: -1;  
-}
-
-.frostedGlass {
-    height: auto;
-    width: auto;
-    border-radius: 5px 5px 12px 12px;
-}
-
-.frostedGlassTopPiece {
-    border-radius: 0 0 5px 5px;
-}
-
-.frostedGlassCenterPiece {
-    border-radius: 5px 5px; 
-}
-
-.modalStyles {
-    background-image: -webkit-linear-gradient(#0169A4, #aec0df, #c8c2db);
-    background-image: -webkit-gradient(#0169A4, #aec0df, #c8c2db);
-    background-image: -moz-linear-gradient(#0169A4, #aec0df, #c8c2db);
-    background-image: -o-linear-gradient(#0169A4, #aec0df, #c8c2db); 
-    background-attachment: fixed;
-    border-radius: 12px 12px;
-
-}
-
-.weatherPanels, p, h1, figcaption {
-    color: whitesmoke;
-}
-
 .weatherPanels .mainData {
     color: #7DCCAB;
 }
-.countryInfoPanels .mainData {
+
+.countryInfoPanels .mainData, 
+.countryInfoPanels p,
+.currencyPanels .mainData,
+.weatherPanels,
+.heading,
+p,
+h1 {
     color:  whitesmoke;
 }
-
-.countryInfoPanels p {
-    color: whitesmoke;
-}
-
-.currencyPanels .mainData {
-    color: whitesmoke;
-} 
+ 
 .modalSection span {
     color: #7e7e7e;  
 }
@@ -270,11 +318,6 @@ html, body, main, #mapid {
 }
 
 
-
-.myBtn {
-    color: #1E252A ;
-    background-image: linear-gradient(90deg, rgb(129,251,184, 0.5), rgb(125,204,171, 0.5));  
-}
 
 
 /*icon cards*/
@@ -349,8 +392,4 @@ ion-icon {
 
 .newsHeader {
     font-size: 0.9rem;
-}
-
-.heading {
-    color: whitesmoke;
 }
