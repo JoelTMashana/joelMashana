@@ -603,7 +603,17 @@ $('#btnRun').click(function(){
                                   })
                                      .setLatLng([lat,long])
                                      .setContent(`                                  
-                                     <a href="${c.url}" target="_blank"><h6>${c.name}</h6></a>
+                                     <div class="container-fluid">
+                                     <div class="row">
+                                       <div class="col-12">
+                                           <div class="card businessMarkerInfoIconCard mx-auto">
+                                           <a href="${c.url}" target="_blank"><img src="${c.image_url}"></a> 
+                                           </div>
+                                           <hr>
+                                           <p>${c.name}</p>
+                                       </div>
+                                     </div>
+                                   </div>
                                      `)
                                      .openOn(mymap);
    
