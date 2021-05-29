@@ -394,12 +394,13 @@ ion-icon {
     color: black;
     opacity: 0.9;
     font-weight: 700;
+    font-size: 1.05rem;
     text-decoration: none; 
 }
 
 .businessMarkerInfoIconCard, .businessMarkerInfoIconCard img {
-    height: 60px;
-    width: 60px;
+    height: 70px;
+    width: 70px;
     opacity: 1;
     border-radius: 12px 12px 12px 12px!important; 
 }
