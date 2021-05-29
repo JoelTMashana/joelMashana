@@ -166,7 +166,7 @@ html, body, main, #mapid {
     box-shadow: 0 0 1rem 0 rgba(0,0,0, .2);
     position: relative;
     overflow: hidden;
-    background-image: linear-gradient(#0169A4, #aec0df, #c8c2db); 
+    background-image:inherit; 
     background-attachment: fixed;
     z-index: 1;
 
@@ -176,7 +176,7 @@ html, body, main, #mapid {
 .frostedGlass::before {
     content: '';
     position: absolute;
-    background: inherit;
+    background-image: inherit; 
     top: 0;
     left: 0;
     right: 0;
@@ -202,7 +202,10 @@ html, body, main, #mapid {
 }
 
 .modalStyles {
-    background-image: linear-gradient(#0169A4, #aec0df, #c8c2db); 
+    background-image: -webkit-linear-gradient(#0169A4, #aec0df, #c8c2db);
+    background-image: -webkit-gradient(#0169A4, #aec0df, #c8c2db);
+    background-image: -moz-linear-gradient(#0169A4, #aec0df, #c8c2db);
+    background-image: -o-linear-gradient(#0169A4, #aec0df, #c8c2db); 
     background-attachment: fixed;
     border-radius: 12px 12px;
 
@@ -322,7 +325,7 @@ ion-icon {
 
 /*leaflet easy button styles*/
 
-.leaflet-bar {
+.leaflet-bar, .leaflet-control-layers{
     border: 1px solid #7DCCAB!important;
     border-radius: 8px 8px!important;   
 }
@@ -338,6 +341,10 @@ ion-icon {
 .leaflet-top, .leaflet-left {
     margin-top: 290px;
     
+}
+
+.leaflet-control-layers-toggle {
+    border-radius: 8px 8px!important;
 }
 
 .newsHeader {
