@@ -96,7 +96,7 @@ $(document).ready(function findLocation () {
 const showPosition = position => {
     var userLocationMarker = L.marker( [position.coords.latitude, position.coords.longitude]).addTo(mymap);
     //remember to style properly in style sheet
-    userLocationMarker.bindPopup('<p style="color: black;">You are here!</p>');
+    userLocationMarker.bindPopup('<p>You are here!</p>');
 }
 
 
@@ -392,7 +392,7 @@ $('#btnRun').click(function(){
                             placename: result['data'][0]['capital']
                         },
                         success: function(result){
-                            
+                            console.log(result.data);
                             restaurantMarkers.clearLayers(); 
                             let restaurants = result['data'];
                             restaurants.forEach(r => {
@@ -409,8 +409,18 @@ $('#btnRun').click(function(){
                                    maxWidth: 400
                                })
                                   .setLatLng([lat,long])
-                                  .setContent(`                                  
-                                  <a href="${r.url}" target="_blank"><h6>${r.name}</h6></a>
+                                  .setContent(`
+                                    <div class="container-fluid">
+                                      <div class="row">
+                                        <div class="col-12">
+                                            <div class="card businessMarkerInfoIconCard mx-auto">
+                                            <a href="${r.url}" target="_blank"><img src="${r.image_url}"></a> 
+                                            </div>
+                                            <hr>
+                                            <p>${r.name}</p>
+                                        </div>
+                                      </div>
+                                    </div>
                                   `)
                                   .openOn(mymap);
 

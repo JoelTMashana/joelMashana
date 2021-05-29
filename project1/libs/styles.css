@@ -11,7 +11,7 @@ Tea Green: ECFEC0
 
 /*  Media Queries */
 
-@media screen and (max-width: 420px) {
+@media screen and (max-width: 818px) {
     
     .frostedGlass {
         width: 100%;
@@ -45,21 +45,15 @@ Tea Green: ECFEC0
         border-radius: 12px 12px;
     
     }
-    /*
-    .countryInfoPanels .mainData, 
-    .countryInfoPanels p,
-    .currencyPanels .mainData,
-    .weatherPanels,
-    .heading,
-    p,
-    h1 {
-        color: #131611;
+    
+    .btnPill,
+    .searchBtn{
+        background-color: #7DCCAB;
     }
-    */ 
   }
 
 
-  @media screen and (min-width: 420px){
+  @media screen and (min-width: 820px){
      
 .frostedGlass {
     width: 100%;
@@ -325,8 +319,8 @@ h1 {
 .countryInfoIconCard, .countryInfoIconCard img {
     height: 80px;
     width: 80px;
-    transition: 0.3s;
-    
+    border-radius: 12px 12px 12px 12px!important;
+    transition: 0.3s;  
 }
 
 #newsHeadlineIconImgOne:hover,
@@ -347,9 +341,6 @@ h1 {
     color: #f8fffc;
 }
 
-.countryInfoIconCard, .countryInfoIconCard img {
-     border-radius: 12px 12px 12px 12px!important;
-}
 
 /*typography*/
 
@@ -392,4 +383,27 @@ ion-icon {
 
 .newsHeader {
     font-size: 0.9rem;
+}
+
+
+
+/*leaflet marker pop up styles*/
+
+.leaflet-popup-content-wrapper{
+    background-image: -webkit-linear-gradient( #aec0df, #c8c2db)!important;
+    color: black;
+    opacity: 0.9;
+    font-weight: 700;
+    text-decoration: none; 
+}
+
+.businessMarkerInfoIconCard, .businessMarkerInfoIconCard img {
+    height: 60px;
+    width: 60px;
+    opacity: 1;
+    border-radius: 12px 12px 12px 12px!important; 
+}
+
+.businessMarkerInfoIconCard img:hover{
+    border: 1px solid #7DCCAB;
 }
