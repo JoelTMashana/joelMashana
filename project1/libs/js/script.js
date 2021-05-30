@@ -438,7 +438,7 @@ $('#btnRun').click(function(){
                                         </div>
                                       </div>
                                     </div>
-                                  `)
+                                  `) 
                                   .openOn(mymap);
 
                                   restaurantMarker.bindPopup(popup);
@@ -1057,295 +1057,301 @@ $('#locate').click(function () {
         let lat = position.coords.latitude;
         let long = position.coords.longitude;
          
-             $.ajax({
-                 url: "./php/getLocationOpenCageDataReverseGeo.php",
-                 type: 'POST',
-                 dataType: 'json',
-                 data: {
-                     latitude: lat,
-                     longitude: long
-                 },
-                 success: function(result){
-                    $.ajax({
-                        url: "./php/getCapitalAreasOfInterestData.php",
-                        type: 'POST',
-                        dataType: 'json',
-                        data: {
-                            latitude: lat,
-                            longitude: long,
-                            isocode: result['data'][0]['components']['ISO_3166-1_alpha-2']
-                        },
-                        success: function(result){
-                            console.log(result.data);
-                            let areasOfInterest = result['data'];               
-                            areasOfInterest.forEach(area => {
-                                let areaLat = area.lat;
-                                let areaLng = area.lng;
-                                let areaOfInterestMarker = L.marker(
-                                    [areaLat, areaLng],
-                                    {icon: blackIcon}
-                                    );
-                                    areaOfInterestMarkers.addLayer(areaOfInterestMarker);
-                                let wikipediaUrl = 'https://' + area.wikipediaUrl;    
-                                areaOfInterestMarker.bindPopup(`<a href="${wikipediaUrl}" target="_blank"><h6 style="color: black;">${area.title}</h6></a>`);
-                            
-                            });           
-                        },
-                        error: function(jqXHR, textStatus, errorThrown) {
-                            console.log("There was an error peforming the AJAX call!");  
-                        }                          
-                     });
-
-                     $.ajax({
-                        url: "./php/getUserLocationRestaurantData.php",
-                        type: 'POST',
-                        dataType: 'json',
-                        data: {
-                            latitude: lat,
-                            longitude: long,
-                            placename: result['data'][0]['components']['town']
-                        },
-                        success: function(result){
-                            let restaurants = result['data'];
-                            restaurants.forEach(r => {
-                               let lat = r.coordinates.latitude;
-                               let long = r.coordinates.longitude;
-                               let restaurantMarker = L.marker(
-                                   [lat, long],
-                                   {icon: redIcon}
+        if (navigator.geolocation) {
+            $.ajax({
+                url: "./php/getLocationOpenCageDataReverseGeo.php",
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    latitude: lat,
+                    longitude: long
+                },
+                success: function(result){
+                   $.ajax({
+                       url: "./php/getCapitalAreasOfInterestData.php",
+                       type: 'POST',
+                       dataType: 'json',
+                       data: {
+                           latitude: lat,
+                           longitude: long,
+                           isocode: result['data'][0]['components']['ISO_3166-1_alpha-2']
+                       },
+                       success: function(result){
+                           console.log(result.data);
+                           let areasOfInterest = result['data'];               
+                           areasOfInterest.forEach(area => {
+                               let areaLat = area.lat;
+                               let areaLng = area.lng;
+                               let areaOfInterestMarker = L.marker(
+                                   [areaLat, areaLng],
+                                   {icon: blackIcon}
                                    );
-                                   restaurantMarkers.addLayer(restaurantMarker);
-                               
-                               
-                               let popup = L.popup({
-                                   maxWidth: 400
-                               })
-                                  .setLatLng([lat,long])
-                                  .setContent(`
-                                    <div class="container-fluid">
-                                      <div class="row">
-                                        <div class="col-12">
-                                            <div class="card businessMarkerInfoIconCard mx-auto">
-                                            <a href="${r.url}" target="_blank"><img src="${r.image_url}" alt="image"></a> 
-                                            </div>
-                                            <hr>
-                                            <p>${r.name}</p>
+                                   areaOfInterestMarkers.addLayer(areaOfInterestMarker);
+                               let wikipediaUrl = 'https://' + area.wikipediaUrl;    
+                               areaOfInterestMarker.bindPopup(`<a href="${wikipediaUrl}" target="_blank"><h6 style="color: black;">${area.title}</h6></a>`);
+                           
+                           });           
+                       },
+                       error: function(jqXHR, textStatus, errorThrown) {
+                           console.log("There was an error peforming the AJAX call!");  
+                       }                          
+                    });
+
+                    $.ajax({
+                       url: "./php/getUserLocationRestaurantData.php",
+                       type: 'POST',
+                       dataType: 'json',
+                       data: {
+                           latitude: lat,
+                           longitude: long,
+                           placename: result['data'][0]['components']['town']
+                       },
+                       success: function(result){
+                           let restaurants = result['data'];
+                           restaurants.forEach(r => {
+                              let lat = r.coordinates.latitude;
+                              let long = r.coordinates.longitude;
+                              let restaurantMarker = L.marker(
+                                  [lat, long],
+                                  {icon: redIcon}
+                                  );
+                                  restaurantMarkers.addLayer(restaurantMarker);
+                              
+                              
+                              let popup = L.popup({
+                                  maxWidth: 400
+                              })
+                                 .setLatLng([lat,long])
+                                 .setContent(`
+                                   <div class="container-fluid">
+                                     <div class="row">
+                                       <div class="col-12">
+                                           <div class="card businessMarkerInfoIconCard mx-auto">
+                                           <a href="${r.url}" target="_blank"><img src="${r.image_url}" alt="image"></a> 
+                                           </div>
+                                           <hr>
+                                           <p>${r.name}</p>
+                                       </div>
+                                     </div>
+                                   </div>
+                                 `)
+                                 .openOn(mymap);
+
+                                 restaurantMarker.bindPopup(popup);
+                           });
+                       },
+                       error: function(jqXHR, textStatus, errorThrown){
+                          alert('Business data not avaialble');
+                           console.log("Restaurant data not available");
+                      }
+                   });
+                   
+                           //gym data ajax call 
+                           $.ajax({
+                               url: "./php/getUserLocationGymData.php",
+                               type: 'POST',
+                               dataType: 'json',
+                               data: {
+                                   latitude: lat,
+                                   longitude: long,
+                                   placename: result['data'][0]['components']['town']
+                               }, 
+                               success: function(result){ 
+                                  let gyms = result['data'];
+                                  gyms.forEach(g => {
+                                     let lat = g.coordinates.latitude;
+                                     let long = g.coordinates.longitude;
+                                     let gymMarker = L.marker(
+                                         [lat, long],
+                                         {icon: greenIcon}
+                                         );
+                                         gymMarkers.addLayer(gymMarker);
+                                     
+                                     
+                                     let popup = L.popup({
+                                         maxWidth: 400
+                                     })
+                                        .setLatLng([lat,long])
+                                        .setContent(`                                  
+                                        <div class="container-fluid">
+                                        <div class="row">
+                                          <div class="col-12">
+                                              <div class="card businessMarkerInfoIconCard mx-auto">
+                                              <a href="${g.url}" target="_blank"><img src="${g.image_url}" alt="image"></a> 
+                                              </div>
+                                              <hr>
+                                              <p>${g.name}</p>
+                                          </div>
                                         </div>
                                       </div>
+                                        `)
+                                        .openOn(mymap);
+      
+                                        gymMarker.bindPopup(popup);
+                                  });
+                               },
+                               error: function(jqXHR, textStatus, errorThrown){
+                                  console.log("Gym data not available");
+                              }
+                          });
+                          
+                            //salon data ajax call 
+                          $.ajax({
+                           url: "./php/getUserLocationSalonData.php",
+                           type: 'POST',
+                           dataType: 'json',
+                           data: {
+                               latitude: lat,
+                               longitude: long,
+                               placename: result['data'][0]['components']['town']
+                           }, 
+                           success: function(result){ 
+                              let salons = result['data'];
+                              salons.forEach(s => {
+                                 let lat = s.coordinates.latitude;
+                                 let long = s.coordinates.longitude;
+                                 let salonMarker = L.marker(
+                                     [lat, long],
+                                     {icon: violetIcon}
+                                     );
+                                     salonMarkers.addLayer(salonMarker);
+                                 
+                                 
+                                 let popup = L.popup({
+                                     maxWidth: 400
+                                 })
+                                    .setLatLng([lat,long])
+                                    .setContent(`                                  
+                                    <div class="container-fluid">
+                                    <div class="row">
+                                      <div class="col-12">
+                                          <div class="card businessMarkerInfoIconCard mx-auto">
+                                          <a href="${s.url}" target="_blank"><img src="${s.image_url}" alt="image"></a> 
+                                          </div>
+                                          <hr>
+                                          <p>${s.name}</p>
+                                      </div>
                                     </div>
-                                  `)
-                                  .openOn(mymap);
+                                  </div>
+                                    `)
+                                    .openOn(mymap);
+  
+                                    salonMarker.bindPopup(popup);
+                              });
+                           },
+                           error: function(jqXHR, textStatus, errorThrown){
+                              console.log("Salon data not available");
+                          }
+                          });
 
-                                  restaurantMarker.bindPopup(popup);
-                            });
-                        },
-                        error: function(jqXHR, textStatus, errorThrown){
-                           alert('Business data not avaialble');
-                            console.log("Restaurant data not available");
-                       }
-                    });
-                    
-                            //gym data ajax call 
-                            $.ajax({
-                                url: "./php/getUserLocationGymData.php",
-                                type: 'POST',
-                                dataType: 'json',
-                                data: {
-                                    latitude: lat,
-                                    longitude: long,
-                                    placename: result['data'][0]['components']['town']
-                                }, 
-                                success: function(result){ 
-                                   let gyms = result['data'];
-                                   gyms.forEach(g => {
-                                      let lat = g.coordinates.latitude;
-                                      let long = g.coordinates.longitude;
-                                      let gymMarker = L.marker(
-                                          [lat, long],
-                                          {icon: greenIcon}
-                                          );
-                                          gymMarkers.addLayer(gymMarker);
-                                      
-                                      
-                                      let popup = L.popup({
-                                          maxWidth: 400
-                                      })
-                                         .setLatLng([lat,long])
-                                         .setContent(`                                  
-                                         <div class="container-fluid">
-                                         <div class="row">
-                                           <div class="col-12">
-                                               <div class="card businessMarkerInfoIconCard mx-auto">
-                                               <a href="${g.url}" target="_blank"><img src="${g.image_url}" alt="image"></a> 
-                                               </div>
-                                               <hr>
-                                               <p>${g.name}</p>
-                                           </div>
-                                         </div>
-                                       </div>
-                                         `)
-                                         .openOn(mymap);
-       
-                                         gymMarker.bindPopup(popup);
-                                   });
-                                },
-                                error: function(jqXHR, textStatus, errorThrown){
-                                   console.log("Gym data not available");
-                               }
-                           });
-                           
-                             //salon data ajax call 
-                           $.ajax({
-                            url: "./php/getUserLocationSalonData.php",
-                            type: 'POST',
-                            dataType: 'json',
-                            data: {
-                                latitude: lat,
-                                longitude: long,
-                                placename: result['data'][0]['components']['town']
-                            }, 
-                            success: function(result){ 
-                               let salons = result['data'];
-                               salons.forEach(s => {
-                                  let lat = s.coordinates.latitude;
-                                  let long = s.coordinates.longitude;
-                                  let salonMarker = L.marker(
-                                      [lat, long],
-                                      {icon: violetIcon}
-                                      );
-                                      salonMarkers.addLayer(salonMarker);
-                                  
-                                  
-                                  let popup = L.popup({
-                                      maxWidth: 400
-                                  })
-                                     .setLatLng([lat,long])
-                                     .setContent(`                                  
-                                     <div class="container-fluid">
-                                     <div class="row">
-                                       <div class="col-12">
-                                           <div class="card businessMarkerInfoIconCard mx-auto">
-                                           <a href="${s.url}" target="_blank"><img src="${s.image_url}" alt="image"></a> 
-                                           </div>
-                                           <hr>
-                                           <p>${s.name}</p>
-                                       </div>
-                                     </div>
-                                   </div>
-                                     `)
-                                     .openOn(mymap);
-   
-                                     salonMarker.bindPopup(popup);
-                               });
-                            },
-                            error: function(jqXHR, textStatus, errorThrown){
-                               console.log("Salon data not available");
-                           }
-                           });
+                          //museum data ajax call 
+                          $.ajax({
+                           url: "./php/getUserLocationMuseumData.php",
+                           type: 'POST',
+                           dataType: 'json',
+                           data: {
+                               latitude: lat,
+                               longitude: long,
+                               placename: result['data'][0]['components']['town']
+                           }, 
+                           success: function(result){ 
+                              let museums = result['data'];
+                              museums.forEach(m => {
+                                 let lat = m.coordinates.latitude;
+                                 let long = m.coordinates.longitude;
+                                 let museumMarker = L.marker(
+                                     [lat, long],
+                                     {icon: greyIcon}
+                                     );
+                                     museumMarkers.addLayer(museumMarker);
+                                 
+                                 
+                                 let popup = L.popup({
+                                     maxWidth: 400
+                                 })
+                                    .setLatLng([lat,long])
+                                    .setContent(`                                  
+                                    <div class="container-fluid">
+                                    <div class="row">
+                                      <div class="col-12">
+                                          <div class="card businessMarkerInfoIconCard mx-auto">
+                                          <a href="${m.url}" target="_blank"><img src="${m.image_url}" alt="image"></a> 
+                                          </div>
+                                          <hr>
+                                          <p>${m.name}</p>
+                                      </div>
+                                    </div>
+                                  </div>
+                                    `)
+                                    .openOn(mymap);
+  
+                                    museumMarker.bindPopup(popup);
+                              });
+                           },
+                           error: function(jqXHR, textStatus, errorThrown){
+                              console.log("Museum data not availalbe");
+                          }
+                        });
 
-                           //museum data ajax call 
-                           $.ajax({
-                            url: "./php/getUserLocationMuseumData.php",
-                            type: 'POST',
-                            dataType: 'json',
-                            data: {
-                                latitude: lat,
-                                longitude: long,
-                                placename: result['data'][0]['components']['town']
-                            }, 
-                            success: function(result){ 
-                               let museums = result['data'];
-                               museums.forEach(m => {
-                                  let lat = m.coordinates.latitude;
-                                  let long = m.coordinates.longitude;
-                                  let museumMarker = L.marker(
-                                      [lat, long],
-                                      {icon: greyIcon}
-                                      );
-                                      museumMarkers.addLayer(museumMarker);
-                                  
-                                  
-                                  let popup = L.popup({
-                                      maxWidth: 400
-                                  })
-                                     .setLatLng([lat,long])
-                                     .setContent(`                                  
-                                     <div class="container-fluid">
-                                     <div class="row">
-                                       <div class="col-12">
-                                           <div class="card businessMarkerInfoIconCard mx-auto">
-                                           <a href="${m.url}" target="_blank"><img src="${m.image_url}" alt="image"></a> 
-                                           </div>
-                                           <hr>
-                                           <p>${m.name}</p>
-                                       </div>
-                                     </div>
-                                   </div>
-                                     `)
-                                     .openOn(mymap);
-   
-                                     museumMarker.bindPopup(popup);
-                               });
-                            },
-                            error: function(jqXHR, textStatus, errorThrown){
-                               console.log("Museum data not availalbe");
-                           }
-                         });
+                           //cocktail bar data ajax call 
+                          $.ajax({
+                           url: "./php/getUserLocationCocktailBarData.php",
+                           type: 'POST',
+                           dataType: 'json',
+                           data: {
+                               latitude: lat,
+                               longitude: long,
+                               placename: result['data'][0]['components']['town']
+                           }, 
+                           success: function(result){
+                              let cocktailBars = result['data'];
+                              cocktailBars.forEach(c => {
+                                 let lat = c.coordinates.latitude;
+                                 let long = c.coordinates.longitude;
+                                 let cocktailBarMarker = L.marker(
+                                     [lat, long],
+                                     {icon: goldIcon}
+                                     );
+                                     cocktailBarMarkers.addLayer(cocktailBarMarker);
+                                 
+                                 
+                                 let popup = L.popup({
+                                     maxWidth: 400
+                                 })
+                                    .setLatLng([lat,long])
+                                    .setContent(`                                  
+                                    <div class="container-fluid">
+                                    <div class="row">
+                                      <div class="col-12">
+                                          <div class="card businessMarkerInfoIconCard mx-auto">
+                                          <a href="${c.url}" target="_blank"><img src="${c.image_url}" alt="image"></a> 
+                                          </div>
+                                          <hr>
+                                          <p>${c.name}</p>
+                                      </div>
+                                    </div>
+                                  </div>
+                                    `)
+                                    .openOn(mymap);
+  
+                                    cocktailBarMarker.bindPopup(popup);
+                              });
+                           },
+                           error: function(jqXHR, textStatus, errorThrown){
+                              console.log("Cocktail bar data not available");
+                          }
+                        });
 
-                            //cocktail bar data ajax call 
-                           $.ajax({
-                            url: "./php/getUserLocationCocktailBarData.php",
-                            type: 'POST',
-                            dataType: 'json',
-                            data: {
-                                latitude: lat,
-                                longitude: long,
-                                placename: result['data'][0]['components']['town']
-                            }, 
-                            success: function(result){
-                               let cocktailBars = result['data'];
-                               cocktailBars.forEach(c => {
-                                  let lat = c.coordinates.latitude;
-                                  let long = c.coordinates.longitude;
-                                  let cocktailBarMarker = L.marker(
-                                      [lat, long],
-                                      {icon: goldIcon}
-                                      );
-                                      cocktailBarMarkers.addLayer(cocktailBarMarker);
-                                  
-                                  
-                                  let popup = L.popup({
-                                      maxWidth: 400
-                                  })
-                                     .setLatLng([lat,long])
-                                     .setContent(`                                  
-                                     <div class="container-fluid">
-                                     <div class="row">
-                                       <div class="col-12">
-                                           <div class="card businessMarkerInfoIconCard mx-auto">
-                                           <a href="${c.url}" target="_blank"><img src="${c.image_url}" alt="image"></a> 
-                                           </div>
-                                           <hr>
-                                           <p>${c.name}</p>
-                                       </div>
-                                     </div>
-                                   </div>
-                                     `)
-                                     .openOn(mymap);
-   
-                                     cocktailBarMarker.bindPopup(popup);
-                               });
-                            },
-                            error: function(jqXHR, textStatus, errorThrown){
-                               console.log("Cocktail bar data not available");
-                           }
-                         });
+                },
+                error: function(jqXHR, textStatus, errorThrown){
+                    console.log("There was an error with the user location opencage ajax call")
+                }
+            });
 
-                 },
-                 error: function(jqXHR, textStatus, errorThrown){
-                     console.log("There was an error with the user location opencage ajax call")
-                 }
-             });
+    
+        } else {
+            alert('Geolocation is not supported by browser');
+        }
 
     });    
     
