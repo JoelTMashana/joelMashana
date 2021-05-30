@@ -398,13 +398,18 @@ ion-icon {
 /*LEAFLET*/
 
 .leaflet-bar, .leaflet-control-layers{
-    border: 1px solid #7dccab28!important;
+    border: 1px solid #7dccab00!important;
     border-radius: 8px 8px!important;   
 }
 
 .leaflet-control-layers {
     background-image: -webkit-linear-gradient( #aec0df, #c8c2db)!important;
     opacity: 0.9;
+}
+
+.leaflet-control-zoom-in,
+.leaflet-control-zoom-out {
+    background-image: -webkit-linear-gradient( #aec0df, #c8c2db);
 }
 
 .leaflet-control-zoom-in {
