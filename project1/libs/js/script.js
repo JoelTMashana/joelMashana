@@ -101,7 +101,20 @@ function functionAlert(msg, myYes) {
     confirmBox.find(".yes").click(myYes);
     confirmBox.show();
  }
+ var widths = [0, 500, 850];
 
+ function alertFunc() {
+ if (window.innerWidth>=widths[2]) {
+    functionAlert();
+ } else {
+    alert('Business data unavailable');
+ };
+
+ }
+
+ /*
+ window.onresize = alertFunc;
+ alertFunc(); */
 
 //dates for weather panels
 let currDate = new Date();
@@ -432,7 +445,7 @@ $('#btnRun').click(function(){
                             });
                         },
                         error: function(jqXHR, textStatus, errorThrown){
-                            functionAlert();
+                            alertFunc();
                             console.log("Restaurant data not available");
                        }
                     });

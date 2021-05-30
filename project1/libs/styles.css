@@ -61,6 +61,12 @@ html, body, main, #mapid {
     .searchBtn{
         background-color: #7DCCAB;
     }
+ 
+    #confirm {
+        left: 40%;
+        top: 40%;
+     }
+    
   }
 
 
@@ -122,6 +128,7 @@ html, body, main, #mapid {
     box-shadow: rgba(107, 105, 105, 0.753) 2px 2px 2px!important;     
 }   
 
+  }
 /*ALERT BOX*/
 
 #confirm {
@@ -144,6 +151,7 @@ html, body, main, #mapid {
     border-radius: 12px 12px 12px 12px;
     text-decoration: none; 
  }
+ 
  #confirm button {
     border-radius: 12px;
     border: 1px solid #7DCCAB;
