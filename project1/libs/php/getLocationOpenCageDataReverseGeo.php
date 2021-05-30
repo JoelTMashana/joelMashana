@@ -8,7 +8,7 @@
 	// these params are taken from the data part of the ajax call
 	$url='https://api.opencagedata.com/geocode/v1/json?q=' . $_POST['latitude']. ',' . $_POST['longitude'] . '&key=ee756e3c37284a8db239a456ef2be343' . '&pretty=1';
 
-	//curls obj initialised and stored in var
+	//curls obj initialised and stored in vary
 	// the API I use will speicfy what I need to copy
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);

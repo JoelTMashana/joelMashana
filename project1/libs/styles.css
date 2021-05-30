@@ -9,7 +9,18 @@ Blush: #E6537F
 Tea Green: ECFEC0
 */
 
-/*  Media Queries */
+/*--UNIVERSAL--*/
+body {
+    padding: 0;
+    margin: 0;
+}
+
+html, body, main, #mapid {
+    height: 100%;
+    width: 100vw;
+}
+
+/*MEDIA QUERIES*/
 
 @media screen and (max-width: 818px) {
     
@@ -100,14 +111,53 @@ Tea Green: ECFEC0
     border-radius: 12px 12px;
 
 }
-  }
+     
+/*for shadows on big screens*/
+
+.leaflet-bar,
+.leaflet-control-layers,
+.searchTerm,
+.searchBtn,
+.btnPill {
+    box-shadow: rgba(107, 105, 105, 0.753) 2px 2px 2px!important;     
+}   
 
 
 
+}
 
+/*ALERT BOX*/
 
+#confirm {
+    display: none;
+    background-color: #F3F5F6;
+    color: whitesmoke;
+    border: 1px solid #aaa;
+    position: fixed;
+    width: 250px;
+    height: 100px;
+    left: 40%;
+    top: 40%;
+    box-sizing: border-box;
+    text-align: center;
+    background-image: -webkit-linear-gradient(#aec0df, #c8c2db);
+    box-shadow: rgba(107, 105, 105, 0.753) 2px 2px 2px;
+    opacity: 0.9;
+    font-weight: 700;
+    font-size: 1.05rem;
+    border-radius: 12px 12px 12px 12px;
+    text-decoration: none; 
+ }
+ #confirm button {
+    border-radius: 12px;
+    border: 1px solid #7DCCAB;
+    padding: 5px;
+    text-align: center;
+    width: 60px;
+    cursor: pointer;
+ }
 
-/*preloader css*/
+/*PRELOADER CSS*/
 
 body {
     margin: 0;
@@ -165,19 +215,6 @@ body {
   }
 
 
-/*--UNIVERSAL--*/
-body {
-    padding: 0;
-    margin: 0;
-}
-
-html, body, main, #mapid {
-    height: 100%;
-    width: 100vw;
-}
-
-
-
 /*--SEARCH BAR--*/
 .selectCountry {
     width: 100%;
@@ -195,7 +232,6 @@ html, body, main, #mapid {
     border: 1px solid #7DCCAB;
     border-right: none;
     padding: 5px;
-    /*box-shadow: 3px 3px 3px #b3b4b6;*/
     border-radius: 12px 0 0 12px;
     outline: none;
     color: #9DBFAF;
@@ -206,12 +242,18 @@ html, body, main, #mapid {
   }
 
 
-   /*buttons*/
+/*BUTTONS*/
+
+.searchBtn,
+.btnPill,
+.myBtn {
+    background-image: linear-gradient(90deg, rgb(129,251,184, 0.5), rgb(125,204,171, 0.5));      
+} 
+
 .searchBtn {
     width: 40px;
     height: 45px;
-    border: 1px solid #7DCCAB;
-    background-image: linear-gradient(90deg, rgb(129,251,184, 0.5), rgb(125,204,171, 0.5));  
+    border: 1px solid #7DCCAB; 
     text-align: center;
     color: #fff;
     border-radius: 0 12px 12px 0;
@@ -221,8 +263,7 @@ html, body, main, #mapid {
     /*box-shadow: 3px 3px 3px #b3b4b6;*/
   }
 
-.btnPill {
-    background-image: linear-gradient(90deg, rgb(129,251,184, 0.5), rgb(125,204,171, 0.5));  
+.btnPill { 
     border: 1px solid #7DCCAB;
     color: black;
     padding: 4px 10px 4px 10px;
@@ -237,13 +278,13 @@ html, body, main, #mapid {
     /*box-shadow: 3px 3px 3px #b3b4b6;*/   
   }
 
-  .btnPill:hover, .searchBtn:hover, .myBtn:hover{
+.btnPill:hover, .searchBtn:hover, .myBtn:hover{
     background-color: #7DCCAB;
     cursor: pointer;
 }
 
 .btnPill:focus, .searchBtn:focus, .myBtn:focus {
-    background-color:  #ff9800;
+    background-image: -webkit-linear-gradient( #aec0df, #c8c2db);
     color: whitesmoke;
     border: 1px solid rgba(255, 255, 255, 0)
 }
@@ -252,7 +293,6 @@ html, body, main, #mapid {
 #mapid {
     position: fixed;
 }
-
 
 
 /*--MODAL--*/
@@ -312,8 +352,6 @@ h1 {
 }
 
 
-
-
 /*icon cards*/
 
 .countryInfoIconCard, .countryInfoIconCard img {
@@ -357,13 +395,17 @@ ion-icon {
 
 
 
-/*leaflet easy button styles*/
+/*LEAFLET*/
 
 .leaflet-bar, .leaflet-control-layers{
-    border: 1px solid #7DCCAB!important;
+    border: 1px solid #7dccab28!important;
     border-radius: 8px 8px!important;   
 }
 
+.leaflet-control-layers {
+    background-image: -webkit-linear-gradient( #aec0df, #c8c2db)!important;
+    opacity: 0.9;
+}
 
 .leaflet-control-zoom-in {
     border-radius: 8px 8px 0 0!important;
@@ -402,7 +444,8 @@ ion-icon {
     height: 70px;
     width: 70px;
     opacity: 1;
-    border-radius: 12px 12px 12px 12px!important; 
+    border-radius: 12px 12px 12px 12px!important;
+    box-shadow: rgba(128, 128, 128, 0.8) 3px 3px 3px; 
 }
 
 .businessMarkerInfoIconCard img:hover{
