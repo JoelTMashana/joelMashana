@@ -122,17 +122,13 @@ html, body, main, #mapid {
     box-shadow: rgba(107, 105, 105, 0.753) 2px 2px 2px!important;     
 }   
 
-
-
-}
-
 /*ALERT BOX*/
 
 #confirm {
     display: none;
     background-color: #F3F5F6;
     color: whitesmoke;
-    border: 1px solid #aaa;
+    border: 1px solid #7dccab17;
     position: fixed;
     width: 250px;
     height: 100px;
@@ -277,6 +273,10 @@ body {
     border-radius: 16px;
     /*box-shadow: 3px 3px 3px #b3b4b6;*/   
   }
+
+.myBtn {
+    border-radius: 12px 12px 12px 12px!important;
+}
 
 .btnPill:hover, .searchBtn:hover, .myBtn:hover{
     background-color: #7DCCAB;
@@ -433,11 +433,13 @@ ion-icon {
 
 .leaflet-popup-content-wrapper{
     background-image: -webkit-linear-gradient( #aec0df, #c8c2db)!important;
-    color: black;
-    opacity: 0.9;
-    font-weight: 700;
-    font-size: 1.05rem;
-    text-decoration: none; 
+    opacity: 0.9; 
+}
+
+.leaflet-control-layers-list {
+     color: whitesmoke;
+     font-weight: 700;
+
 }
 
 .businessMarkerInfoIconCard, .businessMarkerInfoIconCard img {
