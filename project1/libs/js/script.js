@@ -25,7 +25,7 @@ const mymap = L.map('mapid',
     layers: [osmMap],
     minZoom: 3,
     maxZoom: 19,
-    zoomSnap: 0.1
+    zoomSnap: 0.01
 }).fitWorld();
 
 mymap.locate({setView: true, maxZoom: 16});
@@ -92,6 +92,23 @@ const showPosition = position => {
 }
 
 
+
+//style alert box when user click on any position on the map
+function functionAlertTwo(msg, myYes) {
+    var confirmBox = $("#confirmTwo");
+    confirmBox.find(".messageTwo").text(msg);
+    confirmBox.find(".yesTwo").unbind().click(function() {
+       confirmBox.hide();
+    });
+    confirmBox.find(".yesTwo").click(myYes);
+    confirmBox.show();
+ } 
+
+mymap.on('click', function(e) {
+    functionAlertTwo();
+});
+
+//styled alert when user selects country with no business data
 function functionAlert(msg, myYes) {
     var confirmBox = $("#confirm");
     confirmBox.find(".message").text(msg);
@@ -101,20 +118,18 @@ function functionAlert(msg, myYes) {
     confirmBox.find(".yes").click(myYes);
     confirmBox.show();
  }
+ //screen widths
  var widths = [0, 500, 850];
 
+ //styles alert box only shows on small to medium screens
+ //otherwise normal alert box 
  function alertFunc() {
  if (window.innerWidth>=widths[2]) {
     functionAlert();
  } else {
     alert('Business data unavailable');
+    }
  };
-
- }
-
- /*
- window.onresize = alertFunc;
- alertFunc(); */
 
 //dates for weather panels
 let currDate = new Date();
@@ -383,7 +398,7 @@ mymap.addLayer(museumMarkers);
 let cocktailBarMarkers = L.markerClusterGroup();
 mymap.addLayer(cocktailBarMarkers);
 
-
+//places markers down on search 
 $('#btnRun').click(function(){
     $.ajax({
         url: "./php/getLocationOpenCageDataForwardGeo.php",
@@ -466,7 +481,7 @@ $('#btnRun').click(function(){
                                       let long = g.coordinates.longitude;
                                       let gymMarker = L.marker(
                                           [lat, long],
-                                          {icon: greyIcon}
+                                          {icon: greenIcon}
                                           );
                                           gymMarkers.addLayer(gymMarker);
                                       
@@ -562,7 +577,7 @@ $('#btnRun').click(function(){
                                   let long = m.coordinates.longitude;
                                   let museumMarker = L.marker(
                                       [lat, long],
-                                      {icon: blackIcon}
+                                      {icon: greyIcon}
                                       );
                                       museumMarkers.addLayer(museumMarker);
                                   
@@ -714,7 +729,7 @@ $('#btnRun').click(function(){
                     let areaLng = area.lng;
                     let areaOfInterestMarker = L.marker(
                         [areaLat, areaLng],
-                        {icon: greenIcon}
+                        {icon: blackIcon}
                         );
                         areaOfInterestMarkers.addLayer(areaOfInterestMarker);
                     let wikipediaUrl = 'https://' + area.wikipediaUrl;    
@@ -1056,8 +1071,7 @@ $('#locate').click(function () {
     navigator.geolocation.getCurrentPosition(function(position) {
         let lat = position.coords.latitude;
         let long = position.coords.longitude;
-         
-        if (navigator.geolocation) {
+        
             $.ajax({
                 url: "./php/getLocationOpenCageDataReverseGeo.php",
                 type: 'POST',
@@ -1077,7 +1091,7 @@ $('#locate').click(function () {
                            isocode: result['data'][0]['components']['ISO_3166-1_alpha-2']
                        },
                        success: function(result){
-                           console.log(result.data);
+                        areasOfInterestMarkers.clearLayers(); 
                            let areasOfInterest = result['data'];               
                            areasOfInterest.forEach(area => {
                                let areaLat = area.lat;
@@ -1107,6 +1121,7 @@ $('#locate').click(function () {
                            placename: result['data'][0]['components']['town']
                        },
                        success: function(result){
+                        restaurantMarkers.clearLayers();
                            let restaurants = result['data'];
                            restaurants.forEach(r => {
                               let lat = r.coordinates.latitude;
@@ -1156,7 +1171,8 @@ $('#locate').click(function () {
                                    longitude: long,
                                    placename: result['data'][0]['components']['town']
                                }, 
-                               success: function(result){ 
+                               success: function(result){
+                                gymMarkers.clearLayers(); 
                                   let gyms = result['data'];
                                   gyms.forEach(g => {
                                      let lat = g.coordinates.latitude;
@@ -1205,7 +1221,8 @@ $('#locate').click(function () {
                                longitude: long,
                                placename: result['data'][0]['components']['town']
                            }, 
-                           success: function(result){ 
+                           success: function(result){
+                            salonMarkers.clearLayers(); 
                               let salons = result['data'];
                               salons.forEach(s => {
                                  let lat = s.coordinates.latitude;
@@ -1257,6 +1274,7 @@ $('#locate').click(function () {
                            success: function(result){ 
                               let museums = result['data'];
                               museums.forEach(m => {
+                                 museumMarkers.clearLayers();
                                  let lat = m.coordinates.latitude;
                                  let long = m.coordinates.longitude;
                                  let museumMarker = L.marker(
@@ -1304,6 +1322,7 @@ $('#locate').click(function () {
                                placename: result['data'][0]['components']['town']
                            }, 
                            success: function(result){
+                            cocktailBarMarkers.clearLayers(); 
                               let cocktailBars = result['data'];
                               cocktailBars.forEach(c => {
                                  let lat = c.coordinates.latitude;
@@ -1347,12 +1366,6 @@ $('#locate').click(function () {
                     console.log("There was an error with the user location opencage ajax call")
                 }
             });
-
-    
-        } else {
-            alert('Geolocation is not supported by browser');
-        }
-
     });    
     
 });

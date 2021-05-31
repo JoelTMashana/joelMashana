@@ -12,6 +12,7 @@
         <link rel="stylesheet" href="libs/styles.css">
         <link rel="stylesheet" href="vendors/boostrap/css/bootstrap.min.css">
 		<link rel="stylesheet" href="node_modules/leaflet/dist/leaflet.css">
+		<link rel="stylesheet" href="http://code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css">
 		<link rel="stylesheet" href="node_modules/leaflet.markercluster/dist/MarkerCluster.css">
 		<link rel="stylesheet" href="node_modules/leaflet.markercluster/dist/MarkerCluster.Default.css">
 		<link rel="stylesheet" href="vendors/dist/awesome-markers.css">
@@ -24,8 +25,46 @@
 		
 	
 		<!--map-->
-		<div id="mapid"></div> 
-		<!--alert box-->
+		<div id="mapid"></div>
+
+
+		<!--map click alert box-->
+		<div id="confirmTwo">
+			<div class="row">
+				<div class="col-4">
+				   <!--img-->
+				</div>    
+				   <div class="col-6">
+					   <div class="row">
+							<div class="col-12">
+								<p class="messageTwo my-auto">Location</p><br>
+								<p class="messageTwo my-auto">Lat Long</p>
+							</div>
+					   </div> 
+				   </div> 
+			             <div class="col-2">
+							<button class="yesTwo ml-4">
+								<ion-icon name="close-outline"></ion-icon>
+							</button>
+						 </div>
+		    </div>
+		 </div> 
+		
+		
+	 
+		
+
+		<!--
+			 
+			 	                <div id="confirmTwo">
+									<div class="messageTwo my-auto">Location</div><br>
+									<button class="yesTwo ml-5">
+										<ion-icon name="close-outline"></ion-icon>
+									</button>
+								 </div>
+
+		-->
+		<!--business data alert box-->
 		<div id="confirm">
 			<div class="message my-auto">Business data unavailable</div><br>
 			<button class="yes myBtn">OK</button>
