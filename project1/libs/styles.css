@@ -169,7 +169,7 @@ html, body, main, #mapid {
     border: 1px solid #7dccab17;
     position: fixed;
     width:420px;
-    height: 75px;
+    height: 80px;
     left: 5%;
     top: 90%;
     box-sizing: border-box;
@@ -205,6 +205,13 @@ html, body, main, #mapid {
      color: #a8a5a5;
  }
 
+ /*icon card*/
+ .mapClickAlertInfoIconCard, .mapClickAlertInfoIconCard img  {
+    height: 72px;
+    width: 100px;
+    border-radius: 12px 12px 12px 12px!important;
+    transition: 0.3s; 
+ }
 
 /*PRELOADER CSS*/
 
