@@ -168,10 +168,10 @@ html, body, main, #mapid {
     color: whitesmoke;
     border: 1px solid #7dccab17;
     position: fixed;
-    width:420px;
-    height: 80px;
+    width:450px;
+    height:100px;
     left: 5%;
-    top: 90%;
+    top: 88%;
     box-sizing: border-box;
     text-align: left;
     background-image: -webkit-linear-gradient(#aec0df, #c8c2db);
@@ -216,7 +216,7 @@ html, body, main, #mapid {
  }
  /*icon card*/
  .mapClickAlertInfoIconCard, .mapClickAlertInfoIconCard img  {
-    height: 72px;
+    height: 90px;
     width: 100px;
     border-radius: 12px 12px 12px 12px!important;
     transition: 0.3s; 

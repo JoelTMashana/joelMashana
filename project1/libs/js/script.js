@@ -92,6 +92,82 @@ const showPosition = position => {
 }
 
 
+//markers
+let areaOfInterestMarkers = L.markerClusterGroup();
+mymap.addLayer(areaOfInterestMarkers);
+
+//temporary color marker until I find better alternative
+const greenIcon = new L.icon({
+    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+});
+
+const goldIcon = new L.icon({
+    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-gold.png',
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]    
+});
+
+const redIcon = new L.icon({
+    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]    
+});
+
+
+const greyIcon = new L.icon({
+    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-grey.png',
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]    
+});
+
+const violetIcon = new L.icon({
+    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-violet.png',
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]    
+});
+
+const blackIcon = new L.icon({
+    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-black.png',
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]    
+});
+
+
+let restaurantMarkers = L.markerClusterGroup();
+mymap.addLayer(restaurantMarkers);
+
+let gymMarkers = L.markerClusterGroup();
+mymap.addLayer(gymMarkers);
+
+let salonMarkers = L.markerClusterGroup();
+mymap.addLayer(salonMarkers);
+
+let museumMarkers = L.markerClusterGroup();
+mymap.addLayer(museumMarkers);
+
+let cocktailBarMarkers = L.markerClusterGroup();
+mymap.addLayer(cocktailBarMarkers);
+
 //style alert box when user click on any position on the map
 function functionAlertTwo(msg, myYes) {
     var confirmBox = $("#confirmTwo");
@@ -110,7 +186,12 @@ function functionAlertTwo(msg, myYes) {
 //ajax calls for modal info
 //ajax calls for marker info
 
+let theMarker = {};
 mymap.on('click', function(e) {
+    if (theMarker != undefined){
+         mymap.removeLayer(theMarker);
+    };
+    theMarker = L.marker([e.latlng.lat, e.latlng.lng]).addTo(mymap);
     functionAlertTwo();
     $('.latLongTxt ').html(e.latlng.lat + ',' + e.latlng.lng);
     //ajax call to opencage
@@ -124,8 +205,20 @@ mymap.on('click', function(e) {
         },
         success: function(result){
             console.log(result.data);
-            $('.countyNameText').html(result['data'][0]['components']['county']);
-            $('.townNameTxt').html(`${result['data'][0]['components']['town']}, ${result['data'][0]['components']['road']}`);
+            //writes to the alert box 
+            if(result['data'][0]['components']['city'] != undefined){
+                $('.townNameTxt').html(`${result['data'][0]['components']['city'] }, ${result['data'][0]['components']['road']}`);
+            } else if(result['data'][0]['components']['town'] != undefined) {
+                $('.townNameTxt').html(`${result['data'][0]['components']['town'] }, ${result['data'][0]['components']['road']}`);
+            } else if(result['data'][0]['components']['state'] != undefined){
+                $('.townNameTxt').html(`${result['data'][0]['components']['state'] }, ${result['data'][0]['components']['road']}`);
+            }
+
+            if(result['data'][0]['components']['county'] != undefined){
+                $('.countyNameText').html(result['data'][0]['components']['county']);
+            } else {
+                $('.countyNameText').html(result['data'][0]['components']['country']);
+            }
         },
         error: function(jqXHR, textStatus, errorThrown){
              console.log("There was an error with the map click ajax call!");
@@ -350,83 +443,6 @@ $(document).ready(function getUserLocationData() {
 });
 
 
-let areaOfInterestMarkers = L.markerClusterGroup();
-mymap.addLayer(areaOfInterestMarkers);
-
-//temporary color marker until I find better alternative
-const greenIcon = new L.icon({
-    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
-    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34],
-    shadowSize: [41, 41]
-});
-
-const goldIcon = new L.icon({
-    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-gold.png',
-    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34],
-    shadowSize: [41, 41]    
-});
-
-const redIcon = new L.icon({
-    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
-    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34],
-    shadowSize: [41, 41]    
-});
-
-
-const greyIcon = new L.icon({
-    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-grey.png',
-    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34],
-    shadowSize: [41, 41]    
-});
-
-const violetIcon = new L.icon({
-    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-violet.png',
-    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34],
-    shadowSize: [41, 41]    
-});
-
-const blackIcon = new L.icon({
-    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-black.png',
-    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34],
-    shadowSize: [41, 41]    
-});
-
-
-
-// ajax calls for bussiness data on country select
-
-let restaurantMarkers = L.markerClusterGroup();
-mymap.addLayer(restaurantMarkers);
-
-let gymMarkers = L.markerClusterGroup();
-mymap.addLayer(gymMarkers);
-
-let salonMarkers = L.markerClusterGroup();
-mymap.addLayer(salonMarkers);
-
-let museumMarkers = L.markerClusterGroup();
-mymap.addLayer(museumMarkers);
-
-let cocktailBarMarkers = L.markerClusterGroup();
-mymap.addLayer(cocktailBarMarkers);
 
 //places markers down on search 
 $('#btnRun').click(function(){
