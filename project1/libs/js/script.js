@@ -108,6 +108,12 @@ mymap.on('click', function(e) {
     functionAlertTwo();
 });
 
+mymap.on('click', function(e) {
+    const lat = e.latlng.lat;
+    const lng = e.latlng.lng;
+    $('.latLongTxt ').html(lat + ',' + lng);
+});
+
 //styled alert when user selects country with no business data
 function functionAlert(msg, myYes) {
     var confirmBox = $("#confirm");

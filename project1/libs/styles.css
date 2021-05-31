@@ -201,10 +201,19 @@ html, body, main, #mapid {
 
  /*text*/
  #confirmTwo span {
-     font-weight: 400;
+     font-weight: 300;
      color: #a8a5a5;
+     font-size: 0.8rem;
  }
 
+ #confirmTwo  .townNameTxt {
+     color: whitesmoke;
+ }
+
+ #townNameTxt{
+     font-size: 0.8rem!important;
+     font-weight: 400!important;
+ }
  /*icon card*/
  .mapClickAlertInfoIconCard, .mapClickAlertInfoIconCard img  {
     height: 72px;
