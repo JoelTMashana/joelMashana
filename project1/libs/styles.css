@@ -183,7 +183,7 @@ html, body, main, #mapid {
     text-decoration: none; 
  }
  
-
+/*buttons*/
  #confirmTwo button {
     background-color: rgba(255, 255, 255, 0);
     border: 0px solid rgba(255, 255, 255, 0);
@@ -197,6 +197,12 @@ html, body, main, #mapid {
 
  #confirmTwo button ion-icon:hover {
     color: #757474;
+ }
+
+ /*text*/
+ #confirmTwo span {
+     font-weight: 400;
+     color: #a8a5a5;
  }
 
 
