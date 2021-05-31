@@ -92,7 +92,6 @@ const showPosition = position => {
 }
 
 
-
 //style alert box when user click on any position on the map
 function functionAlertTwo(msg, myYes) {
     var confirmBox = $("#confirmTwo");
@@ -104,15 +103,36 @@ function functionAlertTwo(msg, myYes) {
     confirmBox.show();
  } 
 
-mymap.on('click', function(e) {
-    functionAlertTwo();
-});
+
+//reverse geocode to get open cage data necessary for ajax calls
+// - need the county name to write to countyNameText
+// - need town name to write to townNameTxt
+//ajax calls for modal info
+//ajax calls for marker info
 
 mymap.on('click', function(e) {
-    const lat = e.latlng.lat;
-    const lng = e.latlng.lng;
-    $('.latLongTxt ').html(lat + ',' + lng);
+    functionAlertTwo();
+    $('.latLongTxt ').html(e.latlng.lat + ',' + e.latlng.lng);
+    //ajax call to opencage
+    $.ajax({
+        url: "./php/getLocationOpenCageDataReverseGeo.php",
+        type: 'POST',
+        dataType: 'json',
+        data: {
+            latitude: e.latlng.lat,
+            longitude: e.latlng.lng
+        },
+        success: function(result){
+            console.log(result.data);
+            $('.countyNameText').html(result['data'][0]['components']['county']);
+            $('.townNameTxt').html(`${result['data'][0]['components']['town']}, ${result['data'][0]['components']['road']}`);
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+             console.log("There was an error with the map click ajax call!");
+        }
+    });
 });
+
 
 //styled alert when user selects country with no business data
 function functionAlert(msg, myYes) {
@@ -124,6 +144,7 @@ function functionAlert(msg, myYes) {
     confirmBox.find(".yes").click(myYes);
     confirmBox.show();
  }
+
  //screen widths
  var widths = [0, 500, 850];
 
@@ -137,11 +158,14 @@ function functionAlert(msg, myYes) {
     }
  };
 
+
 //dates for weather panels
 let currDate = new Date();
 let ddPlusTwo = String(currDate.getDate() + 2).padStart(2, '0'),
     ddPlusThree = String(currDate.getDate() + 3).padStart(2, '0'),
     ddPlusFour = String(currDate.getDate() + 4).padStart(2, '0');
+
+    
 //openweather data conversion
 const kelvinToCelcius = (kelvin) => {
     return Math.floor(kelvin - 273.15);
