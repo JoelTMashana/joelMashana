@@ -180,12 +180,7 @@ function functionAlertTwo(msg, myYes) {
  } 
 
 
-//reverse geocode to get open cage data necessary for ajax calls
-// - need the county name to write to countyNameText
-// - need town name to write to townNameTxt
-//ajax calls for modal info
-//ajax calls for marker info
-//creates marker on map on click and writes html to alert box
+
 let theMarker = {};
 mymap.on('click', function(e) {
     if (theMarker != undefined){
