@@ -22,6 +22,15 @@ html, body, main, #mapid {
 
 /*MEDIA QUERIES*/
 
+@media screen and (max-width: 767px) {
+   #confirmTwo {
+    width: 99%;
+    height:150px;
+    margin-left: 1px;
+    margin-right: 1px;
+   }
+}
+
 @media screen and (max-width: 818px) {
     
     .frostedGlass {
@@ -68,9 +77,6 @@ html, body, main, #mapid {
      }
     /*styles below adjust size of laert box on mobiles and removes the search button*/
     #confirmTwo {
-        width: 340px;
-        height:150px;
-        left: 4.5%;
         top: 78%;
     }
     #confirmTwo .yesTwo ion-icon {
