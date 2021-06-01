@@ -185,7 +185,7 @@ function functionAlertTwo(msg, myYes) {
 // - need town name to write to townNameTxt
 //ajax calls for modal info
 //ajax calls for marker info
-
+//creates marker on map on click and writes html to alert box
 let theMarker = {};
 mymap.on('click', function(e) {
     if (theMarker != undefined){
@@ -204,7 +204,6 @@ mymap.on('click', function(e) {
             longitude: e.latlng.lng
         },
         success: function(result){
-            console.log(result.data);
             //writes to the alert box 
             if(result['data'][0]['components']['city'] != undefined){
                 $('.townNameTxt').html(`${result['data'][0]['components']['city'] }, ${result['data'][0]['components']['road']}`);
@@ -224,6 +223,294 @@ mymap.on('click', function(e) {
              console.log("There was an error with the map click ajax call!");
         }
     });
+    
+   
+    
+    $('.btnRun').click(function(){
+        restaurantMarkers.clearLayers();
+        gymMarkers.clearLayers();
+        salonMarkers.clearLayers();
+        museumMarkers .clearLayers();
+        cocktailBarMarkers.clearLayers(); 
+        mymap.setView([e.latlng.lat, e.latlng.lng],6);
+        $.ajax({
+           url: "./php/getLocationOpenCageDataReverseGeo.php",
+           type: 'POST',
+           dataType: 'json',
+           data: {
+            latitude: e.latlng.lat,
+            longitude: e.latlng.lng
+           },
+           success: function(result){
+            console.log(result.data);
+            let town = result['data'][0]['components']['town'];
+            let city = result['data'][0]['components']['city']
+            const placeName = [];
+            if (result['data'][0]['components']['town'] != undefined){
+                placeName.push(town);
+            } else if (result['data'][0]['components']['city'] != undefined) {
+                placeName.push(city)
+            }
+
+            console.log(placeName[0]);
+            $.ajax({
+                url: "./php/getUserLocationRestaurantData.php",
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    latitude: e.latlng.lat,
+                    longitude: e.latlng.lng,
+                    placename: placeName[0]
+                },
+                success: function(result){
+                 restaurantMarkers.clearLayers();
+                    let restaurants = result['data'];
+                    restaurants.forEach(r => {
+                       let lat = r.coordinates.latitude;
+                       let long = r.coordinates.longitude;
+                       let restaurantMarker = L.marker(
+                           [lat, long],
+                           {icon: redIcon}
+                           );
+                           restaurantMarkers.addLayer(restaurantMarker);
+                       
+                       
+                       let popup = L.popup({
+                           maxWidth: 400
+                       })
+                          .setLatLng([lat,long])
+                          .setContent(`
+                            <div class="container-fluid">
+                              <div class="row">
+                                <div class="col-12">
+                                    <div class="card businessMarkerInfoIconCard mx-auto">
+                                    <a href="${r.url}" target="_blank"><img src="${r.image_url}" alt="image"></a> 
+                                    </div>
+                                    <hr>
+                                    <p>${r.name}</p>
+                                </div>
+                              </div>
+                            </div>
+                          `)
+                          .openOn(mymap);
+
+                          restaurantMarker.bindPopup(popup);
+                    });
+                },
+                error: function(jqXHR, textStatus, errorThrown){
+                   alert('Business data not avaialble');
+                    console.log("Restaurant data not available");
+               }
+            });
+
+            
+                           //gym data ajax call 
+                           $.ajax({
+                            url: "./php/getUserLocationGymData.php",
+                            type: 'POST',
+                            dataType: 'json',
+                            data: {
+                                latitude: e.latlng.lat,
+                                longitude: e.latlng.lng,
+                                placename: placeName[0]
+                            }, 
+                            success: function(result){
+                             gymMarkers.clearLayers(); 
+                               let gyms = result['data'];
+                               gyms.forEach(g => {
+                                  let lat = g.coordinates.latitude;
+                                  let long = g.coordinates.longitude;
+                                  let gymMarker = L.marker(
+                                      [lat, long],
+                                      {icon: greenIcon}
+                                      );
+                                      gymMarkers.addLayer(gymMarker);
+                                  
+                                  
+                                  let popup = L.popup({
+                                      maxWidth: 400
+                                  })
+                                     .setLatLng([lat,long])
+                                     .setContent(`                                  
+                                     <div class="container-fluid">
+                                     <div class="row">
+                                       <div class="col-12">
+                                           <div class="card businessMarkerInfoIconCard mx-auto">
+                                           <a href="${g.url}" target="_blank"><img src="${g.image_url}" alt="image"></a> 
+                                           </div>
+                                           <hr>
+                                           <p>${g.name}</p>
+                                       </div>
+                                     </div>
+                                   </div>
+                                     `)
+                                     .openOn(mymap);
+   
+                                     gymMarker.bindPopup(popup);
+                               });
+                            },
+                            error: function(jqXHR, textStatus, errorThrown){
+                               console.log("Gym data not available");
+                           }
+                       });
+                       
+                         //salon data ajax call 
+                       $.ajax({
+                        url: "./php/getUserLocationSalonData.php",
+                        type: 'POST',
+                        dataType: 'json',
+                        data: {
+                            latitude: e.latlng.lat,
+                            longitude: e.latlng.lng,
+                            placename: placeName[0]
+                        }, 
+                        success: function(result){
+                         salonMarkers.clearLayers(); 
+                           let salons = result['data'];
+                           salons.forEach(s => {
+                              let lat = s.coordinates.latitude;
+                              let long = s.coordinates.longitude;
+                              let salonMarker = L.marker(
+                                  [lat, long],
+                                  {icon: violetIcon}
+                                  );
+                                  salonMarkers.addLayer(salonMarker);
+                              
+                              
+                              let popup = L.popup({
+                                  maxWidth: 400
+                              })
+                                 .setLatLng([lat,long])
+                                 .setContent(`                                  
+                                 <div class="container-fluid">
+                                 <div class="row">
+                                   <div class="col-12">
+                                       <div class="card businessMarkerInfoIconCard mx-auto">
+                                       <a href="${s.url}" target="_blank"><img src="${s.image_url}" alt="image"></a> 
+                                       </div>
+                                       <hr>
+                                       <p>${s.name}</p>
+                                   </div>
+                                 </div>
+                               </div>
+                                 `)
+                                 .openOn(mymap);
+
+                                 salonMarker.bindPopup(popup);
+                           });
+                        },
+                        error: function(jqXHR, textStatus, errorThrown){
+                           console.log("Salon data not available");
+                       }
+                       });
+
+                       //museum data ajax call 
+                       $.ajax({
+                        url: "./php/getUserLocationMuseumData.php",
+                        type: 'POST',
+                        dataType: 'json',
+                        data: {
+                            latitude: e.latlng.lat,
+                            longitude: e.latlng.lng,
+                            placename: placeName[0]
+                        }, 
+                        success: function(result){ 
+                           let museums = result['data'];
+                           museums.forEach(m => {
+                              museumMarkers.clearLayers();
+                              let lat = m.coordinates.latitude;
+                              let long = m.coordinates.longitude;
+                              let museumMarker = L.marker(
+                                  [lat, long],
+                                  {icon: greyIcon}
+                                  );
+                                  museumMarkers.addLayer(museumMarker);
+                              
+                              
+                              let popup = L.popup({
+                                  maxWidth: 400
+                              })
+                                 .setLatLng([lat,long])
+                                 .setContent(`                                  
+                                 <div class="container-fluid">
+                                 <div class="row">
+                                   <div class="col-12">
+                                       <div class="card businessMarkerInfoIconCard mx-auto">
+                                       <a href="${m.url}" target="_blank"><img src="${m.image_url}" alt="image"></a> 
+                                       </div>
+                                       <hr>
+                                       <p>${m.name}</p>
+                                   </div>
+                                 </div>
+                               </div>
+                                 `)
+                                 .openOn(mymap);
+
+                                 museumMarker.bindPopup(popup);
+                           });
+                        },
+                        error: function(jqXHR, textStatus, errorThrown){
+                           console.log("Museum data not availalbe");
+                       }
+                     });
+
+                        //cocktail bar data ajax call 
+                       $.ajax({
+                        url: "./php/getUserLocationCocktailBarData.php",
+                        type: 'POST',
+                        dataType: 'json',
+                        data: {
+                            latitude: e.latlng.lat,
+                            longitude: e.latlng.lng,
+                            placename: placeName[0]
+                        }, 
+                        success: function(result){
+                         cocktailBarMarkers.clearLayers(); 
+                           let cocktailBars = result['data'];
+                           cocktailBars.forEach(c => {
+                              let lat = c.coordinates.latitude;
+                              let long = c.coordinates.longitude;
+                              let cocktailBarMarker = L.marker(
+                                  [lat, long],
+                                  {icon: goldIcon}
+                                  );
+                                  cocktailBarMarkers.addLayer(cocktailBarMarker);
+                              
+                              
+                              let popup = L.popup({
+                                  maxWidth: 400
+                              })
+                                 .setLatLng([lat,long])
+                                 .setContent(`                                  
+                                 <div class="container-fluid">
+                                 <div class="row">
+                                   <div class="col-12">
+                                       <div class="card businessMarkerInfoIconCard mx-auto">
+                                       <a href="${c.url}" target="_blank"><img src="${c.image_url}" alt="image"></a> 
+                                       </div>
+                                       <hr>
+                                       <p>${c.name}</p>
+                                   </div>
+                                 </div>
+                               </div>
+                                 `)
+                                 .openOn(mymap);
+
+                                 cocktailBarMarker.bindPopup(popup);
+                           });
+                        },
+                        error: function(jqXHR, textStatus, errorThrown){
+                           console.log("Cocktail bar data not available");
+                       }
+                     });
+                    placeName.pop();
+           },
+           error: function(jqXHR, textStatus, errorThrown){
+                console.log("There was an error with the map click ajax call!");
+           }
+        });
+    });
+
 });
 
 
@@ -266,7 +553,6 @@ const kelvinToCelcius = (kelvin) => {
 
 //initiase country borders before usage below
 let countryBordersGeoJsonLayer = L.geoJSON().addTo(mymap);
-
 //func which calls on doc load
 $(document).ready(function getUserLocationData() {
     //store users current lat and long so its accessible for all calls        
@@ -441,7 +727,6 @@ $(document).ready(function getUserLocationData() {
     });
 
 });
-
 
 
 //places markers down on search 
