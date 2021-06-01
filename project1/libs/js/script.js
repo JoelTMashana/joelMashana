@@ -168,18 +168,6 @@ mymap.addLayer(museumMarkers);
 let cocktailBarMarkers = L.markerClusterGroup();
 mymap.addLayer(cocktailBarMarkers);
 
-//style alert box when user click on any position on the map
-function functionAlertTwo(msg, myYes) {
-    var confirmBox = $("#confirmTwo");
-    confirmBox.find(".messageTwo").text(msg);
-    confirmBox.find(".yesTwo").unbind().click(function() {
-       confirmBox.hide();
-    });
-    confirmBox.find(".yesTwo").click(myYes);
-    confirmBox.show();
- } 
-
-
 
 let theMarker = {};
 mymap.on('click', function(e) {
@@ -218,294 +206,6 @@ mymap.on('click', function(e) {
              console.log("There was an error with the map click ajax call!");
         }
     });
-    
-   
-    
-    $('.btnRun').click(function(){
-        restaurantMarkers.clearLayers();
-        gymMarkers.clearLayers();
-        salonMarkers.clearLayers();
-        museumMarkers .clearLayers();
-        cocktailBarMarkers.clearLayers(); 
-        mymap.setView([e.latlng.lat, e.latlng.lng],6);
-        $.ajax({
-           url: "./php/getLocationOpenCageDataReverseGeo.php",
-           type: 'POST',
-           dataType: 'json',
-           data: {
-            latitude: e.latlng.lat,
-            longitude: e.latlng.lng
-           },
-           success: function(result){
-            console.log(result.data);
-            let town = result['data'][0]['components']['town'];
-            let city = result['data'][0]['components']['city']
-            const placeName = [];
-            if (result['data'][0]['components']['town'] != undefined){
-                placeName.push(town);
-            } else if (result['data'][0]['components']['city'] != undefined) {
-                placeName.push(city)
-            }
-
-            console.log(placeName[0]);
-            $.ajax({
-                url: "./php/getUserLocationRestaurantData.php",
-                type: 'POST',
-                dataType: 'json',
-                data: {
-                    latitude: e.latlng.lat,
-                    longitude: e.latlng.lng,
-                    placename: placeName[0]
-                },
-                success: function(result){
-                 restaurantMarkers.clearLayers();
-                    let restaurants = result['data'];
-                    restaurants.forEach(r => {
-                       let lat = r.coordinates.latitude;
-                       let long = r.coordinates.longitude;
-                       let restaurantMarker = L.marker(
-                           [lat, long],
-                           {icon: redIcon}
-                           );
-                           restaurantMarkers.addLayer(restaurantMarker);
-                       
-                       
-                       let popup = L.popup({
-                           maxWidth: 400
-                       })
-                          .setLatLng([lat,long])
-                          .setContent(`
-                            <div class="container-fluid">
-                              <div class="row">
-                                <div class="col-12">
-                                    <div class="card businessMarkerInfoIconCard mx-auto">
-                                    <a href="${r.url}" target="_blank"><img src="${r.image_url}" alt="image"></a> 
-                                    </div>
-                                    <hr>
-                                    <p>${r.name}</p>
-                                </div>
-                              </div>
-                            </div>
-                          `)
-                          .openOn(mymap);
-
-                          restaurantMarker.bindPopup(popup);
-                    });
-                },
-                error: function(jqXHR, textStatus, errorThrown){
-                   alert('Business data not avaialble');
-                    console.log("Restaurant data not available");
-               }
-            });
-
-            
-                           //gym data ajax call 
-                           $.ajax({
-                            url: "./php/getUserLocationGymData.php",
-                            type: 'POST',
-                            dataType: 'json',
-                            data: {
-                                latitude: e.latlng.lat,
-                                longitude: e.latlng.lng,
-                                placename: placeName[0]
-                            }, 
-                            success: function(result){
-                             gymMarkers.clearLayers(); 
-                               let gyms = result['data'];
-                               gyms.forEach(g => {
-                                  let lat = g.coordinates.latitude;
-                                  let long = g.coordinates.longitude;
-                                  let gymMarker = L.marker(
-                                      [lat, long],
-                                      {icon: greenIcon}
-                                      );
-                                      gymMarkers.addLayer(gymMarker);
-                                  
-                                  
-                                  let popup = L.popup({
-                                      maxWidth: 400
-                                  })
-                                     .setLatLng([lat,long])
-                                     .setContent(`                                  
-                                     <div class="container-fluid">
-                                     <div class="row">
-                                       <div class="col-12">
-                                           <div class="card businessMarkerInfoIconCard mx-auto">
-                                           <a href="${g.url}" target="_blank"><img src="${g.image_url}" alt="image"></a> 
-                                           </div>
-                                           <hr>
-                                           <p>${g.name}</p>
-                                       </div>
-                                     </div>
-                                   </div>
-                                     `)
-                                     .openOn(mymap);
-   
-                                     gymMarker.bindPopup(popup);
-                               });
-                            },
-                            error: function(jqXHR, textStatus, errorThrown){
-                               console.log("Gym data not available");
-                           }
-                       });
-                       
-                         //salon data ajax call 
-                       $.ajax({
-                        url: "./php/getUserLocationSalonData.php",
-                        type: 'POST',
-                        dataType: 'json',
-                        data: {
-                            latitude: e.latlng.lat,
-                            longitude: e.latlng.lng,
-                            placename: placeName[0]
-                        }, 
-                        success: function(result){
-                         salonMarkers.clearLayers(); 
-                           let salons = result['data'];
-                           salons.forEach(s => {
-                              let lat = s.coordinates.latitude;
-                              let long = s.coordinates.longitude;
-                              let salonMarker = L.marker(
-                                  [lat, long],
-                                  {icon: violetIcon}
-                                  );
-                                  salonMarkers.addLayer(salonMarker);
-                              
-                              
-                              let popup = L.popup({
-                                  maxWidth: 400
-                              })
-                                 .setLatLng([lat,long])
-                                 .setContent(`                                  
-                                 <div class="container-fluid">
-                                 <div class="row">
-                                   <div class="col-12">
-                                       <div class="card businessMarkerInfoIconCard mx-auto">
-                                       <a href="${s.url}" target="_blank"><img src="${s.image_url}" alt="image"></a> 
-                                       </div>
-                                       <hr>
-                                       <p>${s.name}</p>
-                                   </div>
-                                 </div>
-                               </div>
-                                 `)
-                                 .openOn(mymap);
-
-                                 salonMarker.bindPopup(popup);
-                           });
-                        },
-                        error: function(jqXHR, textStatus, errorThrown){
-                           console.log("Salon data not available");
-                       }
-                       });
-
-                       //museum data ajax call 
-                       $.ajax({
-                        url: "./php/getUserLocationMuseumData.php",
-                        type: 'POST',
-                        dataType: 'json',
-                        data: {
-                            latitude: e.latlng.lat,
-                            longitude: e.latlng.lng,
-                            placename: placeName[0]
-                        }, 
-                        success: function(result){ 
-                           let museums = result['data'];
-                           museums.forEach(m => {
-                              museumMarkers.clearLayers();
-                              let lat = m.coordinates.latitude;
-                              let long = m.coordinates.longitude;
-                              let museumMarker = L.marker(
-                                  [lat, long],
-                                  {icon: greyIcon}
-                                  );
-                                  museumMarkers.addLayer(museumMarker);
-                              
-                              
-                              let popup = L.popup({
-                                  maxWidth: 400
-                              })
-                                 .setLatLng([lat,long])
-                                 .setContent(`                                  
-                                 <div class="container-fluid">
-                                 <div class="row">
-                                   <div class="col-12">
-                                       <div class="card businessMarkerInfoIconCard mx-auto">
-                                       <a href="${m.url}" target="_blank"><img src="${m.image_url}" alt="image"></a> 
-                                       </div>
-                                       <hr>
-                                       <p>${m.name}</p>
-                                   </div>
-                                 </div>
-                               </div>
-                                 `)
-                                 .openOn(mymap);
-
-                                 museumMarker.bindPopup(popup);
-                           });
-                        },
-                        error: function(jqXHR, textStatus, errorThrown){
-                           console.log("Museum data not availalbe");
-                       }
-                     });
-
-                        //cocktail bar data ajax call 
-                       $.ajax({
-                        url: "./php/getUserLocationCocktailBarData.php",
-                        type: 'POST',
-                        dataType: 'json',
-                        data: {
-                            latitude: e.latlng.lat,
-                            longitude: e.latlng.lng,
-                            placename: placeName[0]
-                        }, 
-                        success: function(result){
-                         cocktailBarMarkers.clearLayers(); 
-                           let cocktailBars = result['data'];
-                           cocktailBars.forEach(c => {
-                              let lat = c.coordinates.latitude;
-                              let long = c.coordinates.longitude;
-                              let cocktailBarMarker = L.marker(
-                                  [lat, long],
-                                  {icon: goldIcon}
-                                  );
-                                  cocktailBarMarkers.addLayer(cocktailBarMarker);
-                              
-                              
-                              let popup = L.popup({
-                                  maxWidth: 400
-                              })
-                                 .setLatLng([lat,long])
-                                 .setContent(`                                  
-                                 <div class="container-fluid">
-                                 <div class="row">
-                                   <div class="col-12">
-                                       <div class="card businessMarkerInfoIconCard mx-auto">
-                                       <a href="${c.url}" target="_blank"><img src="${c.image_url}" alt="image"></a> 
-                                       </div>
-                                       <hr>
-                                       <p>${c.name}</p>
-                                   </div>
-                                 </div>
-                               </div>
-                                 `)
-                                 .openOn(mymap);
-
-                                 cocktailBarMarker.bindPopup(popup);
-                           });
-                        },
-                        error: function(jqXHR, textStatus, errorThrown){
-                           console.log("Cocktail bar data not available");
-                       }
-                     });
-                    placeName.pop();
-           },
-           error: function(jqXHR, textStatus, errorThrown){
-                console.log("There was an error with the map click ajax call!");
-           }
-        });
-    });
-
 });
 
 
@@ -519,6 +219,16 @@ function functionAlert(msg, myYes) {
     confirmBox.find(".yes").click(myYes);
     confirmBox.show();
  }
+//style alert box when user click on any position on the map
+function functionAlertTwo(msg, myYes) {
+    var confirmBox = $("#confirmTwo");
+    confirmBox.find(".messageTwo").text(msg);
+    confirmBox.find(".yesTwo").unbind().click(function() {
+       confirmBox.hide();
+    });
+    confirmBox.find(".yesTwo").click(myYes);
+    confirmBox.show();
+ } 
 
  //screen widths
  var widths = [0, 500, 850];
@@ -576,20 +286,20 @@ $(document).ready(function getUserLocationData() {
                     //panel one
                     $('#weatherPanelOneDescriptionText').html(result['data'][0]['weather'][0]['description']);
                     $('#weatherPanelOneTemp').html(`${kelvinToCelcius(result['data'][0]['temp']['day'])}<span>°</span>`);
-                    $('#weatherPanelOneIcon').html(`<img src="http://openweathermap.org/img/wn/${result['data'][0]['weather'][0]['icon']}@2x.png">`);
+                    $('#weatherPanelOneIcon').html(`<img src="https://openweathermap.org/img/wn/${result['data'][0]['weather'][0]['icon']}@2x.png">`);
                     //panel two
-                    $('#weatherPanelTwoIcon').html(`<img src="http://openweathermap.org/img/wn/${result['data'][1]['weather'][0]['icon']}@2x.png">`);
+                    $('#weatherPanelTwoIcon').html(`<img src="https://openweathermap.org/img/wn/${result['data'][1]['weather'][0]['icon']}@2x.png">`);
                     $('#weatherPanelTwoTemp').html(`H:${kelvinToCelcius(result['data'][1]['temp']['max'])}<span>°</span> L:${kelvinToCelcius(result['data'][1]['temp']['min'])}<span>°</span>`); 
                     //panel three
-                    $('#weatherPanelThreeIcon').html(`<img src="http://openweathermap.org/img/wn/${result['data'][2]['weather'][0]['icon']}@2x.png">`);
+                    $('#weatherPanelThreeIcon').html(`<img src="https://openweathermap.org/img/wn/${result['data'][2]['weather'][0]['icon']}@2x.png">`);
                     $('#weatherPanelThreeTemp').html(`H:${kelvinToCelcius(result['data'][2]['temp']['max'])}<span>°</span> L:${kelvinToCelcius(result['data'][2]['temp']['min'])}<span>°</span>`);
                     $('#currDatePlusTwo').html(`${ddPlusTwo}th`);
                     //panel four
-                    $('#weatherPanelFourIcon').html(`<img src="http://openweathermap.org/img/wn/${result['data'][3]['weather'][0]['icon']}@2x.png">`);
+                    $('#weatherPanelFourIcon').html(`<img src="https://openweathermap.org/img/wn/${result['data'][3]['weather'][0]['icon']}@2x.png">`);
                     $('#weatherPanelFourTemp').html(`H:${kelvinToCelcius(result['data'][3]['temp']['max'])}<span>°</span> L:${kelvinToCelcius(result['data'][3]['temp']['min'])}<span>°</span>`);
                     $('#currDatePlusThree').html(`${ddPlusThree}th`); 
                     //panel five
-                    $('#weatherPanelFiveIcon').html(`<img src="http://openweathermap.org/img/wn/${result['data'][4]['weather'][0]['icon']}@2x.png">`);
+                    $('#weatherPanelFiveIcon').html(`<img src="https://openweathermap.org/img/wn/${result['data'][4]['weather'][0]['icon']}@2x.png">`);
                     $('#weatherPanelFiveTemp').html(`H:${kelvinToCelcius(result['data'][4]['temp']['max'])}<span>°</span> L:${kelvinToCelcius(result['data'][4]['temp']['min'])}<span>°</span>`);
                     $('#currDatePlusFour').html(`${ddPlusFour}th`);
                 }
@@ -631,8 +341,7 @@ $(document).ready(function getUserLocationData() {
                     });
                     
                     //next ajax calls which depends on data from previous
-                     /*openexchangerates ajax call
-                     let isoCode = result['data'][0]['annotations']['currency']['iso_code'];
+                     let isoCodeCurrency = result['data'][0]['annotations']['currency']['iso_code'];
                      $.ajax({
                         url: "./php/getLocationExchangeData.php",
                         type: 'POST',
@@ -641,7 +350,7 @@ $(document).ready(function getUserLocationData() {
                         
                             let rates = result['data'];                           
                             for (let key in rates) {
-                               if(key == isoCode){
+                               if(key == isoCodeCurrency){
                                    $('#exchangeRatesTxt').html(`1 USD = ${(rates[key])} ${isoCode}`);
                                } 
                             }
@@ -651,7 +360,7 @@ $(document).ready(function getUserLocationData() {
                         error: function(jqXHR, textStatus, errorThrown) {
                             console.log("There was an error peforming the AJAX call!");  
                         }                          
-                     });*/
+                     });
 
                      //newsapi ajax call
                      $.ajax({
@@ -755,7 +464,6 @@ $('#btnRun').click(function(){
                             placename: result['data'][0]['capital']
                         },
                         success: function(result){
-                            console.log(result.data);
                             restaurantMarkers.clearLayers(); 
                             let restaurants = result['data'];
                             restaurants.forEach(r => {
@@ -1074,8 +782,8 @@ $('#btnRun').click(function(){
          }); 
             
 
-       /*openexchangerates ajax call
-       let isoCode = result['data'][0]['annotations']['currency']['iso_code'];
+       
+       let isoCodeCurrency = result['data'][0]['annotations']['currency']['iso_code'];
        
        $.ajax({
           url: "./php/getLocationExchangeData.php",
@@ -1085,7 +793,7 @@ $('#btnRun').click(function(){
           
               let rates = result['data'];                           
               for (let key in rates) {
-                 if(key == isoCode){
+                 if(key == isoCodeCurrency){
                      $('#exchangeRatesTxt').html(`1 USD = ${(rates[key])} ${isoCode}`);
                  } 
               }          
@@ -1093,7 +801,7 @@ $('#btnRun').click(function(){
           error: function(jqXHR, textStatus, errorThrown) {
               console.log("There was an error peforming the AJAX call!");  
           }                          
-       }); */    
+       });  
         
          //newsapi ajax call
          $.ajax({
@@ -1180,20 +888,20 @@ $('#btnRun').click(function(){
                     //panel one
                     $('#weatherPanelOneDescriptionText').html(result['data'][0]['weather'][0]['description']);
                     $('#weatherPanelOneTemp').html(`${kelvinToCelcius(result['data'][0]['temp']['day'])}<span>°</span>`);
-                    $('#weatherPanelOneIcon').html(`<img src="http://openweathermap.org/img/wn/${result['data'][0]['weather'][0]['icon']}@2x.png">`);
+                    $('#weatherPanelOneIcon').html(`<img src="https://openweathermap.org/img/wn/${result['data'][0]['weather'][0]['icon']}@2x.png">`);
                     //panel two
-                    $('#weatherPanelTwoIcon').html(`<img src="http://openweathermap.org/img/wn/${result['data'][1]['weather'][0]['icon']}@2x.png">`);
+                    $('#weatherPanelTwoIcon').html(`<img src="https://openweathermap.org/img/wn/${result['data'][1]['weather'][0]['icon']}@2x.png">`);
                     $('#weatherPanelTwoTemp').html(`H:${kelvinToCelcius(result['data'][1]['temp']['max'])}<span>°</span> L:${kelvinToCelcius(result['data'][1]['temp']['min'])}<span>°</span>`); 
                     //panel three
-                    $('#weatherPanelThreeIcon').html(`<img src="http://openweathermap.org/img/wn/${result['data'][2]['weather'][0]['icon']}@2x.png">`);
+                    $('#weatherPanelThreeIcon').html(`<img src="https://openweathermap.org/img/wn/${result['data'][2]['weather'][0]['icon']}@2x.png">`);
                     $('#weatherPanelThreeTemp').html(`H:${kelvinToCelcius(result['data'][2]['temp']['max'])}<span>°</span> L:${kelvinToCelcius(result['data'][2]['temp']['min'])}<span>°</span>`);
                     $('#currDatePlusTwo').html(`${ddPlusTwo}th`);
                     //panel four
-                    $('#weatherPanelFourIcon').html(`<img src="http://openweathermap.org/img/wn/${result['data'][3]['weather'][0]['icon']}@2x.png">`);
+                    $('#weatherPanelFourIcon').html(`<img src="https://openweathermap.org/img/wn/${result['data'][3]['weather'][0]['icon']}@2x.png">`);
                     $('#weatherPanelFourTemp').html(`H:${kelvinToCelcius(result['data'][3]['temp']['max'])}<span>°</span> L:${kelvinToCelcius(result['data'][3]['temp']['min'])}<span>°</span>`);
                     $('#currDatePlusThree').html(`${ddPlusThree}th`); 
                     //panel five
-                    $('#weatherPanelFiveIcon').html(`<img src="http://openweathermap.org/img/wn/${result['data'][4]['weather'][0]['icon']}@2x.png">`);
+                    $('#weatherPanelFiveIcon').html(`<img src="https://openweathermap.org/img/wn/${result['data'][4]['weather'][0]['icon']}@2x.png">`);
                     $('#weatherPanelFiveTemp').html(`H:${kelvinToCelcius(result['data'][4]['temp']['max'])}<span>°</span> L:${kelvinToCelcius(result['data'][4]['temp']['min'])}<span>°</span>`);
                     $('#currDatePlusFour').html(`${ddPlusFour}th`);
 
@@ -1259,8 +967,8 @@ $('#locate').click(function (){
             });      
             
                
-            /*openexchangerates ajax call
-               let isoCode = result['data'][0]['annotations']['currency']['iso_code'];
+            
+               let isoCodeCurrency = result['data'][0]['annotations']['currency']['iso_code'];
        
                $.ajax({
                     url: "./php/getLocationExchangeData.php",
@@ -1270,7 +978,7 @@ $('#locate').click(function (){
           
                          let rates = result['data'];                           
                          for (let key in rates) {
-                            if(key == isoCode){
+                            if(key == isoCodeCurrency){
                                 $('#exchangeRatesTxt').html(`1 USD = ${(rates[key])} ${isoCode}`);
                             } 
                          }          
@@ -1278,7 +986,7 @@ $('#locate').click(function (){
                  error: function(jqXHR, textStatus, errorThrown) {
                         console.log("There was an error peforming the AJAX call!");  
                     }                               
-                }); */
+                }); 
                 
                 //news ajax call
                 $.ajax({
@@ -1364,20 +1072,20 @@ $('#locate').click(function (){
                             //panel one
                             $('#weatherPanelOneDescriptionText').html(result['data'][0]['weather'][0]['description']);
                             $('#weatherPanelOneTemp').html(`${kelvinToCelcius(result['data'][0]['temp']['day'])}<span>°</span>`);
-                            $('#weatherPanelOneIcon').html(`<img src="http://openweathermap.org/img/wn/${result['data'][0]['weather'][0]['icon']}@2x.png">`);
+                            $('#weatherPanelOneIcon').html(`<img src="https://openweathermap.org/img/wn/${result['data'][0]['weather'][0]['icon']}@2x.png">`);
                             //panel two
-                            $('#weatherPanelTwoIcon').html(`<img src="http://openweathermap.org/img/wn/${result['data'][1]['weather'][0]['icon']}@2x.png">`);
+                            $('#weatherPanelTwoIcon').html(`<img src="https://openweathermap.org/img/wn/${result['data'][1]['weather'][0]['icon']}@2x.png">`);
                             $('#weatherPanelTwoTemp').html(`H:${kelvinToCelcius(result['data'][1]['temp']['max'])}<span>°</span> L:${kelvinToCelcius(result['data'][1]['temp']['min'])}<span>°</span>`); 
                             //panel three
-                            $('#weatherPanelThreeIcon').html(`<img src="http://openweathermap.org/img/wn/${result['data'][2]['weather'][0]['icon']}@2x.png">`);
+                            $('#weatherPanelThreeIcon').html(`<img src="https://openweathermap.org/img/wn/${result['data'][2]['weather'][0]['icon']}@2x.png">`);
                             $('#weatherPanelThreeTemp').html(`H:${kelvinToCelcius(result['data'][2]['temp']['max'])}<span>°</span> L:${kelvinToCelcius(result['data'][2]['temp']['min'])}<span>°</span>`);
                             $('#currDatePlusTwo').html(`${ddPlusTwo}th`);
                             //panel four
-                            $('#weatherPanelFourIcon').html(`<img src="http://openweathermap.org/img/wn/${result['data'][3]['weather'][0]['icon']}@2x.png">`);
+                            $('#weatherPanelFourIcon').html(`<img src="https://openweathermap.org/img/wn/${result['data'][3]['weather'][0]['icon']}@2x.png">`);
                             $('#weatherPanelFourTemp').html(`H:${kelvinToCelcius(result['data'][3]['temp']['max'])}<span>°</span> L:${kelvinToCelcius(result['data'][3]['temp']['min'])}<span>°</span>`);
                             $('#currDatePlusThree').html(`${ddPlusThree}th`); 
                             //panel five
-                            $('#weatherPanelFiveIcon').html(`<img src="http://openweathermap.org/img/wn/${result['data'][4]['weather'][0]['icon']}@2x.png">`);
+                            $('#weatherPanelFiveIcon').html(`<img src="https://openweathermap.org/img/wn/${result['data'][4]['weather'][0]['icon']}@2x.png">`);
                             $('#weatherPanelFiveTemp').html(`H:${kelvinToCelcius(result['data'][4]['temp']['max'])}<span>°</span> L:${kelvinToCelcius(result['data'][4]['temp']['min'])}<span>°</span>`);
                             $('#currDatePlusFour').html(`${ddPlusFour}th`);
         
@@ -1422,7 +1130,7 @@ $('#locate').click(function () {
                            isocode: result['data'][0]['components']['ISO_3166-1_alpha-2']
                        },
                        success: function(result){
-                        areasOfInterestMarkers.clearLayers(); 
+                        areaOfInterestMarkers.clearLayers(); 
                            let areasOfInterest = result['data'];               
                            areasOfInterest.forEach(area => {
                                let areaLat = area.lat;
