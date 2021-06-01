@@ -22,15 +22,6 @@ html, body, main, #mapid {
 
 /*MEDIA QUERIES*/
 
-@media screen and (max-width: 767px) {
-   #confirmTwo {
-    width: 99%;
-    height:150px;
-    margin-left: 1px;
-    margin-right: 1px;
-   }
-}
-
 @media screen and (max-width: 818px) {
     
     .frostedGlass {
@@ -75,23 +66,6 @@ html, body, main, #mapid {
         left: 40%;
         top: 40%;
      }
-    /*styles below adjust size of laert box on mobiles and removes the search button*/
-    #confirmTwo {
-        top: 78%;
-    }
-    #confirmTwo .yesTwo ion-icon {
-         margin-left: -30px;
-         color: #757474;
-    }
-    #confirmTwo .btnRun ion-icon {
-        display: none;
-   }
-    .mapClickAlertInfoIconCard, .mapClickAlertInfoIconCard img  {
-        height: 60px;
-        width: 70px;
-        border-radius: 12px 12px 12px 12px!important;
-        transition: 0.3s; 
-     } 
     
   }
 
@@ -154,22 +128,6 @@ html, body, main, #mapid {
     box-shadow: rgba(107, 105, 105, 0.753) 4px 4px 4px!important;     
 }   
 
- /*icon card*/
- .mapClickAlertInfoIconCard, .mapClickAlertInfoIconCard img  {
-    height: 90px;
-    width: 100px;
-    border-radius: 12px 12px 12px 12px!important;
-    transition: 0.3s; 
- }
-
- #confirmTwo {
-    width: 500px;
-    height: 100px;
-    left: 5%;
-    top: 87.5%;
- }
- 
-
   }
 /*ALERT BOX*/
 
@@ -210,6 +168,10 @@ html, body, main, #mapid {
     color: whitesmoke;
     border: 1px solid #7dccab17;
     position: fixed;
+    width: 500px;
+    height:100px;
+    left: 5%;
+    top: 88%;
     box-sizing: border-box;
     text-align: left;
     background-image: -webkit-linear-gradient(#aec0df, #c8c2db);
@@ -261,7 +223,13 @@ html, body, main, #mapid {
      font-size: 0.8rem!important;
      font-weight: 400!important;
  }
-
+ /*icon card*/
+ .mapClickAlertInfoIconCard, .mapClickAlertInfoIconCard img  {
+    height: 90px;
+    width: 100px;
+    border-radius: 12px 12px 12px 12px!important;
+    transition: 0.3s; 
+ }
 
 /*PRELOADER CSS*/
 

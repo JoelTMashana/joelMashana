@@ -187,7 +187,7 @@ mymap.on('click', function(e) {
          mymap.removeLayer(theMarker);
     };
     theMarker = L.marker([e.latlng.lat, e.latlng.lng]).addTo(mymap);
-    functionAlertTwo();
+    alertFuncTwo();
     $('.latLongTxt ').html(e.latlng.lat + ',' + e.latlng.lng);
     //ajax call to opencage
     $.ajax({
@@ -528,12 +528,17 @@ function functionAlert(msg, myYes) {
  function alertFunc() {
  if (window.innerWidth>=widths[2]) {
     functionAlert();
+    functionAlertTwo();
  } else {
     alert('Business data unavailable');
     }
  };
 
-
+ function alertFuncTwo() {
+    if (window.innerWidth>=widths[2]) {
+       functionAlertTwo();
+    } 
+};
 //dates for weather panels
 let currDate = new Date();
 let ddPlusTwo = String(currDate.getDate() + 2).padStart(2, '0'),
