@@ -1,14 +1,3 @@
-/*--COLOURS--*/
-/*
-Eton Blue: #7DCCAB
-Ocean Green: #73BB9E
-Tan: #D8C39B
-Charleston Green: #1E252A 
-light off green: #9DBFAF
-Blush: #E6537F
-Tea Green: ECFEC0
-*/
-
 /*--UNIVERSAL--*/
 body {
     padding: 0;
@@ -270,7 +259,7 @@ body {
     vertical-align: top;
     display: inline-block;
     width: 100%;
-    background-color: #ff9800;
+    background-color: #daa85d;
     animation: loader-inner 2s infinite ease-in;
   }
   @keyframes loader {

@@ -28,7 +28,6 @@ const mymap = L.map('mapid',
     zoomSnap: 0.01
 }).fitWorld();
 
-mymap.locate({setView: true, maxZoom: 16});
 //error message if locating user fails
 function onLocationError(e) {
     alert(e.message);
@@ -74,23 +73,6 @@ $(document).ready(function getCountryNameData(){
         }        
     });
 });
-
-//finds users location and set marker
-$(document).ready(function findLocation () {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition);
-
-    } else {
-        alert('Geolocation is not supported by browser');
-    }
-});
-
-const showPosition = position => {
-    var userLocationMarker = L.marker( [position.coords.latitude, position.coords.longitude]).addTo(mymap);
-    //remember to style properly in style sheet
-    userLocationMarker.bindPopup('<p>You are here!</p>');
-}
-
 
 //markers
 let areaOfInterestMarkers = L.markerClusterGroup();
@@ -308,6 +290,7 @@ $(document).ready(function getUserLocationData() {
                 console.log("There was an error peforming the AJAX call!");  
             }
         });
+        
         //opencage ajax call
         $.ajax({
             url: "./php/getLocationOpenCageDataReverseGeo.php",

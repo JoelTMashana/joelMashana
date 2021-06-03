@@ -44,3 +44,4 @@
 	// echo prints the output via the json_encode func
 	// which returns a string containing the JSON representation of the supplied value
 	echo json_encode($output);
+	?>
