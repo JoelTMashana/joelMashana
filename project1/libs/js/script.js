@@ -134,6 +134,12 @@ const blackIcon = new L.icon({
     shadowSize: [41, 41]    
 });
 
+const redMarker = L.AwesomeMarkers.icon({
+    icon: 'coffee',
+    markerColor: 'red'
+});
+
+L.marker([51.941196,4.512291], {icon: redMarker}).addTo(mymap);
 
 let restaurantMarkers = L.markerClusterGroup();
 mymap.addLayer(restaurantMarkers);
@@ -243,8 +249,6 @@ const kelvinToCelcius = (kelvin) => {
     return Math.floor(kelvin - 273.15);
 } 
 
-//initiase country borders before usage below
-let countryBordersGeoJsonLayer = L.geoJSON().addTo(mymap);
 //func which calls on doc load
 $(document).ready(function getUserLocationData() {
     //store users current lat and long so its accessible for all calls        
@@ -692,6 +696,17 @@ $('#btnRun').click(function(){
     });
 });
 
+function style(feature) {
+    return {
+        fillColor: '#7DCCAB',
+        fillOpacity: 0.1,
+        weight: 2,
+        opacity: 1,
+        color: '#7DCCAB'
+    };
+}
+//initiase country borders before usage below
+let countryBordersGeoJsonLayer = L.geoJSON(null, {style: style}).addTo(mymap);
 // ajax calls for when user selects country
 $('#btnRun').click(function(){
     $.ajax({
