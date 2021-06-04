@@ -134,9 +134,8 @@ const blackIcon = new L.icon({
     shadowSize: [41, 41]    
 });
 
-const redMarker = L.AwesomeMarkers.icon({
-    icon: 'coffee',
-    markerColor: 'red'
+const redMarker =  new L.AwesomeMarkers.icon({
+
 });
 
 L.marker([51.941196,4.512291], {icon: redMarker}).addTo(mymap);

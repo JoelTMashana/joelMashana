@@ -495,6 +495,11 @@ ion-icon {
     border-radius: 8px 8px!important;
 }
 
+
+.leaflet-popup-tip {
+    background-image: -webkit-linear-gradient(#aec0df, #c8c2db)!important;
+}
+
 .newsHeader {
     font-size: 0.9rem;
 }
