@@ -4,12 +4,19 @@
 	error_reporting(E_ALL);
 	$executionStartTime = microtime(true);
 
-    
     // get file contenes from json file 
-    $countryBordersGeoFileContents = file_get_contents("../countryBorders.geo.json");
-
     //convert to associative array
-    $countryBordersDecode = json_decode($countryBordersGeoFileContents, true);
+    $countryBordersDecode = json_decode(file_get_contents("../countryBorders.geo.json"), true);
+
+	$countryBorder = []; 
+	 
+	$temp = null;
+	foreach ($countryBordersDecode['features'] as $feature) {
+		
+		if ($feature['properties']['iso_a2'] == $_POST['isocode']) {
+			 array_push($countryBorder, $feature);
+		}
+	}
     
     // this is the strucure of the output
 	// status and data
@@ -17,7 +24,7 @@
 	$output['status']['name'] = "ok";
 	$output['status']['description'] = "success";
 	$output['status']['returnedIn'] = intval((microtime(true) - $executionStartTime) * 1000) . " ms";
-	$output['data'] = $countryBordersDecode['features'];
+	$output['data'] = $countryBorder;
 
 	header('Content-Type: application/json; charset=UTF-8');
     
