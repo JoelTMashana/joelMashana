@@ -370,7 +370,7 @@ body {
     border-radius: 0 0 12px 12px;
 }
 .weatherPanels .mainData {
-    color: #7DCCAB;
+    color: whitesmoke
 }
 
 .countryInfoPanels .mainData, 
@@ -384,7 +384,7 @@ h1 {
 }
  
 .modalSection span {
-    color: #7e7e7e;  
+    color: #7DCCAB;  
 }
 
 .modalSection h5{
@@ -535,8 +535,8 @@ ion-icon {
 .covidFigure,
 .covidFigureTitle {
     font-size: 0.9rem;
+    font-weight: 700;
 }
-
 
 
 /*leaflet marker pop up styles*/
