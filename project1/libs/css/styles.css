@@ -159,8 +159,8 @@ html, body, main, #mapid {
     position: fixed;
     width: 500px;
     height:100px;
-    left: 5%;
-    top: 88%;
+    left: 25px;
+    bottom: 20px;
     box-sizing: border-box;
     text-align: left;
     background-image: -webkit-linear-gradient(#aec0df, #c8c2db);
