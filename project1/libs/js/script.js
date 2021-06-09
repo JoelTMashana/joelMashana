@@ -120,43 +120,6 @@ $(document).ready(function() {
 let areaOfInterestMarkers = L.markerClusterGroup();
 mymap.addLayer(areaOfInterestMarkers);
 
-//temporary color marker until I find better alternative
-const greenIcon = new L.icon({
-    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
-    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34],
-    shadowSize: [41, 41]
-});
-
-const greyIcon = new L.icon({
-    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-grey.png',
-    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34],
-    shadowSize: [41, 41]    
-});
-
-const violetIcon = new L.icon({
-    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-violet.png',
-    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34],
-    shadowSize: [41, 41]    
-});
-
-const blackIcon = new L.icon({
-    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-black.png',
-    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34],
-    shadowSize: [41, 41]    
-});
-
 // for restaurants
 const utensilsIcon = L.AwesomeMarkers.icon({
     icon: 'utensils',
@@ -194,6 +157,11 @@ const areaIcon = L.AwesomeMarkers.icon({
     prefix: 'fa'
   });
 
+const ballPinIcon = L.AwesomeMarkers.icon({
+    icon: 'map-pin',
+    markerColor: 'blue',
+    prefix: 'fa'
+  });
 
 
 let restaurantMarkers = L.markerClusterGroup();
@@ -219,7 +187,10 @@ mymap.on('click', function(e) {
     if (theMarker != undefined){
          mymap.removeLayer(theMarker);
     };
-    theMarker = L.marker([e.latlng.lat, e.latlng.lng]).addTo(mymap);
+    theMarker = L.marker(
+        [e.latlng.lat, e.latlng.lng],
+        {icon: ballPinIcon}
+         ).addTo(mymap);
     alertFuncTwo();
     $('.latLongTxt ').html(e.latlng.lat + ',' + e.latlng.lng);
     //ajax call to opencage
