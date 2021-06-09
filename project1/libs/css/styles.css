@@ -198,16 +198,17 @@ html, body, main, #mapid {
  /*text*/
  #confirmTwo span {
      font-weight: 300;
-     color: #a8a5a5;
+     color: black;
      font-size: 0.8rem;
  }
 
  #confirmTwo  .townNameTxt {
      color: whitesmoke;
+     font-weight: 700;
  }
 
  #townNameTxt{
-     font-size: 0.8rem!important;
+     font-size: 0.9rem!important;
      font-weight: 400!important;
  }
  /*icon card*/
