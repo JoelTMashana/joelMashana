@@ -188,6 +188,12 @@ const museumIcon = L.AwesomeMarkers.icon({
     prefix: 'fa'
   });
 
+const areaIcon = L.AwesomeMarkers.icon({
+    icon: 'question',
+    markerColor: 'darkpurple',
+    prefix: 'fa'
+  });
+
 
 
 let restaurantMarkers = L.markerClusterGroup();
@@ -1007,7 +1013,7 @@ $('#selCountry').change(function countryInfoOnChange(){
                             let areaLng = area.lng;
                             let areaOfInterestMarker = L.marker(
                                 [areaLat, areaLng],
-                                {icon: blackIcon}
+                                {icon:areaIcon}
                                 );
                                 areaOfInterestMarkers.addLayer(areaOfInterestMarker);
                             let wikipediaUrl = 'https://' + area.wikipediaUrl;    
