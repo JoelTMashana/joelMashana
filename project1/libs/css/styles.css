@@ -278,36 +278,30 @@ body {
   }
 
 
-/*--SEARCH BAR--*/
-.selectCountry {
-    width: 100%;
-    text-align: center;
+/*FORM*/
+
+#selCountry{
+   width: 100%;
+   border-radius: 8px;
+   width: 100%;
+   border: 1px solid #7DCCAB;
+   padding: 5px;
+   border-radius: 12px;
+   outline: none;
+   color: #9DBFAF;
 }
 
-.searchBox {
+.formBox {
     width: 100%;
     position: relative;
     display: flex;
-  }
+}
 
-.searchTerm {
-    width: 100%;
-    border: 1px solid #7DCCAB;
-    border-right: none;
-    padding: 5px;
-    border-radius: 12px 0 0 12px;
-    outline: none;
-    color: #9DBFAF;
-  }
-
-.searchTerm:focus{
+#selCountry:focus{
     color: #7DCCAB;
   }
 
-
 /*BUTTONS*/
-
-.searchBtn,
 .btnPill,
 .myBtn {
     background-image: linear-gradient(90deg, rgb(129,251,184, 0.5), rgb(125,204,171, 0.5));      
@@ -328,13 +322,14 @@ body {
 
 .btnPill { 
     border: 1px solid #7DCCAB;
-    color: black;
-    padding: 4px 10px 4px 10px;
+    color: whitesmoke;
+    padding: 4px;
+    width: 90px;
     text-align: center;
     text-decoration: none;
     font-size: 0.8rem;
     display: inline-block;
-    margin: 4px 2px;
+    margin: -8px;
     cursor: pointer;
     opacity: 1;
     border-radius: 16px;
@@ -363,6 +358,11 @@ body {
 
 
 /*--MODAL--*/
+
+.modal-body {
+    max-height: 70vh;
+    overflow-y: auto;
+    }
 
 .weatherPanels .mainData {
     color: #7DCCAB;
@@ -398,15 +398,17 @@ h1 {
 
 .myWeatherHeaderCard, 
 .myCountryInfoHeaderCard,
-.myCurrencyHeaderCard, 
+.myNewsHeaderCard, 
 .myCard,
-.myHeaderCard {
+.myHeaderCard,
+.myCovidHeaderCard {
     border-radius: 12px 12px 0 0!important;
 }
 
 .myWeatherHeaderCard,
 .myCountryInfoHeaderCard,
-.myCurrencyHeaderCard  {   
+.myNewsHeaderCard,
+.myCovidHeaderCard  {   
     background-image: linear-gradient(90deg, rgb(129,251,184, 0.5), rgb(125,204,171, 0.5));  
 }
 
@@ -431,9 +433,26 @@ h1 {
 #newsHeadlineIconImgOne:hover,
 #newsHeadlineIconImgTwo:hover,
 #newsHeadlineIconImgThree:hover,
+#newsHeadlineIconImgFour:hover,
+#newsHeadlineIconImgFive:hover,
+#newsHeadlineIconImgSix:hover,
+#newsHeadlineIconImgSeven:hover,
+#newsHeadlineIconImgEight:hover,
+#covidNewsHeadlineIconImgOne:hover,
+#covidNewsHeadlineIconImgTwo:hover,
+#covidNewsHeadlineIconImgThree:hover,
+
 #newsHeadlineIconImgOne img:hover,
 #newsHeadlineIconImgTwo img:hover,
-#newsHeadlineIconImgThree img:hover{
+#newsHeadlineIconImgThree img:hover,
+#newsHeadlineIconImgFour img:hover,
+#newsHeadlineIconImgFive img:hover,
+#newsHeadlineIconImgSix img:hover,
+#newsHeadlineIconImgSeven img:hover,
+#newsHeadlineIconImgEight img:hover,
+#covidNewsHeadlineIconImgOne img:hover,
+#covidNewsHeadlineIconImgTwo img:hover,
+#covidNewsHeadlineIconImgThree img:hover {
    border: 1px solid #7DCCAB; 
 }
 
@@ -452,6 +471,11 @@ h1 {
 #capitalCitySummaryTxt {
     padding-left: 8px;
     padding-right: 8px;
+}
+
+.covidFigure {
+    font-size: 1.2rem!important;
+    font-weight: 700;
 }
 
 /*--ICONS--*/
@@ -500,7 +524,9 @@ ion-icon {
     background-image: -webkit-linear-gradient(#aec0df, #c8c2db)!important;
 }
 
-.newsHeader {
+.newsHeader,
+.covidFigure,
+.covidFigureTitle {
     font-size: 0.9rem;
 }
 
@@ -530,3 +556,4 @@ ion-icon {
 .businessMarkerInfoIconCard img:hover{
     border: 1px solid #7DCCAB;
 }
+
