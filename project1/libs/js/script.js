@@ -285,6 +285,8 @@ const yyyy = today.getFullYear();
 
 today = yyyy + '-' + mm + '-' + dd;
 
+//initiase country borders before usage below
+let countryBordersGeoJsonLayer = L.geoJSON(null, {style: style}).addTo(mymap);
 
 //func which calls on doc load
 $(document).ready(function getUserLocationData() {
@@ -573,6 +575,7 @@ $('#selCountry').change(function countryMarkersOnChange(){
             isocode: $('#selCountry').val()
          },
          success: function(result){
+             console.log($('#selCountry').val())
             $.ajax({
                 url: "./php/getLocationOpenCageDataForwardGeo.php",
                 type: 'POST',
@@ -847,6 +850,8 @@ $('#selCountry').change(function countryMarkersOnChange(){
     });
 });
 
+
+
 function style(feature) {
     return {
         fillColor: '#daa85d',
@@ -857,10 +862,8 @@ function style(feature) {
     };
 }
 
-//initiase country borders before usage below
-let countryBordersGeoJsonLayer = L.geoJSON(null, {style: style}).addTo(mymap);
-// ajax calls for when user selects country
 
+// ajax calls for when user selects country
 $('#selCountry').change(function countryInfoOnChange(){
     
     $.ajax({
@@ -1190,26 +1193,6 @@ $('#selCountry').change(function countryInfoOnChange(){
          }
     });   
 });
-
-
-
-$(document).ready(function(){
-     
-    $.ajax({
-         url: "./php/getCountryBordersAllData.php",
-         type: 'POST',
-         dataType: 'json',
-         success: function(result){
-             console.log(result.data);
-
-         },
-         error: function(jqXHR, textStatus, errorThrown){
-            console.log("There was an error peforming the AJAX call!"); 
-         }
-    });
-});
-
-
 
 
 // for layer control 

@@ -41,9 +41,7 @@ html, body, main, #mapid {
     
     .modalStyles {
         background-color: rgb(137, 192, 209);
-        background-attachment: fixed;
-        border-radius: 12px 12px;
-    
+        background-attachment: fixed;  
     }
     
     .btnPill,
@@ -103,9 +101,9 @@ html, body, main, #mapid {
     background-image: -moz-linear-gradient(#0169A4, #aec0df, #c8c2db);
     background-image: -o-linear-gradient(#0169A4, #aec0df, #c8c2db); 
     background-attachment: fixed;
-    border-radius: 12px 12px;
-
 }
+
+.modal
      
 /*for shadows on big screens*/
 
@@ -358,12 +356,18 @@ body {
 
 
 /*--MODAL--*/
+.modal-header {
+     border-radius: 12px 12px 0  0;
+}
 
 .modal-body {
     max-height: 70vh;
     overflow-y: auto;
     }
 
+.modal-footer{
+    border-radius: 0 0 12px 12px;
+}
 .weatherPanels .mainData {
     color: #7DCCAB;
 }
