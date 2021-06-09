@@ -130,25 +130,6 @@ const greenIcon = new L.icon({
     shadowSize: [41, 41]
 });
 
-const goldIcon = new L.icon({
-    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-gold.png',
-    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34],
-    shadowSize: [41, 41]    
-});
-
-const redIcon = new L.icon({
-    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
-    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34],
-    shadowSize: [41, 41]    
-});
-
-
 const greyIcon = new L.icon({
     iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-grey.png',
     shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
@@ -175,6 +156,39 @@ const blackIcon = new L.icon({
     popupAnchor: [1, -34],
     shadowSize: [41, 41]    
 });
+
+// for restaurants
+const utensilsIcon = L.AwesomeMarkers.icon({
+    icon: 'utensils',
+    markerColor: 'red',
+    prefix: 'fa'
+  });
+// for cocktail bars  
+const cocktailIcon = L.AwesomeMarkers.icon({
+    icon: 'cocktail',
+    markerColor: 'orange',
+    prefix: 'fa'
+  });
+
+const salonIcon = L.AwesomeMarkers.icon({
+    icon: 'cut',
+    markerColor: 'purple',
+    prefix: 'fa'
+  });
+
+const weightsIcon = L.AwesomeMarkers.icon({
+    icon: 'dumbbell',
+    markerColor: 'blue',
+    prefix: 'fa'
+  });
+
+const museumIcon = L.AwesomeMarkers.icon({
+    icon: 'landmark',
+    markerColor: 'cadetblue',
+    prefix: 'fa'
+  });
+
+
 
 let restaurantMarkers = L.markerClusterGroup();
 mymap.addLayer(restaurantMarkers);
@@ -613,7 +627,7 @@ $('#selCountry').change(function countryMarkersOnChange(){
                                        let long = r.coordinates.longitude;
                                        let restaurantMarker = L.marker(
                                            [lat, long],
-                                           {icon: redIcon}
+                                           {icon: utensilsIcon}
                                            );
                                            restaurantMarkers.addLayer(restaurantMarker);
                                        
@@ -662,7 +676,7 @@ $('#selCountry').change(function countryMarkersOnChange(){
                                               let long = g.coordinates.longitude;
                                               let gymMarker = L.marker(
                                                   [lat, long],
-                                                  {icon: greenIcon}
+                                                  {icon: weightsIcon}
                                                   );
                                                   gymMarkers.addLayer(gymMarker);
                                               
@@ -710,7 +724,7 @@ $('#selCountry').change(function countryMarkersOnChange(){
                                           let long = s.coordinates.longitude;
                                           let salonMarker = L.marker(
                                               [lat, long],
-                                              {icon: violetIcon}
+                                              {icon: salonIcon}
                                               );
                                               salonMarkers.addLayer(salonMarker);
                                           
@@ -758,7 +772,7 @@ $('#selCountry').change(function countryMarkersOnChange(){
                                           let long = m.coordinates.longitude;
                                           let museumMarker = L.marker(
                                               [lat, long],
-                                              {icon: greyIcon}
+                                              {icon: museumIcon}
                                               );
                                               museumMarkers.addLayer(museumMarker);
                                           
@@ -806,7 +820,7 @@ $('#selCountry').change(function countryMarkersOnChange(){
                                           let long = c.coordinates.longitude;
                                           let cocktailBarMarker = L.marker(
                                               [lat, long],
-                                              {icon: goldIcon}
+                                              {icon: cocktailIcon}
                                               );
                                               cocktailBarMarkers.addLayer(cocktailBarMarker);
                                           

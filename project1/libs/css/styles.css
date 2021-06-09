@@ -480,10 +480,12 @@ h1 {
 
 /*--ICONS--*/
 ion-icon {
-  
     color: #1E252A;
 }
 
+.fa{
+    margin-top: 12px !important;
+}
 
 
 /*LEAFLET*/
