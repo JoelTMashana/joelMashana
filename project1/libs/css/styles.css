@@ -379,11 +379,16 @@ body {
 .weatherPanels,
 .heading,
 p,
-h1 {
+h1,
+.modalSection h4 {
     color:  whitesmoke;
 }
- 
+
 .modalSection span {
+    color: #7e7e7e;
+}
+
+.weatherPanels span {
     color: #7DCCAB;  
 }
 
