@@ -6,7 +6,7 @@
 
     
 	// these params are taken from the data part of the ajax call
-	$url= 'http://worldtimeapi.org/api/timezone/' . $_POST['continent'] . '/' . $_POST['placename'];
+	$url= 'http://worldtimeapi.org/api/timezone/' . $_POST['timezone'];
 
 	//curls obj initialised and stored in var
 	// the API I use will speicfy what I need to copy
