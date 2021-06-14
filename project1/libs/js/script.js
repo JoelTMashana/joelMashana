@@ -111,7 +111,6 @@ $(document).ready(function() {
                            isocode: $('#selCountry').val()
                         },
                         success: function(result){
-                            console.log($('#selCountry').val())
                            $.ajax({
                                url: "./php/getLocationOpenCageDataForwardGeo.php",
                                type: 'POST',
